@@ -6,13 +6,13 @@
   --surface:rgba(13,24,44,.6);--surface-2:#0E1B30;
   --line:rgba(60,200,205,.13);--line-2:rgba(60,200,205,.06);
   --text:#EAF3F4;--dim:#86A0AB;--faint:#4A6068;
-  --teal:#19E6D6;--teal-2:#5BF0E4;--green:#33E29A;
-  --glow:rgba(25,230,214,.45);--soft:rgba(25,230,214,.11);
-  --grad:linear-gradient(120deg,#18E7D2,#33E29A);
-  --grad-text:linear-gradient(115deg,#27EADB 10%,#7BF0CE 90%);
-  --btn-ink:#03110C;
-  --spot:rgba(25,230,214,.08);
-  --mesh-1:rgba(25,230,214,.10);--mesh-2:rgba(51,226,154,.07);
+  --teal:#00E0E0;--teal-2:#5BF0F0;--green:#00D2DC;
+  --glow:rgba(0,224,224,.45);--soft:rgba(0,224,224,.12);
+  --grad:linear-gradient(120deg,#00E0E0,#12B8DC);
+  --grad-text:linear-gradient(115deg,#19E6E6 10%,#86F0F0 90%);
+  --btn-ink:#03171A;
+  --spot:rgba(0,224,224,.08);
+  --mesh-1:rgba(0,224,224,.10);--mesh-2:rgba(0,200,220,.07);
   --footer-bg:rgba(7,13,26,.92);
   --fd:var(--font-display),'Space Grotesk',sans-serif;
   --fb:var(--font-body),'Hanken Grotesk',sans-serif;
@@ -25,12 +25,12 @@ body.light{
   --surface:rgba(255,255,255,.72);--surface-2:#E4EEED;
   --line:rgba(14,135,128,.16);--line-2:rgba(14,135,128,.08);
   --text:#08231F;--dim:#42605B;--faint:#86A39E;
-  --teal:#0DA99E;--teal-2:#12C4B6;--green:#16B57C;
-  --glow:rgba(13,169,158,.35);--soft:rgba(13,169,158,.1);
-  --grad:linear-gradient(120deg,#10BCAC,#16C386);
-  --grad-text:linear-gradient(115deg,#0AA294 10%,#13B07A 90%);
+  --teal:#04AEC0;--teal-2:#0FC8D6;--green:#04AEC0;
+  --glow:rgba(0,200,216,.35);--soft:rgba(0,200,216,.1);
+  --grad:linear-gradient(120deg,#00E0E0,#00A6CE);
+  --grad-text:linear-gradient(115deg,#00BFD0 10%,#0094B6 90%);
   --btn-ink:#FFFFFF;
-  --spot:rgba(13,169,158,.07);
+  --spot:rgba(0,200,216,.07);
   /* No teal wash over the white background in light mode (keeps the bg pure white). */
   --mesh-1:transparent;--mesh-2:transparent;
   --footer-bg:rgba(228,238,237,.94);
@@ -72,6 +72,11 @@ header.scrolled .bar{background:color-mix(in srgb,var(--bg) 78%,transparent);bac
 .logo .mark{width:32px;height:32px;flex:none}
 .logo .mark .lkp{stroke:var(--teal)}
 .logo b{color:var(--teal);font-weight:700}
+/* brand logo image — dark variant on dark theme, recolored variant on light */
+.logo-img{height:30px;width:auto;display:block}
+.logo-light{display:none}
+body.light .logo-dark{display:none}
+body.light .logo-light{display:block}
 .nav-links{display:flex;gap:28px;align-items:center}
 .nav-links a{font-size:14.5px;color:var(--dim);font-weight:500;transition:.2s;position:relative}
 .nav-links a.on,.nav-links a:hover{color:var(--text)}
@@ -88,7 +93,8 @@ body.light .theme-tg .sun{display:none}body.light .theme-tg .moon{display:block}
 .btn-p{background:var(--grad);color:var(--btn-ink);border-color:transparent;font-weight:700;box-shadow:0 6px 24px -10px var(--glow)}
 .btn-p:hover{box-shadow:0 12px 38px -8px var(--glow);transform:translateY(-1px)}
 .btn-lg{padding:16px 30px;font-size:16px;border-radius:14px;letter-spacing:.02em}
-.menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:10px;color:var(--text);padding:9px 11px;cursor:pointer}
+.menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:10px;color:var(--text);padding:9px 13px;cursor:pointer;font-size:18px;line-height:1}
+.mobile-menu{display:none}
 
 .hero{min-height:90vh;display:flex;align-items:center;padding:90px 0 70px;position:relative}
 .hero .wrap{width:100%}
@@ -472,7 +478,13 @@ footer{border-top:1px solid var(--line);padding:72px 0 40px;background:var(--foo
   .cycles{grid-template-columns:repeat(2,1fr)}
   .stack-card{grid-template-columns:auto 1fr;padding:36px}.stack-card .glyph{display:none}
   .ladder{flex-wrap:wrap}.rung{flex:1 1 30%}
-  .nav-links,.lang{display:none}.menu-btn{display:block}
+  .nav-links,.lang,.nav-login,.nav-buy{display:none}.menu-btn{display:block}
+  .mobile-menu{display:block;border-top:1px solid var(--line);background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(18px) saturate(160%)}
+  .mobile-menu .wrap{display:flex;flex-direction:column;padding-top:12px;padding-bottom:20px}
+  .mobile-menu .wrap>a{padding:14px 2px;color:var(--dim);font-weight:500;font-size:16px;border-bottom:1px solid var(--line-2)}
+  .mobile-menu .wrap>a.on{color:var(--teal)}
+  .mobile-cta{display:flex;gap:10px;margin-top:16px}
+  .mobile-cta .btn{flex:1;justify-content:center;padding:13px}
   #globe{opacity:.6}#spot{display:none}
   .news{grid-template-columns:1fr}
 }
@@ -591,7 +603,9 @@ footer{border-top:1px solid var(--line);padding:72px 0 40px;background:var(--foo
 
 /* ===== i18n: Arabic / Hindi fonts + RTL ===== */
 html[lang="ar"]{--fd:'Noto Kufi Arabic','Geeza Pro','Segoe UI',Tahoma,sans-serif;--fb:'Noto Naskh Arabic','Geeza Pro','Segoe UI',Tahoma,sans-serif;--fm:'Noto Naskh Arabic','Geeza Pro',monospace}
+html[lang="ur"]{--fd:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq','Noto Naskh Arabic','Geeza Pro',serif;--fb:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq','Noto Naskh Arabic','Geeza Pro',serif;--fm:'Noto Naskh Arabic','Geeza Pro',monospace}
 html[lang="hi"]{--fd:'Noto Sans Devanagari','Nirmala UI','Mangal',sans-serif;--fb:'Noto Sans Devanagari','Nirmala UI','Mangal',sans-serif;--fm:'Noto Sans Devanagari','Nirmala UI',monospace}
+html[lang="bn"]{--fd:'Noto Sans Bengali','Nirmala UI','Vrinda',sans-serif;--fb:'Noto Sans Bengali','Nirmala UI','Vrinda',sans-serif;--fm:'Noto Sans Bengali','Nirmala UI',monospace}
 body.rtl{direction:rtl}
 /* brand wordmark, marquees and code-like bits stay LTR for legibility */
 body.rtl .logo,body.rtl .promo .row,body.rtl .chips,body.rtl .rw-total-num,body.rtl .rewards-total{direction:ltr}

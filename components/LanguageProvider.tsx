@@ -3,13 +3,20 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { DICT } from '@/lib/i18n';
 
-export type Lang = 'en' | 'ar' | 'hi';
+export type Lang = 'en' | 'ar' | 'hi' | 'es' | 'bn' | 'ur' | 'fr';
 
 export const LANGS: { code: Lang; label: string; flag: string; native: string }[] = [
   { code: 'en', label: 'EN', flag: '🇬🇧', native: 'English' },
   { code: 'ar', label: 'AR', flag: '🇸🇦', native: 'العربية' },
   { code: 'hi', label: 'HI', flag: '🇮🇳', native: 'हिन्दी' },
+  { code: 'es', label: 'ES', flag: '🇪🇸', native: 'Español' },
+  { code: 'bn', label: 'BN', flag: '🇧🇩', native: 'বাংলা' },
+  { code: 'ur', label: 'UR', flag: '🇵🇰', native: 'اردو' },
+  { code: 'fr', label: 'FR', flag: '🇫🇷', native: 'Français' },
 ];
+
+// Right-to-left scripts.
+const RTL_LANGS: Lang[] = ['ar', 'ur'];
 
 interface LanguageContextValue {
   lang: Lang;
@@ -25,7 +32,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem('lang');
-    if (saved === 'en' || saved === 'ar' || saved === 'hi') setLangState(saved);
+    if (saved && LANGS.some((l) => l.code === saved)) setLangState(saved as Lang);
   }, []);
 
   const setLang = useCallback((l: Lang) => {
@@ -37,7 +44,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const dir: 'ltr' | 'rtl' = lang === 'ar' ? 'rtl' : 'ltr';
+  const dir: 'ltr' | 'rtl' = RTL_LANGS.includes(lang) ? 'rtl' : 'ltr';
 
   // Mirror onto <html> so the whole document flips direction + swaps fonts (CSS),
   // and onto <body class="rtl"> for any RTL-specific tweaks.

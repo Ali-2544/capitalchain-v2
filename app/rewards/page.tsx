@@ -73,7 +73,7 @@ export default function Rewards() {
                 verification for every crypto transaction. No press releases. Just receipts.
               </p>
               <a href="/#programs" className="btn btn-p" data-magnetic>
-                Get Funded ↗
+                View Programs ↗
               </a>
             </div>
 

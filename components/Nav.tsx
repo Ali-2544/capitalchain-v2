@@ -1,31 +1,17 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useTheme } from './ThemeProvider';
 import { LANGS, useLang, useT } from './LanguageProvider';
 
-function LogoMark() {
+function Logo() {
   return (
-    <svg className="mark" viewBox="0 0 40 40" fill="none">
-      <path
-        className="lkp"
-        d="M14 20a6 6 0 016-6h0a6 6 0 016 6m0 0a6 6 0 01-6 6h0a6 6 0 01-6-6"
-        strokeWidth="3"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <circle
-        className="lkp"
-        cx="20"
-        cy="20"
-        r="17"
-        strokeWidth="2.4"
-        strokeDasharray="4 5"
-        opacity=".5"
-        fill="none"
-      />
-    </svg>
+    <a href="/" className="logo" aria-label="Capital Chain">
+      <Image className="logo-img logo-dark" src="/logo.png" alt="Capital Chain" width={150} height={33} priority />
+      <Image className="logo-img logo-light" src="/logo-light.png" alt="Capital Chain" width={150} height={33} priority />
+    </a>
   );
 }
 
@@ -76,7 +62,17 @@ export default function Nav() {
   const { toggleTheme } = useTheme();
   const t = useT();
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+
+  const links = [
+    { href: '/', label: t.nav.home },
+    { href: '/rewards', label: t.nav.rewards },
+    { href: '/affiliate', label: t.nav.affiliate },
+    { href: '/about', label: t.nav.about },
+    { href: '/contact', label: t.nav.contact },
+    { href: '/terms', label: t.nav.terms },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -85,33 +81,22 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Close the mobile menu whenever the route changes.
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
   return (
     <header id="hdr" className={scrolled ? 'scrolled' : undefined}>
       <div className="wrap">
         <div className="bar">
-          <a href="/" className="logo">
-            <LogoMark />
-            Capital<b>Chain</b>
-          </a>
+          <Logo />
           <div className="nav-links">
-            <a href="/" className={pathname === '/' ? 'on' : undefined}>
-              {t.nav.home}
-            </a>
-            <a href="/rewards" className={pathname === '/rewards' ? 'on' : undefined}>
-              {t.nav.rewards}
-            </a>
-            <a href="/affiliate" className={pathname === '/affiliate' ? 'on' : undefined}>
-              {t.nav.affiliate}
-            </a>
-            <a href="/about" className={pathname === '/about' ? 'on' : undefined}>
-              {t.nav.about}
-            </a>
-            <a href="/contact" className={pathname === '/contact' ? 'on' : undefined}>
-              {t.nav.contact}
-            </a>
-            <a href="/terms" className={pathname === '/terms' ? 'on' : undefined}>
-              {t.nav.terms}
-            </a>
+            {links.map((l) => (
+              <a key={l.href} href={l.href} className={pathname === l.href ? 'on' : undefined}>
+                {l.label}
+              </a>
+            ))}
           </div>
           <div className="nav-cta">
             <button className="theme-tg" id="themeTg" aria-label="Toggle theme" onClick={toggleTheme}>
@@ -124,16 +109,47 @@ export default function Nav() {
               </svg>
             </button>
             <LangSwitch />
-            <a href="#" className="btn">
+            <a href="#" className="btn nav-login">
               {t.nav.login}
             </a>
-            <a href="/#programs" className="btn btn-p" data-magnetic>
+            <a href="/#programs" className="btn btn-p nav-buy" data-magnetic>
               {t.nav.buy}
             </a>
           </div>
-          <button className="menu-btn">☰</button>
+          <button
+            className="menu-btn"
+            aria-label="Menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((o) => !o)}
+          >
+            {menuOpen ? '✕' : '☰'}
+          </button>
         </div>
       </div>
+      {menuOpen && (
+        <div className="mobile-menu">
+          <div className="wrap">
+            {links.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className={pathname === l.href ? 'on' : undefined}
+                onClick={() => setMenuOpen(false)}
+              >
+                {l.label}
+              </a>
+            ))}
+            <div className="mobile-cta">
+              <a href="#" className="btn">
+                {t.nav.login}
+              </a>
+              <a href="/#programs" className="btn btn-p" data-magnetic onClick={() => setMenuOpen(false)}>
+                {t.nav.buy}
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

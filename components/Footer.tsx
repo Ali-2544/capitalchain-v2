@@ -1,30 +1,7 @@
 'use client';
 
+import Image from 'next/image';
 import { useT } from './LanguageProvider';
-
-function LogoMark() {
-  return (
-    <svg className="mark" viewBox="0 0 40 40" fill="none">
-      <path
-        className="lkp"
-        d="M14 20a6 6 0 016-6h0a6 6 0 016 6m0 0a6 6 0 01-6 6h0a6 6 0 01-6-6"
-        strokeWidth="3"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <circle
-        className="lkp"
-        cx="20"
-        cy="20"
-        r="17"
-        strokeWidth="2.4"
-        strokeDasharray="4 5"
-        opacity=".5"
-        fill="none"
-      />
-    </svg>
-  );
-}
 
 export default function Footer() {
   const t = useT();
@@ -45,9 +22,9 @@ export default function Footer() {
         </div>
         <div className="foot-grid">
           <div className="foot-brand">
-            <a href="/" className="logo">
-              <LogoMark />
-              Capital<b>Chain</b>
+            <a href="/" className="logo" aria-label="Capital Chain">
+              <Image className="logo-img logo-dark" src="/logo.png" alt="Capital Chain" width={164} height={36} />
+              <Image className="logo-img logo-light" src="/logo-light.png" alt="Capital Chain" width={164} height={36} />
             </a>
             <p>{t.footer.brandP}</p>
           </div>
