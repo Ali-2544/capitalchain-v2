@@ -120,23 +120,10 @@ function GlobeScene({ labelRefs }: { labelRefs: LabelRefs }) {
     });
     group.add(new THREE.Mesh(new THREE.SphereGeometry(R * 0.985, 36, 36), wireMat));
 
-    // Geometric outline — a faceted heptagon band that wraps the globe just
-    // outside the dot sphere. Parented to the group, so it rotates with the globe.
-    const bandMat = new THREE.MeshBasicMaterial({
-      color: 0x1fc6d2,
-      transparent: true,
-      opacity: 0.5,
-      side: THREE.DoubleSide,
-      depthWrite: false,
-    });
-    const band = new THREE.Mesh(new THREE.RingGeometry(R * 1.1, R * 1.16, 7, 1), bandMat);
-    band.rotation.z = Math.PI / 14; // flat edge near the top, like the reference
-    group.add(band);
-
     // Soft halo sprite (lives at scene root, behind the group).
     const haloMat = new THREE.SpriteMaterial({
       map: tex,
-      color: 0x19e6d6,
+      color: 0x1fe6e6,
       transparent: true,
       opacity: 0.45,
       blending: THREE.AdditiveBlending,
@@ -161,7 +148,7 @@ function GlobeScene({ labelRefs }: { labelRefs: LabelRefs }) {
       const m = s.clone().add(e).multiplyScalar(0.5);
       m.normalize().multiplyScalar(R + s.distanceTo(e) * 0.45);
       const cu = new THREE.QuadraticBezierCurve3(s, m, e);
-      const lm = new THREE.LineBasicMaterial({ color: 0x19e6d6, transparent: true, opacity: 0.22 });
+      const lm = new THREE.LineBasicMaterial({ color: 0x1fe6e6, transparent: true, opacity: 0.22 });
       lineMats.push(lm);
       group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(cu.getPoints(46)), lm));
       const dm = new THREE.SpriteMaterial({
@@ -187,12 +174,12 @@ function GlobeScene({ labelRefs }: { labelRefs: LabelRefs }) {
       return pts[idx].clone().multiplyScalar(1.06);
     });
 
-    return { group, halo, anchors, ptsMat, wireMat, bandMat, haloMat, lineMats, travMats, trav };
+    return { group, halo, anchors, ptsMat, wireMat, haloMat, lineMats, travMats, trav };
   }, []);
 
   // Re-tint materials whenever the theme changes (mirrors setGlobeTheme).
   useEffect(() => {
-    const { ptsMat, wireMat, bandMat, haloMat, lineMats, travMats } = built;
+    const { ptsMat, wireMat, haloMat, lineMats, travMats } = built;
     if (isLight) {
       ptsMat.color.setHex(0x05aec0);
       ptsMat.blending = THREE.NormalBlending;
@@ -200,15 +187,13 @@ function GlobeScene({ labelRefs }: { labelRefs: LabelRefs }) {
       ptsMat.needsUpdate = true;
       wireMat.color.setHex(0x9fd6d0);
       wireMat.opacity = 0.18;
-      bandMat.color.setHex(0x06b6c4);
-      bandMat.opacity = 0.5;
       haloMat.opacity = 0.12;
       lineMats.forEach((m) => {
         m.color.setHex(0x05aec0);
         m.opacity = 0.3;
       });
       travMats.forEach((m) => {
-        m.color.setHex(0x06b6c4);
+        m.color.setHex(0x05aec0);
         m.blending = THREE.NormalBlending;
         m.needsUpdate = true;
       });
@@ -219,11 +204,9 @@ function GlobeScene({ labelRefs }: { labelRefs: LabelRefs }) {
       ptsMat.needsUpdate = true;
       wireMat.color.setHex(0x0f6b66);
       wireMat.opacity = 0.1;
-      bandMat.color.setHex(0x1fc6d2);
-      bandMat.opacity = 0.5;
       haloMat.opacity = 0.45;
       lineMats.forEach((m) => {
-        m.color.setHex(0x19e6d6);
+        m.color.setHex(0x1fe6e6);
         m.opacity = 0.22;
       });
       travMats.forEach((m) => {

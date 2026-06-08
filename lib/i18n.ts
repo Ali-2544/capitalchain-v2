@@ -33,7 +33,7 @@ const en = {
     trustpilot: 'Trustpilot',
   },
   who: {
-    idx: '[ 01 — WHO WE ARE ]',
+    idx: '[ 03 — WHO WE ARE ]',
     title_a: 'Who we are.',
     title_b: 'What we do.',
     sub: 'Capital Chain is a global prop firm — we back skilled traders with real capital, fast payouts and pro-grade technology across 160+ countries.',
@@ -45,7 +45,7 @@ const en = {
     ],
   },
   how: {
-    idx: '[ 02 — THE CHAIN ]',
+    idx: '[ 01 — THE CHAIN ]',
     title_a: 'Four links to a',
     title_b: 'funded desk.',
     sub: 'A measurable path from evaluation to live allocation — built to reward consistency, not luck.',
@@ -57,7 +57,7 @@ const en = {
     ],
   },
   programs: {
-    idx: '[ 03 — PROGRAMS ]',
+    idx: '[ 02 — PROGRAMS ]',
     title_a: 'Configure your',
     title_b: 'funded account.',
     sub: 'Pick a path and a size. The evaluation fee is refunded with your first payout.',
@@ -289,7 +289,7 @@ const ar: Dict = {
     trustpilot: 'Trustpilot',
   },
   who: {
-    idx: '[ 01 — من نحن ]',
+    idx: '[ 03 — من نحن ]',
     title_a: 'من نحن.',
     title_b: 'ماذا نفعل.',
     sub: 'كابيتال تشين شركة تداول ملكية عالمية — ندعم المتداولين المهرة برأس مال حقيقي وسحوبات سريعة وتقنية احترافية في أكثر من 160 دولة.',
@@ -301,7 +301,7 @@ const ar: Dict = {
     ],
   },
   how: {
-    idx: '[ 02 — السلسلة ]',
+    idx: '[ 01 — السلسلة ]',
     title_a: 'أربع حلقات نحو',
     title_b: 'مكتب ممول.',
     sub: 'مسار قابل للقياس من التقييم إلى التخصيص الحقيقي — مصمم لمكافأة الاستمرارية لا الحظ.',
@@ -313,7 +313,7 @@ const ar: Dict = {
     ],
   },
   programs: {
-    idx: '[ 03 — البرامج ]',
+    idx: '[ 02 — البرامج ]',
     title_a: 'هيّئ حسابك',
     title_b: 'الممول.',
     sub: 'اختر مسارًا وحجمًا. تُسترد رسوم التقييم مع أول سحب لك.',
@@ -543,7 +543,7 @@ const hi: Dict = {
     trustpilot: 'Trustpilot',
   },
   who: {
-    idx: '[ 01 — हम कौन हैं ]',
+    idx: '[ 03 — हम कौन हैं ]',
     title_a: 'हम कौन हैं.',
     title_b: 'हम क्या करते हैं.',
     sub: 'कैपिटल चेन एक वैश्विक प्रॉप फर्म है — हम कुशल ट्रेडर्स को 160+ देशों में वास्तविक पूँजी, तेज़ पेआउट और पेशेवर तकनीक से समर्थन देते हैं।',
@@ -555,7 +555,7 @@ const hi: Dict = {
     ],
   },
   how: {
-    idx: '[ 02 — द चेन ]',
+    idx: '[ 01 — द चेन ]',
     title_a: 'फ़ंडेड डेस्क तक',
     title_b: 'चार कड़ियाँ.',
     sub: 'मूल्यांकन से लाइव आवंटन तक एक मापने योग्य मार्ग — निरंतरता को पुरस्कृत करने के लिए बना, भाग्य को नहीं।',
@@ -567,7 +567,7 @@ const hi: Dict = {
     ],
   },
   programs: {
-    idx: '[ 03 — प्रोग्राम ]',
+    idx: '[ 02 — प्रोग्राम ]',
     title_a: 'अपना फ़ंडेड',
     title_b: 'खाता कॉन्फ़िगर करें.',
     sub: 'एक मार्ग और आकार चुनें। मूल्यांकन शुल्क आपके पहले पेआउट के साथ वापस मिलता है।',
@@ -797,7 +797,7 @@ const es: Dict = {
     trustpilot: 'Trustpilot',
   },
   who: {
-    idx: '[ 01 — QUIÉNES SOMOS ]',
+    idx: '[ 03 — QUIÉNES SOMOS ]',
     title_a: 'Quiénes somos.',
     title_b: 'Qué hacemos.',
     sub: 'Capital Chain es una firma de trading propietario global — respaldamos a traders capacitados con capital real, pagos rápidos y tecnología profesional en más de 160 países.',
@@ -809,7 +809,7 @@ const es: Dict = {
     ],
   },
   how: {
-    idx: '[ 02 — LA CADENA ]',
+    idx: '[ 01 — LA CADENA ]',
     title_a: 'Cuatro pasos hacia una',
     title_b: 'mesa financiada.',
     sub: 'Un camino medible de la evaluación a la asignación real — diseñado para recompensar la constancia, no la suerte.',
@@ -821,7 +821,7 @@ const es: Dict = {
     ],
   },
   programs: {
-    idx: '[ 03 — PROGRAMAS ]',
+    idx: '[ 02 — PROGRAMAS ]',
     title_a: 'Configura tu',
     title_b: 'cuenta financiada.',
     sub: 'Elige un camino y un tamaño. La tarifa de evaluación se reembolsa con tu primer pago.',
@@ -1051,7 +1051,7 @@ const fr: Dict = {
     trustpilot: 'Trustpilot',
   },
   who: {
-    idx: '[ 01 — QUI SOMMES-NOUS ]',
+    idx: '[ 03 — QUI SOMMES-NOUS ]',
     title_a: 'Qui nous sommes.',
     title_b: 'Ce que nous faisons.',
     sub: 'Capital Chain est une société de trading pour compte propre mondiale — nous soutenons des traders qualifiés avec un capital réel, des paiements rapides et une technologie professionnelle dans plus de 160 pays.',
@@ -1063,7 +1063,7 @@ const fr: Dict = {
     ],
   },
   how: {
-    idx: '[ 02 — LA CHAÎNE ]',
+    idx: '[ 01 — LA CHAÎNE ]',
     title_a: 'Quatre étapes vers un',
     title_b: 'desk financé.',
     sub: 'Un parcours mesurable de l’évaluation à l’allocation réelle — conçu pour récompenser la régularité, pas la chance.',
@@ -1075,7 +1075,7 @@ const fr: Dict = {
     ],
   },
   programs: {
-    idx: '[ 03 — PROGRAMMES ]',
+    idx: '[ 02 — PROGRAMMES ]',
     title_a: 'Configurez votre',
     title_b: 'compte financé.',
     sub: 'Choisissez une voie et une taille. Les frais d’évaluation sont remboursés avec votre premier paiement.',
@@ -1305,7 +1305,7 @@ const bn: Dict = {
     trustpilot: 'Trustpilot',
   },
   who: {
-    idx: '[ ০১ — আমরা কারা ]',
+    idx: '[ ০৩ — আমরা কারা ]',
     title_a: 'আমরা কারা.',
     title_b: 'আমরা কী করি.',
     sub: 'ক্যাপিটাল চেইন একটি বৈশ্বিক প্রপ ফার্ম — আমরা ১৬০+ দেশে দক্ষ ট্রেডারদের প্রকৃত মূলধন, দ্রুত পেআউট ও পেশাদার প্রযুক্তি দিয়ে সমর্থন করি।',
@@ -1317,7 +1317,7 @@ const bn: Dict = {
     ],
   },
   how: {
-    idx: '[ ০২ — দ্য চেইন ]',
+    idx: '[ ০১ — দ্য চেইন ]',
     title_a: 'ফান্ডেড ডেস্কের দিকে',
     title_b: 'চারটি ধাপ.',
     sub: 'মূল্যায়ন থেকে লাইভ অ্যালোকেশন পর্যন্ত একটি পরিমাপযোগ্য পথ — ভাগ্য নয়, ধারাবাহিকতা পুরস্কৃত করতে তৈরি।',
@@ -1329,7 +1329,7 @@ const bn: Dict = {
     ],
   },
   programs: {
-    idx: '[ ০৩ — প্রোগ্রাম ]',
+    idx: '[ ০২ — প্রোগ্রাম ]',
     title_a: 'আপনার ফান্ডেড',
     title_b: 'অ্যাকাউন্ট কনফিগার করুন.',
     sub: 'একটি পথ ও আকার বেছে নিন। মূল্যায়ন ফি আপনার প্রথম পেআউটের সাথে ফেরত দেওয়া হয়।',
@@ -1559,7 +1559,7 @@ const ur: Dict = {
     trustpilot: 'Trustpilot',
   },
   who: {
-    idx: '[ 01 — ہم کون ہیں ]',
+    idx: '[ 03 — ہم کون ہیں ]',
     title_a: 'ہم کون ہیں.',
     title_b: 'ہم کیا کرتے ہیں.',
     sub: 'کیپیٹل چین ایک عالمی پراپ فرم ہے — ہم 160+ ممالک میں ہنرمند ٹریڈرز کو حقیقی سرمائے، تیز ادائیگیوں اور پیشہ ورانہ ٹیکنالوجی سے سہارا دیتے ہیں۔',
@@ -1571,7 +1571,7 @@ const ur: Dict = {
     ],
   },
   how: {
-    idx: '[ 02 — دی چین ]',
+    idx: '[ 01 — دی چین ]',
     title_a: 'فنڈڈ ڈیسک تک',
     title_b: 'چار کڑیاں.',
     sub: 'تشخیص سے لائیو ایلوکیشن تک ایک قابلِ پیمائش راستہ — قسمت نہیں، تسلسل کو انعام دینے کے لیے بنایا گیا۔',
@@ -1583,7 +1583,7 @@ const ur: Dict = {
     ],
   },
   programs: {
-    idx: '[ 03 — پروگرام ]',
+    idx: '[ 02 — پروگرام ]',
     title_a: 'اپنا فنڈڈ',
     title_b: 'اکاؤنٹ ترتیب دیں.',
     sub: 'ایک راستہ اور سائز منتخب کریں۔ تشخیص فیس آپ کی پہلی ادائیگی کے ساتھ واپس کر دی جاتی ہے۔',

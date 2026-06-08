@@ -28,9 +28,9 @@ export default function Home() {
       <Hero />
       <TrustBand />
       <Ticker />
-      <WhoWeAre />
       <HowStacking />
       <ProgramsConfigurator />
+      <WhoWeAre />
       <PayoutCycles />
       <Calculator />
       <WhyBento />

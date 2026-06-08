@@ -104,14 +104,17 @@ export default function ContactUs() {
         {/* Section 3: Location / Map */}
         <section className="sec" style={{ paddingTop: 0 }}>
           <div className="wrap reveal">
-            <div 
-              className="about-location-card"
-              style={{ backgroundImage: `url('/about_dubai.png')` }}
-            >
+            <div className="about-location-card">
               <div className="loc-content">
+                <div className="loc-pin">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 21s-7-6.3-7-11a7 7 0 0114 0c0 4.7-7 11-7 11z" />
+                    <circle cx="12" cy="10" r="2.5" />
+                  </svg>
+                </div>
                 <span className="idx" style={{ color: 'var(--teal)' }}>HEADQUARTERS</span>
                 <h3>Dubai Healthcare City, Dubai,<br />United Arab Emirates</h3>
-                <p style={{ color: 'var(--text)', fontSize: 16, marginBottom: 30, opacity: 0.8 }}>
+                <p style={{ color: 'var(--dim)', fontSize: 16, marginBottom: 30 }}>
                   Our physical doors are open for institutional partners and scheduled appointments.
                 </p>
                 <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
