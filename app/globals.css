@@ -48,8 +48,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:17px
 .scrim.v{background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 20%,transparent) 0%,transparent 16%,transparent 72%,color-mix(in srgb,var(--bg) 60%,transparent) 100%)}
 #spot{position:fixed;width:480px;height:480px;border-radius:50%;z-index:1;pointer-events:none;left:0;top:0;transform:translate(-50%,-50%);background:radial-gradient(circle,var(--spot),transparent 65%);opacity:0;transition:opacity .4s}
 
-/* revolving payout pills anchored to globe nodes */
-.globe-labels{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+/* revolving payout pills anchored to globe nodes
+   z-index above page content (z:3) so the clickable pills aren't blocked;
+   the container is pointer-events:none, so only the pills themselves catch clicks. */
+.globe-labels{position:fixed;inset:0;z-index:40;pointer-events:none;overflow:hidden}
 .glabel{position:absolute;left:0;top:0;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;padding:6px 13px 6px 10px;border:1px solid var(--line);border-radius:100px;background:color-mix(in srgb,var(--surface-2) 80%,transparent);backdrop-filter:blur(9px);font-family:var(--fm);font-size:12.5px;line-height:1;white-space:nowrap;box-shadow:0 8px 24px -12px rgba(0,0,0,.6);opacity:0;will-change:transform,opacity}
 .glabel .gdot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex:none}
 .glabel .gflag{font-size:14px}
