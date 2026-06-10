@@ -1,9 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useT } from './LanguageProvider';
+import { useLiveData, timeAgo } from '@/lib/useLiveData';
 
 interface Settlement {
+  id?: number;
   flag: string;
   name: string;
   country: string;
@@ -12,8 +14,22 @@ interface Settlement {
   net: string;
 }
 
-// TODO: replace with the real live payout feed (country + amount + tx proof).
-const SETTLEMENTS: Settlement[] = [
+// Raw row can come from the API (amount/method/createdAt) or the fallback (amt/time/net).
+interface RawSettlement {
+  id?: number;
+  flag: string;
+  name: string;
+  country: string;
+  amount?: string;
+  amt?: string;
+  method?: string;
+  net?: string;
+  createdAt?: string;
+  time?: string;
+}
+
+// Fallback shown until /api/settlements loads (or if the DB is empty).
+const FALLBACK: RawSettlement[] = [
   { flag: '🇮🇳', name: 'Rashmeet Kaur', country: 'India', amt: '$2,140', time: '8m', net: 'USDT (TRC-20)' },
   { flag: '🇩🇪', name: 'Nik Dolja', country: 'Germany', amt: '$1,680', time: '14m', net: 'Bank transfer' },
   { flag: '🇳🇱', name: 'Jasper Hof', country: 'Netherlands', amt: '$1,499', time: '3h', net: 'USDT (TRC-20)' },
@@ -24,13 +40,29 @@ const SETTLEMENTS: Settlement[] = [
   { flag: '🇵🇰', name: 'Zohaib Sajjad', country: 'Pakistan', amt: '$710', time: '14h', net: 'USDT (TRC-20)' },
 ];
 
+function normalize(r: RawSettlement): Settlement {
+  return {
+    id: r.id,
+    flag: r.flag,
+    name: r.name,
+    country: r.country,
+    amt: r.amt ?? r.amount ?? '',
+    net: r.net ?? r.method ?? '',
+    time: r.time ?? (r.createdAt ? timeAgo(r.createdAt) : ''),
+  };
+}
+
+const certHref = (id?: number) => (id ? `/certificate/${id}` : undefined);
+
 export default function LiveRewards() {
   // `active` drives the left card visibility + scroll pause; `last` keeps the card
   // filled while it fades out after the pointer leaves a row.
   const t = useT();
+  const raw = useLiveData<RawSettlement>('/api/settlements', FALLBACK);
+  const settlements = useMemo(() => raw.map(normalize), [raw]);
   const [active, setActive] = useState<Settlement | null>(null);
-  const [last, setLast] = useState<Settlement>(SETTLEMENTS[2]);
-  const card = active ?? last;
+  const [last, setLast] = useState<Settlement | null>(null);
+  const card = active ?? last ?? settlements[0];
 
   // Continuous upward scroll driven by rAF (robust across reduced-motion quirks).
   // `paused` is a ref so toggling hover never restarts the animation loop.
@@ -88,7 +120,14 @@ export default function LiveRewards() {
               <div className="rf-meta">
                 {card.time} {t.live.ago} · {card.net}
               </div>
-              <a href="#rewards" className="btn btn-p" data-magnetic style={{ marginTop: 22 }}>
+              <a
+                href={certHref(card.id) ?? '#rewards'}
+                target={card.id ? '_blank' : undefined}
+                rel="noreferrer"
+                className="btn btn-p"
+                data-magnetic
+                style={{ marginTop: 22 }}
+              >
                 {t.live.proof}
               </a>
             </div>
@@ -107,25 +146,34 @@ export default function LiveRewards() {
               }}
             >
               <div className="rl-track" ref={trackRef}>
-                {[...SETTLEMENTS, ...SETTLEMENTS].map((s, i) => (
-                  <div
-                    className="rrow"
-                    key={`${s.name}-${i}`}
-                    onMouseEnter={() => {
-                      paused.current = true;
-                      setActive(s);
-                      setLast(s);
-                    }}
-                  >
-                    <span className="rf-flag">{s.flag}</span>
-                    <div>
-                      <div className="rr-name">{s.name}</div>
-                      <div className="rr-country">{s.country}</div>
-                    </div>
-                    <div className="rr-amt">{s.amt}</div>
-                    <div className="rr-time">{s.time}</div>
-                  </div>
-                ))}
+                {[...settlements, ...settlements].map((s, i) => {
+                  const href = certHref(s.id);
+                  return (
+                    <a
+                      className="rrow"
+                      key={`${s.name}-${i}`}
+                      href={href}
+                      target={href ? '_blank' : undefined}
+                      rel="noreferrer"
+                      onClick={(e) => {
+                        if (!href) e.preventDefault();
+                      }}
+                      onMouseEnter={() => {
+                        paused.current = true;
+                        setActive(s);
+                        setLast(s);
+                      }}
+                    >
+                      <span className="rf-flag">{s.flag}</span>
+                      <div>
+                        <div className="rr-name">{s.name}</div>
+                        <div className="rr-country">{s.country}</div>
+                      </div>
+                      <div className="rr-amt">{s.amt}</div>
+                      <div className="rr-time">{s.time}</div>
+                    </a>
+                  );
+                })}
               </div>
             </div>
             <div className="rl-foot">{t.live.onchain}</div>

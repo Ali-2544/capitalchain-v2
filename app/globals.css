@@ -55,6 +55,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:17px
 .glabel .gflag{font-size:14px}
 .glabel .gname{color:var(--text);font-weight:500}
 .glabel .gamt{color:var(--green);font-weight:700}
+.glabel.clickable{pointer-events:auto;cursor:pointer;transition:box-shadow .15s}
+.glabel.clickable:hover{box-shadow:0 10px 28px -10px var(--glow);border-color:var(--teal)}
 @media(max-width:1040px){.globe-labels{display:none}}
 
 .wrap{max-width:var(--w);margin:0 auto;padding:0 40px;position:relative;z-index:3}
@@ -649,3 +651,74 @@ body.rtl .lang-menu{right:auto;left:0}
 .lang-opt.on{color:var(--teal)}
 .lang-opt .o-flag{font-size:16px}
 .lang-opt .o-native{margin-inline-start:auto;font-family:var(--fm);font-size:11px;color:var(--faint)}
+
+/* ===== /admin dashboard ===== */
+/* Admin screens sit ABOVE (and opaquely cover) the global globe/scrims/labels. */
+.adm-loading,.adm-login,.adm-shell{position:relative;z-index:90;background:var(--bg)}
+.adm-loading{min-height:100vh;display:flex;align-items:center;justify-content:center;color:var(--dim);font-family:var(--fm)}
+.adm-login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.adm-login-card{width:100%;max-width:380px;border:1px solid var(--line);border-radius:20px;background:var(--surface);backdrop-filter:blur(14px);padding:36px;display:flex;flex-direction:column;gap:14px}
+.adm-login-card h1{font-family:var(--fd);font-size:30px;letter-spacing:-.02em}
+.adm-login-card p{color:var(--dim);font-size:14px;margin-bottom:6px}
+.adm-err{color:#e2557b;font-size:13px;font-family:var(--fm)}
+.adm-shell{min-height:100vh}
+/* belt-and-braces: hide the marketing globe layers on the admin route */
+body:has(.adm-shell) #globe,body:has(.adm-shell) .globe-labels,body:has(.adm-shell) .scrim,body:has(.adm-shell) #spot,body:has(.adm-shell) .mesh,
+body:has(.adm-login) #globe,body:has(.adm-login) .globe-labels,body:has(.adm-login) .scrim,body:has(.adm-login) #spot,body:has(.adm-login) .mesh{display:none}
+.adm-top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:24px;padding:16px 28px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(16px)}
+.adm-brand{font-family:var(--fd);font-weight:700;font-size:18px}
+.adm-brand b{color:var(--teal)}
+.adm-brand span{color:var(--faint);font-weight:500;font-family:var(--fm);font-size:12px}
+.adm-tabs{display:flex;gap:6px;margin-inline-start:12px}
+.adm-tabs button{font-family:var(--fb);font-size:14px;color:var(--dim);background:none;border:1px solid transparent;border-radius:10px;padding:8px 14px;cursor:pointer;transition:.2s}
+.adm-tabs button:hover{color:var(--text)}
+.adm-tabs button.on{color:var(--text);border-color:var(--line);background:var(--soft)}
+.adm-logout{margin-inline-start:auto}
+.adm-main{padding:28px;max-width:1100px;margin:0 auto}
+.adm-panel{border:1px solid var(--line);border-radius:18px;background:var(--surface);backdrop-filter:blur(12px);padding:24px}
+.adm-panel-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.adm-panel-head h3{font-family:var(--fd);font-size:22px;letter-spacing:-.01em}
+.adm-panel-head p{color:var(--dim);font-size:13.5px;margin-top:4px;max-width:60ch}
+.adm-actions{display:flex;align-items:center;gap:12px}
+.adm-status{font-family:var(--fm);font-size:12px;color:var(--green)}
+.adm-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+.adm-table{width:100%;border-collapse:collapse;min-width:640px}
+.adm-table th{text-align:start;font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);padding:12px 14px;border-bottom:1px solid var(--line);background:var(--soft)}
+.adm-table td{padding:8px 10px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+.adm-table tbody tr:last-child td{border-bottom:none}
+.adm-input{width:100%;font-family:var(--fb);font-size:14px;padding:9px 11px;border-radius:9px;border:1px solid var(--line);background:var(--bg-2);color:var(--text)}
+.adm-input:focus{outline:none;border-color:var(--teal)}
+.adm-row-actions{display:flex;gap:6px;white-space:nowrap}
+.adm-row-actions .btn{padding:8px 12px;font-size:13px}
+.adm-del{color:#e2557b;border-color:transparent}
+.adm-del:hover{border-color:#e2557b;background:transparent}
+.adm-empty{text-align:center;color:var(--faint);font-family:var(--fm);font-size:13px;padding:28px}
+@media(max-width:620px){.adm-top{flex-wrap:wrap;gap:12px;padding:14px 18px}.adm-tabs{order:3;width:100%}.adm-main{padding:18px}}
+
+/* ===== Payout certificate — your template image with data overlaid on top ===== */
+/* light theme -> light template + dark text · dark theme -> dark template + light text */
+.certimg-page{position:relative;z-index:50;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:28px 18px;background:#0a1414;font-family:var(--fb)}
+body.light .certimg-page{background:#eef4f3}
+/* fixed aspect-ratio box; both template images are absolutely stacked & overlap
+   (so a slow CSS load can never stack them vertically and break the overlay) */
+.certimg-wrap{position:relative;width:min(1120px,100%);aspect-ratio:3235/2154;container-type:inline-size;border-radius:14px;overflow:hidden;box-shadow:0 40px 120px -50px rgba(0,0,0,.5)}
+.certimg-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.certimg-light{opacity:0}
+.certimg-dark{opacity:1}
+body.light .certimg-dark{opacity:0}
+body.light .certimg-light{opacity:1}
+.certimg-overlay{position:absolute;inset:0;z-index:2;pointer-events:none}
+.certimg-overlay span{position:absolute;white-space:nowrap;line-height:1;color:#fff}
+body.light .certimg-overlay span{color:#0a2a26}
+/* sizes scale with the certificate width (container query units) */
+.co-name{font-family:var(--fd);font-weight:700;font-size:4.2cqw;letter-spacing:-.01em}
+.co-val{font-family:var(--fd);font-weight:700;font-size:2cqw}
+.co-date{font-family:var(--fd);font-weight:600;font-size:1.8cqw}
+.cert-print{font-family:var(--fb);font-weight:700;font-size:15px;padding:13px 26px;border-radius:12px;cursor:pointer;border:none;background:linear-gradient(120deg,#00E0E0,#10C8DE);color:#04181A;box-shadow:0 10px 30px -10px rgba(0,224,224,.6)}
+.cert-print:hover{transform:translateY(-1px)}
+@media print{
+  .no-print{display:none!important}
+  .certimg-page{min-height:auto;padding:0;background:#fff}
+  .certimg-wrap{box-shadow:none;width:100%}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}

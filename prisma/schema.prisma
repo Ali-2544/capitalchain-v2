@@ -1,0 +1,25 @@
+// Capital Chain — ONE payouts table powers every payout view.
+// The globe, the Live Rewards feed, the leaderboard and the payout certificate
+// all read from `Payout` (different API endpoints just project different fields).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Payout {
+  id          Int      @id @default(autoincrement())
+  flag        String // emoji flag, e.g. "🇵🇰"
+  country     String
+  traderName  String // "Rashmeet Kaur" — certificate "awarded to" + feed name
+  amount      String // display string, e.g. "$2,140"
+  amountValue Int      @default(0) // numeric value (auto-derived) for sorting / leaderboard
+  accountSize String   @default("") // e.g. "$100,000" — shown on the certificate + leaderboard role
+  method      String   @default("USDT (TRC-20)")
+  createdAt   DateTime @default(now()) // certificate date + feed "time ago"
+  updatedAt   DateTime @updatedAt
+}

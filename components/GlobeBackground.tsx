@@ -4,6 +4,25 @@ import { useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useTheme } from './ThemeProvider';
+import { useLiveData } from '@/lib/useLiveData';
+
+// Normalized payout pill: the globe needs { flag, name, amt }. The API returns
+// { flag, country, amount } and the fallback below already uses { flag, name, amt }.
+type GP = { id?: number; flag: string; name: string; amt: string };
+interface RawPayout {
+  id?: number;
+  flag: string;
+  name?: string;
+  country?: string;
+  amt?: string;
+  amount?: string;
+}
+const toGP = (r: RawPayout): GP => ({
+  id: r.id,
+  flag: r.flag,
+  name: r.name ?? r.country ?? '',
+  amt: r.amt ?? r.amount ?? '',
+});
 
 const R = 140;
 const N = 1400;
@@ -75,9 +94,9 @@ interface Traveler {
   sp: number;
 }
 
-type LabelRefs = React.RefObject<(HTMLDivElement | null)[]>;
+type LabelRefs = React.RefObject<(HTMLAnchorElement | null)[]>;
 
-function GlobeScene({ labelRefs }: { labelRefs: LabelRefs }) {
+function GlobeScene({ labelRefs, payouts }: { labelRefs: LabelRefs; payouts: GP[] }) {
   const { isLight } = useTheme();
 
   // Build the entire scene graph once, imperatively — mirrors the mockup exactly.
@@ -167,15 +186,19 @@ function GlobeScene({ labelRefs }: { labelRefs: LabelRefs }) {
     }
     for (let i = 0; i < 13; i++) arc((rnd() * N) | 0, (rnd() * N) | 0);
 
-    // Label anchors: spread evenly along the spiral, sitting just outside the
-    // surface so each pill hovers over a real node and revolves with the globe.
-    const anchors = PAYOUTS.map((_, k) => {
-      const idx = Math.floor(((k + 0.5) / PAYOUTS.length) * N) % N;
-      return pts[idx].clone().multiplyScalar(1.06);
-    });
-
-    return { group, halo, anchors, ptsMat, wireMat, haloMat, lineMats, travMats, trav };
+    return { group, halo, pts, ptsMat, wireMat, haloMat, lineMats, travMats, trav };
   }, []);
+
+  // Label anchors: spread evenly along the spiral so each pill hovers over a real
+  // node and revolves with the globe. Recomputed when the payout count changes.
+  const anchors = useMemo(
+    () =>
+      payouts.map((_, k) => {
+        const idx = Math.floor(((k + 0.5) / Math.max(1, payouts.length)) * N) % N;
+        return built.pts[idx].clone().multiplyScalar(1.06);
+      }),
+    [payouts.length, built],
+  );
 
   // Re-tint materials whenever the theme changes (mirrors setGlobeTheme).
   useEffect(() => {
@@ -246,7 +269,7 @@ function GlobeScene({ labelRefs }: { labelRefs: LabelRefs }) {
   }, [built]);
 
   useFrame((state) => {
-    const { group, trav, anchors } = built;
+    const { group, trav } = built;
     const m = motion.current;
     group.rotation.y += 0.0012;
     m.mx += (m.tx - m.mx) * 0.05;
@@ -296,7 +319,10 @@ function GlobeScene({ labelRefs }: { labelRefs: LabelRefs }) {
 }
 
 export default function GlobeBackground() {
-  const labelRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const labelRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  // Live payouts from the DB (polled); falls back to the built-in list until loaded.
+  const raw = useLiveData<RawPayout>('/api/payouts', PAYOUTS);
+  const payouts = useMemo(() => raw.map(toGP), [raw]);
   return (
     <>
       <Canvas
@@ -308,23 +334,26 @@ export default function GlobeBackground() {
         // fixed behind all content. `#globe` stylesheet still drives opacity/transition.
         style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
       >
-        <GlobeScene labelRefs={labelRefs} />
+        <GlobeScene labelRefs={labelRefs} payouts={payouts} />
       </Canvas>
       {/* Revolving payout pills — positioned each frame from the 3D anchors above. */}
       <div className="globe-labels" aria-hidden="true">
-        {PAYOUTS.map((p, i) => (
-          <div
-            key={p.name}
-            className="glabel"
+        {payouts.map((p, i) => (
+          <a
+            key={`${p.name}-${i}`}
+            className={`glabel${p.id ? ' clickable' : ''}`}
             ref={(el) => {
               labelRefs.current[i] = el;
             }}
+            href={p.id ? `/certificate/${p.id}` : undefined}
+            target={p.id ? '_blank' : undefined}
+            rel="noreferrer"
           >
             <span className="gdot" />
             <span className="gflag">{p.flag}</span>
             <span className="gname">{p.name}</span>
             <span className="gamt">{p.amt}</span>
-          </div>
+          </a>
         ))}
       </div>
     </>

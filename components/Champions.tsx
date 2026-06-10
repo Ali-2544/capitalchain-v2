@@ -1,18 +1,34 @@
 'use client';
 
 import { useT } from './LanguageProvider';
+import { useLiveData } from '@/lib/useLiveData';
 
-// TODO: replace with real leaderboard data — names, flags and amounts are placeholders.
-const CHAMPS = [
-  { rank: '#01', flag: '🇦🇪', name: 'A. Rahman', size: '$200K', amt: '$96,316' },
-  { rank: '#02', flag: '🇩🇪', name: 'B. Schneider', size: '$200K', amt: '$80,517' },
-  { rank: '#03', flag: '🇵🇰', name: 'U. Bin Hannan', size: '$100K', amt: '$80,369' },
-  { rank: '#04', flag: '🇬🇧', name: 'O. Trish', size: '$100K', amt: '$66,028' },
-  { rank: '#05', flag: '🇸🇬', name: 'M. Chen', size: '$100K', amt: '$58,940' },
+interface Champ {
+  id?: number;
+  rank: string | number;
+  flag: string;
+  name: string;
+  role: string;
+  amt?: string;
+  amount?: string;
+}
+
+// Fallback shown until the /api/leaderboard data loads (or if the DB is empty).
+const FALLBACK: Champ[] = [
+  { rank: '#01', flag: '🇦🇪', name: 'A. Rahman', role: '$200K · Operator', amt: '$96,316' },
+  { rank: '#02', flag: '🇩🇪', name: 'B. Schneider', role: '$200K · Operator', amt: '$80,517' },
+  { rank: '#03', flag: '🇵🇰', name: 'U. Bin Hannan', role: '$100K · Operator', amt: '$80,369' },
+  { rank: '#04', flag: '🇬🇧', name: 'O. Trish', role: '$100K · Operator', amt: '$66,028' },
+  { rank: '#05', flag: '🇸🇬', name: 'M. Chen', role: '$100K · Operator', amt: '$58,940' },
 ];
+
+const rankLabel = (r: string | number) =>
+  typeof r === 'number' ? `#${String(r).padStart(2, '0')}` : r;
 
 export default function Champions() {
   const t = useT();
+  const rows = useLiveData<Champ>('/api/leaderboard', FALLBACK);
+
   return (
     <section className="sec band" id="champions">
       <div className="wrap">
@@ -28,17 +44,22 @@ export default function Champions() {
       </div>
       <div className="wrap">
         <div className="hscroll">
-          {CHAMPS.map((c) => (
-            <div className="hcard champ reveal" key={c.rank}>
-              <span className="rank">{c.rank}</span>
+          {rows.map((c, i) => (
+            <a
+              className="hcard champ reveal"
+              key={c.id ?? `${rankLabel(c.rank)}-${i}`}
+              href={c.id ? `/certificate/${c.id}` : undefined}
+              target={c.id ? '_blank' : undefined}
+              rel="noreferrer"
+              style={c.id ? { cursor: 'pointer' } : undefined}
+            >
+              <span className="rank">{rankLabel(c.rank)}</span>
               <div className="flag">{c.flag}</div>
               <div className="name">{c.name}</div>
-              <div className="role">
-                {c.size} · {t.champions.operator}
-              </div>
-              <div className="amt">{c.amt}</div>
+              <div className="role">{c.role}</div>
+              <div className="amt">{c.amt ?? c.amount}</div>
               <div className="amt-l">{t.champions.paidThisCycle}</div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
