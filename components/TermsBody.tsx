@@ -1,6 +1,7 @@
 'use client';
 
 import { useT } from '@/components/LanguageProvider';
+import Editable from '@/components/Editable';
 
 // NOTE: Terms is legal text. These translations still need native/legal review
 // before publishing — track via the weekly report's "Remaining" item.
@@ -16,13 +17,13 @@ export default function TermsBody() {
         <div className="wrap">
           <span className="eyebrow reveal">
             <span className="dot" />
-            {t.eyebrow}
+            <Editable id="termsPage.eyebrow">{t.eyebrow}</Editable>
           </span>
           <h1 className="reveal">
-            {t.title_a} <span className="gt">{t.title_b}</span>
+            <Editable id="termsPage.title_a">{t.title_a}</Editable> <Editable className="gt" id="termsPage.title_b">{t.title_b}</Editable>
           </h1>
           <p className="hero-sub reveal" style={{ maxWidth: '680px' }}>
-            {t.sub}
+            <Editable id="termsPage.sub">{t.sub}</Editable>
           </p>
         </div>
       </section>
@@ -34,12 +35,12 @@ export default function TermsBody() {
           <aside className="reveal" style={{ position: 'sticky', top: '100px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div className="tile" style={{ padding: '24px' }}>
               <h4 style={{ fontFamily: 'var(--fd)', fontSize: '16px', fontWeight: 'bold', marginBottom: '16px', textTransform: 'uppercase', color: 'var(--teal)' }}>
-                {t.toc}
+                <Editable id="termsPage.toc">{t.toc}</Editable>
               </h4>
               <nav style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {t.nav.map((label, i) => (
                   <a key={i} href={`#${sectionIds[i]}`} className="terms-nav-link">
-                    {label}
+                    <Editable id={`termsPage.nav.${i}`}>{label}</Editable>
                   </a>
                 ))}
               </nav>
@@ -51,26 +52,26 @@ export default function TermsBody() {
             {bodySections.map((sec, i) => (
               <div key={sectionIds[i]} id={sectionIds[i]} className="tile" style={{ padding: '40px' }}>
                 <h3 style={{ fontFamily: 'var(--fd)', fontSize: '24px', color: 'var(--text)', marginBottom: '20px' }}>
-                  {sec.h}
+                  <Editable id={`termsPage.${sectionIds[i]}.h`}>{sec.h}</Editable>
                 </h3>
                 {'p_a' in sec ? (
                   <>
                     <p style={{ color: 'var(--dim)', fontSize: '15px', lineHeight: 1.7, marginBottom: '16px' }}>
-                      {sec.p_a}
+                      <Editable id={`termsPage.${sectionIds[i]}.p_a`}>{sec.p_a}</Editable>
                     </p>
                     <p style={{ color: 'var(--dim)', fontSize: '15px', lineHeight: 1.7 }}>
-                      {sec.p_b}
+                      <Editable id={`termsPage.${sectionIds[i]}.p_b`}>{sec.p_b}</Editable>
                     </p>
                   </>
                 ) : (
                   <>
                     <p style={{ color: 'var(--dim)', fontSize: '15px', lineHeight: 1.7, marginBottom: '16px' }}>
-                      {sec.p}
+                      <Editable id={`termsPage.${sectionIds[i]}.p`}>{sec.p}</Editable>
                     </p>
                     <ul style={{ color: 'var(--dim)', fontSize: '15px', lineHeight: 1.8, paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                       {sec.items.map((item, j) => (
                         <li key={j}>
-                          <strong>{item.b}</strong>{item.t}
+                          <strong><Editable id={`termsPage.${sectionIds[i]}.items.${j}.b`}>{item.b}</Editable></strong><Editable id={`termsPage.${sectionIds[i]}.items.${j}.t`}>{item.t}</Editable>
                         </li>
                       ))}
                     </ul>

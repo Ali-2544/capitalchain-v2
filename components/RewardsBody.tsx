@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useT } from '@/components/LanguageProvider';
+import Editable from '@/components/Editable';
 import Ticker from '@/components/Ticker';
 
 interface LedgerRow {
@@ -80,61 +81,61 @@ export default function RewardsBody() {
         {/* Status bar */}
         <div className="rw-statusbar reveal">
           <span className="rw-tag">
-            {t.statusTag}
+            <Editable id="rewardsPage.statusTag">{t.statusTag}</Editable>
             <span className="rw-live">
-              <span className="lr-dot" /> {t.live}
+              <span className="lr-dot" /> <Editable id="rewardsPage.live">{t.live}</Editable>
             </span>
           </span>
           <span className="rw-status-meta">
-            <span>{t.sync} <b>{t.syncVal}</b></span>
-            <span>{t.audit} <b>{t.auditVal}</b></span>
-            <span>{t.records} <b>{count}</b></span>
+            <span><Editable id="rewardsPage.sync">{t.sync}</Editable> <b><Editable id="rewardsPage.syncVal">{t.syncVal}</Editable></b></span>
+            <span><Editable id="rewardsPage.audit">{t.audit}</Editable> <b><Editable id="rewardsPage.auditVal">{t.auditVal}</Editable></b></span>
+            <span><Editable id="rewardsPage.records">{t.records}</Editable> <b>{count}</b></span>
           </span>
         </div>
 
         {/* Hero + stats */}
         <div className="rw-top reveal">
           <div className="rw-hero-card">
-            <span className="rw-tag">{t.heroTag}</span>
+            <span className="rw-tag"><Editable id="rewardsPage.heroTag">{t.heroTag}</Editable></span>
             <div className="rw-receipts">
               <span className="rw-receipt">+$1,800</span>
               <span className="rw-receipt alt">+$640</span>
             </div>
             <h1 className="rw-h1">
-              {t.heroTitle_a}
+              <Editable id="rewardsPage.heroTitle_a">{t.heroTitle_a}</Editable>
               <br />
-              <span className="gt">{t.heroTitle_b}</span>
+              <Editable className="gt" id="rewardsPage.heroTitle_b">{t.heroTitle_b}</Editable>
             </h1>
-            <p>{t.heroP}</p>
+            <p><Editable id="rewardsPage.heroP">{t.heroP}</Editable></p>
             <a href="/#programs" className="btn btn-p" data-magnetic>
-              {t.heroCta}
+              <Editable id="rewardsPage.heroCta">{t.heroCta}</Editable>
             </a>
           </div>
 
           <div className="rw-right">
             <div className="rw-statbar">
               <div className="rw-statbox">
-                <span className="rw-tag">{t.statPaidTag}</span>
+                <span className="rw-tag"><Editable id="rewardsPage.statPaidTag">{t.statPaidTag}</Editable></span>
                 <div className="v gt">{data.totalCompact}+</div>
-                <div className="s">{t.statPaidSub}</div>
+                <div className="s"><Editable id="rewardsPage.statPaidSub">{t.statPaidSub}</Editable></div>
               </div>
               <div className="rw-statbox">
-                <span className="rw-tag">{t.statRewardsTag}</span>
+                <span className="rw-tag"><Editable id="rewardsPage.statRewardsTag">{t.statRewardsTag}</Editable></span>
                 <div className="v gt">{count}</div>
-                <div className="s">{t.statRewardsSub}</div>
+                <div className="s"><Editable id="rewardsPage.statRewardsSub">{t.statRewardsSub}</Editable></div>
               </div>
               <div className="rw-statbox">
-                <span className="rw-tag">{t.statAvgTag}</span>
+                <span className="rw-tag"><Editable id="rewardsPage.statAvgTag">{t.statAvgTag}</Editable></span>
                 <div className="v gt">1hr 28min</div>
-                <div className="s">{t.statAvgSub}</div>
+                <div className="s"><Editable id="rewardsPage.statAvgSub">{t.statAvgSub}</Editable></div>
               </div>
             </div>
 
             {/* Milestones (since-launch narrative) */}
             <div className="rw-panel rw-miles-panel">
               <div className="rw-panel-head">
-                <span className="rw-tag">{t.milestonesTag}</span>
-                <span className="rw-tag muted">{t.sinceLaunch}</span>
+                <span className="rw-tag"><Editable id="rewardsPage.milestonesTag">{t.milestonesTag}</Editable></span>
+                <span className="rw-tag muted"><Editable id="rewardsPage.sinceLaunch">{t.sinceLaunch}</Editable></span>
               </div>
               <svg className="rw-spark" viewBox="0 0 600 90" preserveAspectRatio="none">
                 <polyline
@@ -154,22 +155,22 @@ export default function RewardsBody() {
                 <div className="rw-mile">
                   <div className="d">AUG 9, 2024</div>
                   <div className="a gt">$50K</div>
-                  <div className="l">{t.miles[0].l}</div>
+                  <div className="l"><Editable id="rewardsPage.miles.0.l">{t.miles[0].l}</Editable></div>
                 </div>
                 <div className="rw-mile">
                   <div className="d">DEC 2024</div>
                   <div className="a gt">$1M</div>
-                  <div className="l">{t.miles[1].l}</div>
+                  <div className="l"><Editable id="rewardsPage.miles.1.l">{t.miles[1].l}</Editable></div>
                 </div>
                 <div className="rw-mile">
                   <div className="d">FEB 2026</div>
                   <div className="a gt">$3M</div>
-                  <div className="l">{t.miles[2].l}</div>
+                  <div className="l"><Editable id="rewardsPage.miles.2.l">{t.miles[2].l}</Editable></div>
                 </div>
                 <div className="rw-mile">
-                  <div className="d">{t.onHorizon}</div>
+                  <div className="d"><Editable id="rewardsPage.onHorizon">{t.onHorizon}</Editable></div>
                   <div className="a muted">$6M</div>
-                  <div className="l">{t.miles[3].l}</div>
+                  <div className="l"><Editable id="rewardsPage.miles.3.l">{t.miles[3].l}</Editable></div>
                 </div>
               </div>
             </div>
@@ -181,18 +182,18 @@ export default function RewardsBody() {
               <span className="rw-corner bl" />
               <span className="rw-corner br" />
               <span className="rw-tag center">
-                <span className="lr-dot" /> {t.liveNow}
+                <span className="lr-dot" /> <Editable id="rewardsPage.liveNow">{t.liveNow}</Editable>
               </span>
               <div className="rw-total-num gt">{data.totalExact}</div>
               <div className="rw-total-row">
                 <span>
-                  <b>{count}</b> {t.rewardsLabel}
+                  <b>{count}</b> <Editable id="rewardsPage.rewardsLabel">{t.rewardsLabel}</Editable>
                 </span>
                 <span>
-                  <b>99.2%</b> {t.slaLabel}
+                  <b>99.2%</b> <Editable id="rewardsPage.slaLabel">{t.slaLabel}</Editable>
                 </span>
                 <span>
-                  <b>{data.countriesCount}+</b> {t.countriesLabel}
+                  <b>{data.countriesCount}+</b> <Editable id="rewardsPage.countriesLabel">{t.countriesLabel}</Editable>
                 </span>
               </div>
             </div>
@@ -202,7 +203,7 @@ export default function RewardsBody() {
         {/* Mid: globe + hall of fame + rails */}
         <div className="rw-mid reveal">
           <div className="rw-panel rw-globe">
-            <span className="rw-tag">{t.reachTag}</span>
+            <span className="rw-tag"><Editable id="rewardsPage.reachTag">{t.reachTag}</Editable></span>
             <div className="rw-globe-list">
               {data.countries.map((c, i) => (
                 <span className="rw-country" key={i}>
@@ -216,35 +217,35 @@ export default function RewardsBody() {
 
           <div className="rw-panel">
             <div className="rw-panel-head">
-              <span className="rw-tag">{t.fameTag}</span>
-              <span className="rw-tag muted">{t.recordsLabel}</span>
+              <span className="rw-tag"><Editable id="rewardsPage.fameTag">{t.fameTag}</Editable></span>
+              <span className="rw-tag muted"><Editable id="rewardsPage.recordsLabel">{t.recordsLabel}</Editable></span>
             </div>
             <div className="rw-records">
               <div className="rw-rec">
                 <div>
-                  <div className="t">{t.fame[0].t}</div>
-                  <div className="m">{data.largest?.meta || t.fame[0].m}</div>
+                  <div className="t"><Editable id="rewardsPage.fame.0.t">{t.fame[0].t}</Editable></div>
+                  <div className="m">{data.largest?.meta || <Editable id="rewardsPage.fame.0.m">{t.fame[0].m}</Editable>}</div>
                 </div>
                 <div className="amt gt">{data.largest?.amt || '—'}</div>
               </div>
               <div className="rw-rec">
                 <div>
-                  <div className="t">{t.fame[1].t}</div>
-                  <div className="m">{t.fame[1].m}</div>
+                  <div className="t"><Editable id="rewardsPage.fame.1.t">{t.fame[1].t}</Editable></div>
+                  <div className="m"><Editable id="rewardsPage.fame.1.m">{t.fame[1].m}</Editable></div>
                 </div>
                 <div className="amt gt">7 sec</div>
               </div>
               <div className="rw-rec">
                 <div>
-                  <div className="t">{t.fame[2].t}</div>
-                  <div className="m">{t.fame[2].m}</div>
+                  <div className="t"><Editable id="rewardsPage.fame.2.t">{t.fame[2].t}</Editable></div>
+                  <div className="m"><Editable id="rewardsPage.fame.2.m">{t.fame[2].m}</Editable></div>
                 </div>
                 <div className="amt gt">$61,570</div>
               </div>
               <div className="rw-rec">
                 <div>
-                  <div className="t">{t.fame[3].t}</div>
-                  <div className="m">{t.fame[3].m}</div>
+                  <div className="t"><Editable id="rewardsPage.fame.3.t">{t.fame[3].t}</Editable></div>
+                  <div className="m"><Editable id="rewardsPage.fame.3.m">{t.fame[3].m}</Editable></div>
                 </div>
                 <div className="amt gt">{data.totalCompact}</div>
               </div>
@@ -253,8 +254,8 @@ export default function RewardsBody() {
 
           <div className="rw-panel">
             <div className="rw-panel-head">
-              <span className="rw-tag">{t.railsTag}</span>
-              <span className="rw-tag muted">{t.breakdown}</span>
+              <span className="rw-tag"><Editable id="rewardsPage.railsTag">{t.railsTag}</Editable></span>
+              <span className="rw-tag muted"><Editable id="rewardsPage.breakdown">{t.breakdown}</Editable></span>
             </div>
             <div className="rw-rail">
               <div className="rw-rail-head">
@@ -265,9 +266,9 @@ export default function RewardsBody() {
                 <span style={{ width: `${crypto.pct}%` }} />
               </div>
               <div className="rw-rail-meta">
-                <span>{t.avg} {crypto.avg}</span>
+                <span><Editable id="rewardsPage.avg">{t.avg}</Editable> {crypto.avg}</span>
                 <span>{crypto.count.toLocaleString('en-US')}</span>
-                <span>{t.max} {crypto.max}</span>
+                <span><Editable id="rewardsPage.max">{t.max}</Editable> {crypto.max}</span>
               </div>
             </div>
             <div className="rw-rail">
@@ -279,9 +280,9 @@ export default function RewardsBody() {
                 <span style={{ width: `${bank.pct}%` }} />
               </div>
               <div className="rw-rail-meta">
-                <span>{t.avg} {bank.avg}</span>
+                <span><Editable id="rewardsPage.avg">{t.avg}</Editable> {bank.avg}</span>
                 <span>{bank.count.toLocaleString('en-US')}</span>
-                <span>{t.max} {bank.max}</span>
+                <span><Editable id="rewardsPage.max">{t.max}</Editable> {bank.max}</span>
               </div>
             </div>
             <div className="rw-balance">
@@ -293,7 +294,7 @@ export default function RewardsBody() {
 
         {/* Live reward stream */}
         <div className="rw-panel rw-stream reveal">
-          <span className="rw-tag">{t.streamTag}</span>
+          <span className="rw-tag"><Editable id="rewardsPage.streamTag">{t.streamTag}</Editable></span>
           <Ticker />
         </div>
 
@@ -301,7 +302,7 @@ export default function RewardsBody() {
         <div className="rw-panel rw-ledger-panel reveal">
           <div className="rw-panel-head">
             <span className="rw-tag">
-              {t.ledgerTag} <span className="muted">{t.ledgerScope}</span>
+              <Editable id="rewardsPage.ledgerTag">{t.ledgerTag}</Editable> <span className="muted"><Editable id="rewardsPage.ledgerScope">{t.ledgerScope}</Editable></span>
             </span>
             <span className="rw-tag muted">{t.showing.replace('1–10', `1–${shownTo}`).replace('3,621', count)}</span>
           </div>
@@ -313,18 +314,18 @@ export default function RewardsBody() {
               <option value="24">{t.range24}</option>
             </select>
             <input className="rw-input grow" placeholder={t.searchPh} aria-label={t.searchPh} />
-            <button className="rw-input rw-reset" type="button">{t.reset}</button>
+            <button className="rw-input rw-reset" type="button"><Editable id="rewardsPage.reset">{t.reset}</Editable></button>
           </div>
           <div className="rw-ledger-wrap">
             <table className="rw-ledger">
               <thead>
                 <tr>
-                  <th>{t.thDate}</th>
-                  <th>{t.thTrader}</th>
-                  <th>{t.thSize}</th>
-                  <th>{t.thPlan}</th>
-                  <th>{t.thAmount}</th>
-                  <th>{t.thTx}</th>
+                  <th><Editable id="rewardsPage.thDate">{t.thDate}</Editable></th>
+                  <th><Editable id="rewardsPage.thTrader">{t.thTrader}</Editable></th>
+                  <th><Editable id="rewardsPage.thSize">{t.thSize}</Editable></th>
+                  <th><Editable id="rewardsPage.thPlan">{t.thPlan}</Editable></th>
+                  <th><Editable id="rewardsPage.thAmount">{t.thAmount}</Editable></th>
+                  <th><Editable id="rewardsPage.thTx">{t.thTx}</Editable></th>
                 </tr>
               </thead>
               <tbody>
@@ -343,7 +344,7 @@ export default function RewardsBody() {
                       <td>{r.plan}</td>
                       <td className="amt gt">{r.amt}</td>
                       <td className="tx">
-                        <a href={`/certificate/${r.id}`} target="_blank" rel="noreferrer">{t.thTx} ↗</a>
+                        <a href={`/certificate/${r.id}`} target="_blank" rel="noreferrer"><Editable id="rewardsPage.thTx">{t.thTx}</Editable> ↗</a>
                       </td>
                     </tr>
                   ))
@@ -352,12 +353,12 @@ export default function RewardsBody() {
             </table>
           </div>
           <div className="rw-ledger-foot">
-            <span>{t.ledgerFoot}</span>
+            <span><Editable id="rewardsPage.ledgerFoot">{t.ledgerFoot}</Editable></span>
             <span className="rw-pager">
               <b>1–{shownTo}</b>
-              <button type="button">{t.prev}</button>
-              <button type="button">{t.next}</button>
-              <span className="muted">{t.filterState}</span>
+              <button type="button"><Editable id="rewardsPage.prev">{t.prev}</Editable></button>
+              <button type="button"><Editable id="rewardsPage.next">{t.next}</Editable></button>
+              <span className="muted"><Editable id="rewardsPage.filterState">{t.filterState}</Editable></span>
             </span>
           </div>
         </div>
@@ -365,29 +366,29 @@ export default function RewardsBody() {
         {/* Methodology */}
         <div className="rw-method reveal">
           <div className="rw-panel">
-            <span className="rw-tag">{t.methodTag}</span>
-            <h3>{t.methodH}</h3>
-            <p>{t.methodP}</p>
+            <span className="rw-tag"><Editable id="rewardsPage.methodTag">{t.methodTag}</Editable></span>
+            <h3><Editable id="rewardsPage.methodH">{t.methodH}</Editable></h3>
+            <p><Editable id="rewardsPage.methodP">{t.methodP}</Editable></p>
           </div>
           <div className="rw-panel">
-            <span className="rw-tag">{t.whyTag}</span>
-            <h3>{t.whyH}</h3>
-            <p>{t.whyP}</p>
+            <span className="rw-tag"><Editable id="rewardsPage.whyTag">{t.whyTag}</Editable></span>
+            <h3><Editable id="rewardsPage.whyH">{t.whyH}</Editable></h3>
+            <p><Editable id="rewardsPage.whyP">{t.whyP}</Editable></p>
           </div>
           <div className="rw-panel">
-            <span className="rw-tag">{t.updateTag}</span>
+            <span className="rw-tag"><Editable id="rewardsPage.updateTag">{t.updateTag}</Editable></span>
             <div className="rw-update">
               <div className="rw-update-row">
-                <span>{t.updateSync}</span>
-                <b>{t.updateNextVal}</b>
+                <span><Editable id="rewardsPage.updateSync">{t.updateSync}</Editable></span>
+                <b><Editable id="rewardsPage.updateNextVal">{t.updateNextVal}</Editable></b>
               </div>
               <div className="rw-update-row">
-                <span>{t.updateNext}</span>
-                <b>{t.updateNextVal}</b>
+                <span><Editable id="rewardsPage.updateNext">{t.updateNext}</Editable></span>
+                <b><Editable id="rewardsPage.updateNextVal">{t.updateNextVal}</Editable></b>
               </div>
               <div className="rw-update-row">
-                <span>{t.updateAudit}</span>
-                <b className="gt">{t.updateAuditVal}</b>
+                <span><Editable id="rewardsPage.updateAudit">{t.updateAudit}</Editable></span>
+                <Editable as="b" className="gt" id="rewardsPage.updateAuditVal">{t.updateAuditVal}</Editable>
               </div>
             </div>
           </div>

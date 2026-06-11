@@ -1,6 +1,7 @@
 'use client';
 
 import { useT } from '@/components/LanguageProvider';
+import Editable from '@/components/Editable';
 
 export default function AffiliateFAQ() {
   const items = useT().affiliatePage.faq.items;
@@ -22,11 +23,11 @@ export default function AffiliateFAQ() {
       {items.map((item, i) => (
         <div className="faq-item" style={{ borderBottom: '1px solid var(--line)' }} key={i}>
           <button className="faq-q" onClick={toggleFAQ}>
-            <span>{item.q}</span>
+            <span><Editable id={`affiliatePage.faq.items.${i}.q`}>{item.q}</Editable></span>
             <span className="pm">+</span>
           </button>
           <div className="faq-a" style={{ transition: 'max-height 0.35s ease', maxHeight: '0px', overflow: 'hidden' }}>
-            <div>{item.a}</div>
+            <div><Editable id={`affiliatePage.faq.items.${i}.a`}>{item.a}</Editable></div>
           </div>
         </div>
       ))}

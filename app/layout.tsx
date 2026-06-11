@@ -3,6 +3,9 @@ import { Space_Grotesk, Hanken_Grotesk, JetBrains_Mono } from 'next/font/google'
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { LanguageProvider } from '@/components/LanguageProvider';
+import { ContentProvider } from '@/components/ContentProvider';
+import EditModeToggle from '@/components/EditModeToggle';
+import EditorPopover from '@/components/EditorPopover';
 import GlobeMount from '@/components/GlobeMount';
 import Effects from '@/components/Effects';
 
@@ -41,11 +44,16 @@ export default function RootLayout({
       <body className="light" suppressHydrationWarning>
         <ThemeProvider>
           <LanguageProvider>
-            {/* Fixed full-viewport WebGL globe — rendered once, persists across routes. */}
-            <GlobeMount />
-            {/* Fixed scrims + JS-driven chrome + all page micro-interactions. */}
-            <Effects />
-            {children}
+            <ContentProvider>
+              {/* Fixed full-viewport WebGL globe — rendered once, persists across routes. */}
+              <GlobeMount />
+              {/* Fixed scrims + JS-driven chrome + all page micro-interactions. */}
+              <Effects />
+              {children}
+              {/* Admin-only floating inline-edit toggle + editor popover. */}
+              <EditModeToggle />
+              <EditorPopover />
+            </ContentProvider>
           </LanguageProvider>
         </ThemeProvider>
       </body>

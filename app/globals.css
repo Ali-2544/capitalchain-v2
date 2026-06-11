@@ -65,7 +65,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:17px
 a{color:inherit;text-decoration:none}.mono{font-family:var(--fm)}
 .gt{background:var(--grad-text);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 
-.promo{background:var(--grad);color:var(--btn-ink);font-family:var(--fm);font-size:13px;font-weight:700;letter-spacing:.04em;overflow:hidden;position:relative;z-index:70;padding:9px 0}
+.promo{background:var(--grad);color:var(--btn-ink);font-family:var(--fb);font-size:13.5px;font-weight:600;letter-spacing:.02em;overflow:hidden;position:relative;z-index:70;padding:9px 0}
 .promo .row{display:flex;gap:60px;white-space:nowrap;animation:slide 26s linear infinite;width:max-content}
 @keyframes slide{to{transform:translateX(-50%)}}
 
@@ -109,6 +109,44 @@ body.light .theme-tg .sun{display:none}body.light .theme-tg .moon{display:block}
 h1{font-family:var(--fd);font-weight:700;font-size:clamp(3rem,8vw,7.2rem);line-height:.94;letter-spacing:-.03em;margin-bottom:30px;max-width:13ch}
 /* Hero heading: smaller than the global h1 so it reads tighter. */
 .hero h1{font-size:clamp(2rem,4.4vw,4rem)}
+
+/* ===== Inline CMS — edit affordances (admin Edit mode only) ===== */
+/* The text stays in place and visible; -webkit-text-fill-color:currentColor
+   guarantees it shows even inside gradient/clip ancestors. Click opens the popover. */
+.editable{cursor:pointer;border-radius:3px;outline:1px dashed color-mix(in srgb,var(--teal) 55%,transparent);outline-offset:2px;transition:background .12s;-webkit-text-fill-color:currentColor}
+.editable:hover{background:color-mix(in srgb,var(--teal) 16%,transparent);outline-color:var(--teal)}
+/* Editor popover */
+/* Transparent click-catcher (closes on outside click) — does NOT dim the page,
+   so the text you're editing stays visible. Panel docks at the bottom. */
+.cms-pop-backdrop{position:fixed;inset:0;z-index:130;background:transparent;display:flex;align-items:flex-end;justify-content:center;padding:0 16px 22px}
+.cms-pop{width:min(560px,100%);background:var(--bg-2);border:1px solid var(--teal);border-radius:16px;box-shadow:0 24px 70px -16px rgba(0,0,0,.55);padding:18px;display:flex;flex-direction:column;gap:12px}
+.cms-pop-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cms-pop-id{font-family:var(--fm);font-size:12px;color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cms-pop-lang{font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--teal);border:1px solid var(--line);border-radius:100px;padding:4px 10px;flex:none}
+.cms-pop-area{font-family:var(--fb);font-size:15px;line-height:1.5;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;width:100%;resize:vertical;min-height:80px;outline:none}
+.cms-pop-area:focus{border-color:var(--teal);box-shadow:0 0 0 3px color-mix(in srgb,var(--teal) 18%,transparent)}
+.cms-pop-field{display:flex;flex-direction:column;gap:6px}
+.cms-pop-field>span{font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint)}
+.cms-pop-input{font-family:var(--fb);font-size:15px;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 14px;width:100%;outline:none}
+.cms-pop-input:focus{border-color:var(--teal);box-shadow:0 0 0 3px color-mix(in srgb,var(--teal) 18%,transparent)}
+.cms-pop-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.cms-pop-reset{color:#e2557b}
+/* Section drag-to-reorder (edit mode) */
+.section-dragwrap{position:relative;outline:1px dashed color-mix(in srgb,var(--teal) 30%,transparent);outline-offset:-6px;border-radius:8px}
+.section-dragwrap.over{outline:2px solid var(--teal);outline-offset:-4px;background:color-mix(in srgb,var(--teal) 7%,transparent)}
+.section-ctrl{position:absolute;top:12px;inset-inline-start:12px;z-index:55;display:inline-flex;align-items:stretch;border-radius:9px;border:1px solid var(--line);background:var(--bg-2);box-shadow:0 6px 18px -6px rgba(0,0,0,.35);overflow:hidden;-webkit-user-select:none;user-select:none}
+.section-grip{display:inline-flex;align-items:center;gap:6px;padding:0 12px;height:32px;color:var(--teal);font-family:var(--fm);font-size:12px;font-weight:700;cursor:grab}
+.section-grip:active{cursor:grabbing}
+.section-move{width:32px;height:32px;border:none;border-inline-start:1px solid var(--line);background:var(--bg-2);color:var(--text);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
+.section-move:hover:not(:disabled){background:var(--soft);color:var(--teal)}
+.section-move:disabled{opacity:.3;cursor:default}
+.edit-fab{position:fixed;inset-block-end:22px;inset-inline-end:22px;z-index:120;font-family:var(--fb);font-weight:700;font-size:14px;padding:12px 20px;border-radius:100px;border:none;cursor:pointer;background:linear-gradient(120deg,#00E0E0,#10C8DE);color:#04181A;box-shadow:0 12px 32px -10px rgba(0,224,224,.6);transition:transform .15s}
+.edit-fab:hover{transform:translateY(-2px)}
+.edit-fab.on{background:linear-gradient(120deg,#10C8DE,#0aa6c4);color:#fff}
+.editable-img{position:relative;display:inline-block;cursor:pointer}
+.editable-img.fill{position:absolute;inset:0;display:block}
+.editable-img:hover{outline:2px dashed var(--teal);outline-offset:-2px}
+.editable-img-btn{position:absolute;inset-block-end:8px;inset-inline-start:8px;z-index:5;font-family:var(--fb);font-size:12px;font-weight:700;padding:6px 12px;border-radius:8px;background:var(--teal);color:#04181A;box-shadow:0 2px 8px rgba(0,0,0,.35);pointer-events:none}
 .hero-sub{font-size:clamp(18px,2vw,21px);color:var(--dim);max-width:520px;margin-bottom:40px;line-height:1.55}
 .hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
 .trustline{display:flex;align-items:center;gap:11px;font-size:14px;color:var(--dim);font-family:var(--fm)}
@@ -223,6 +261,12 @@ section{position:relative;z-index:3}
 input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;background:var(--surface-2);outline:none;cursor:pointer}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--teal);box-shadow:0 0 16px var(--glow);cursor:pointer;border:4px solid var(--bg)}
 input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--teal);border:4px solid var(--bg);cursor:pointer}
+/* Step markers ON the calculator slider track (filled up to the current value). */
+.crow-slider{position:relative;display:flex;align-items:center;line-height:0}
+.crow-slider input[type=range]{display:block;margin:0}
+.crow-ticks{position:absolute;left:0;right:0;top:50%;height:0;pointer-events:none;z-index:1}
+.crow-ticks span{position:absolute;top:0;transform:translate(-50%,-50%);width:7px;height:7px;border-radius:50%;background:color-mix(in srgb,var(--dim) 45%,transparent)}
+.crow-ticks span.on{background:var(--teal);box-shadow:0 0 7px var(--glow)}
 .cres{margin-top:32px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-end}
 .cres .lbl{font-family:var(--fm);font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:.1em}
 .cres .lbl span{display:block;color:var(--dim);margin-top:6px;text-transform:none;letter-spacing:0;font-size:13px}
@@ -324,7 +368,7 @@ footer{border-top:1px solid var(--line);padding:72px 0 40px;background:var(--foo
 .foot-col h5{font-family:var(--fm);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:18px}
 .foot-col a{display:block;color:var(--dim);font-size:14.5px;margin-bottom:12px;transition:.2s}
 .foot-col a:hover{color:var(--teal)}
-.disclaimer{border-top:1px solid var(--line);padding-top:28px;font-family:var(--fm);font-size:12px;color:var(--faint);line-height:1.7;max-width:920px}
+.disclaimer{border-top:1px solid var(--line);padding-top:28px;font-family:var(--fb);font-size:13px;color:var(--faint);line-height:1.7;max-width:920px}
 .foot-bot{display:flex;justify-content:space-between;align-items:center;margin-top:26px;flex-wrap:wrap;gap:14px;font-family:var(--fm);font-size:12.5px;color:var(--faint)}
 
 /* who we are — services grid */
@@ -475,6 +519,8 @@ footer{border-top:1px solid var(--line);padding:72px 0 40px;background:var(--foo
 
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
 .reveal.in{opacity:1;transform:none}
+/* In Edit mode, sections re-mount so the reveal observer won't fire — force visible. */
+body.cms-editing .reveal{opacity:1!important;transform:none!important}
 
 @media(max-width:1040px){
   .config,.calc-grid,.faq-grid,.aff,.commgrid,.rewards{grid-template-columns:1fr;gap:48px}

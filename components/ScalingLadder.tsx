@@ -1,6 +1,7 @@
 'use client';
 
 import { useT } from './LanguageProvider';
+import Editable from '@/components/Editable';
 
 const AMTS = [
   <>$100<span>K</span></>,
@@ -17,25 +18,25 @@ export default function ScalingLadder() {
       <div className="wrap">
         <div className="shead reveal">
           <div>
-            <span className="idx">{t.scaling.idx}</span>
+            <span className="idx"><Editable id="scaling.idx">{t.scaling.idx}</Editable></span>
             <h2 className="h2">
-              {t.scaling.title_a} <span className="gt">{t.scaling.title_b}</span>
+              <Editable id="scaling.title_a">{t.scaling.title_a}</Editable> <Editable className="gt" id="scaling.title_b">{t.scaling.title_b}</Editable>
             </h2>
           </div>
-          <p>{t.scaling.sub}</p>
+          <p><Editable id="scaling.sub">{t.scaling.sub}</Editable></p>
         </div>
         <div className="ladder">
           {t.scaling.rungs.map((lv, i) => {
             const peak = i === t.scaling.rungs.length - 1;
             return (
               <div className={`rung reveal${peak ? ' peak' : ''}`} key={i}>
-                <div className="lv">{lv}</div>
+                <div className="lv"><Editable id={`scaling.rungs.${i}`}>{lv}</Editable></div>
                 <div className="amt">{AMTS[i]}</div>
               </div>
             );
           })}
         </div>
-        <div className="ladder-note">{t.scaling.note}</div>
+        <div className="ladder-note"><Editable id="scaling.note">{t.scaling.note}</Editable></div>
       </div>
     </section>
   );

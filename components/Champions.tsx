@@ -2,6 +2,7 @@
 
 import { useT } from './LanguageProvider';
 import { useLiveData } from '@/lib/useLiveData';
+import Editable from '@/components/Editable';
 
 interface Champ {
   id?: number;
@@ -34,12 +35,12 @@ export default function Champions() {
       <div className="wrap">
         <div className="shead reveal">
           <div>
-            <span className="idx">{t.champions.idx}</span>
+            <span className="idx"><Editable id="champions.idx">{t.champions.idx}</Editable></span>
             <h2 className="h2">
-              {t.champions.title_a} <span className="gt">{t.champions.title_b}</span>
+              <Editable id="champions.title_a">{t.champions.title_a}</Editable> <Editable className="gt" id="champions.title_b">{t.champions.title_b}</Editable>
             </h2>
           </div>
-          <p>{t.champions.sub}</p>
+          <p><Editable id="champions.sub">{t.champions.sub}</Editable></p>
         </div>
       </div>
       <div className="wrap">
@@ -58,7 +59,7 @@ export default function Champions() {
               <div className="name">{c.name}</div>
               <div className="role">{c.role}</div>
               <div className="amt">{c.amt ?? c.amount}</div>
-              <div className="amt-l">{t.champions.paidThisCycle}</div>
+              <div className="amt-l"><Editable id="champions.paidThisCycle">{t.champions.paidThisCycle}</Editable></div>
             </a>
           ))}
         </div>

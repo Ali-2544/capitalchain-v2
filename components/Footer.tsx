@@ -1,7 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import { useT } from './LanguageProvider';
+import Editable from '@/components/Editable';
+import EditableImage from '@/components/EditableImage';
 
 export default function Footer() {
   const t = useT();
@@ -10,52 +11,52 @@ export default function Footer() {
       <div className="wrap">
         <div className="news reveal">
           <div>
-            <h4>{t.footer.newsH}</h4>
-            <p>{t.footer.newsP}</p>
+            <h4><Editable id="footer.newsH">{t.footer.newsH}</Editable></h4>
+            <p><Editable id="footer.newsP">{t.footer.newsP}</Editable></p>
           </div>
           <div className="form">
             <input type="email" placeholder={t.footer.emailPlaceholder} aria-label="email" />
             <a href="#" className="btn btn-p" data-magnetic>
-              {t.footer.subscribe}
+              <Editable id="footer.subscribe">{t.footer.subscribe}</Editable>
             </a>
           </div>
         </div>
         <div className="foot-grid">
           <div className="foot-brand">
             <a href="/" className="logo" aria-label="Capital Chain">
-              <Image className="logo-img logo-dark" src="/logo.png" alt="Capital Chain" width={164} height={36} />
-              <Image className="logo-img logo-light" src="/logo-light.png" alt="Capital Chain" width={164} height={36} />
+              <EditableImage id="brand.logoDark" className="logo-img logo-dark" src="/logo.png" alt="Capital Chain" width={164} height={36} />
+              <EditableImage id="brand.logoLight" className="logo-img logo-light" src="/logo-light.png" alt="Capital Chain" width={164} height={36} />
             </a>
-            <p>{t.footer.brandP}</p>
+            <p><Editable id="footer.brandP">{t.footer.brandP}</Editable></p>
           </div>
           <div className="foot-col">
-            <h5>{t.footer.platform}</h5>
-            <a href="/#programs">{t.footer.programs}</a>
-            <a href="/#payouts">{t.footer.payouts}</a>
-            <a href="/#scaling">{t.footer.scaling}</a>
-            <a href="/#platforms">{t.footer.platforms}</a>
+            <h5><Editable id="footer.platform">{t.footer.platform}</Editable></h5>
+            <a href="/#programs"><Editable id="footer.programs">{t.footer.programs}</Editable></a>
+            <a href="/#payouts"><Editable id="footer.payouts">{t.footer.payouts}</Editable></a>
+            <a href="/#scaling"><Editable id="footer.scaling">{t.footer.scaling}</Editable></a>
+            <a href="/#platforms"><Editable id="footer.platforms">{t.footer.platforms}</Editable></a>
           </div>
           <div className="foot-col">
-            <h5>{t.footer.company}</h5>
-            <a href="/about">{t.footer.about}</a>
-            <a href="/affiliate">{t.footer.affiliate}</a>
-            <a href="/#community">{t.footer.community}</a>
-            <a href="/contact">{t.footer.contact}</a>
+            <h5><Editable id="footer.company">{t.footer.company}</Editable></h5>
+            <a href="/about"><Editable id="footer.about">{t.footer.about}</Editable></a>
+            <a href="/affiliate"><Editable id="footer.affiliate">{t.footer.affiliate}</Editable></a>
+            <a href="/#community"><Editable id="footer.community">{t.footer.community}</Editable></a>
+            <a href="/contact"><Editable id="footer.contact">{t.footer.contact}</Editable></a>
           </div>
           <div className="foot-col">
-            <h5>{t.footer.legal}</h5>
-            <a href="/terms">{t.footer.termsOfUse}</a>
-            <a href="/terms#risk">{t.footer.privacy}</a>
-            <a href="/terms#risk">{t.footer.risk}</a>
-            <a href="/terms#refund">{t.footer.refund}</a>
+            <h5><Editable id="footer.legal">{t.footer.legal}</Editable></h5>
+            <a href="/terms"><Editable id="footer.termsOfUse">{t.footer.termsOfUse}</Editable></a>
+            <a href="/terms#risk"><Editable id="footer.privacy">{t.footer.privacy}</Editable></a>
+            <a href="/terms#risk"><Editable id="footer.risk">{t.footer.risk}</Editable></a>
+            <a href="/terms#refund"><Editable id="footer.refund">{t.footer.refund}</Editable></a>
           </div>
         </div>
         <div className="disclaimer">
-          <strong style={{ color: 'var(--dim)' }}>{t.footer.riskTitle}</strong>
-          {t.footer.disclaimer}
+          <strong style={{ color: 'var(--dim)' }}><Editable id="footer.riskTitle">{t.footer.riskTitle}</Editable></strong>
+          <Editable id="footer.disclaimer">{t.footer.disclaimer}</Editable>
         </div>
         <div className="foot-bot">
-          <span>{t.footer.rights}</span>
+          <span><Editable id="footer.rights">{t.footer.rights}</Editable></span>
           <span>capitalchain.co</span>
         </div>
       </div>

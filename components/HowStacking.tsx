@@ -1,6 +1,7 @@
 'use client';
 
 import { useT } from './LanguageProvider';
+import Editable from '@/components/Editable';
 
 const META = [
   { top: 120, n: '01', icon: <path d="M12 2v20M2 12h20" /> },
@@ -16,20 +17,20 @@ export default function HowStacking() {
       <div className="wrap">
         <div className="shead reveal">
           <div>
-            <span className="idx">{t.how.idx}</span>
+            <span className="idx"><Editable id="how.idx">{t.how.idx}</Editable></span>
             <h2 className="h2">
-              {t.how.title_a} <span className="gt">{t.how.title_b}</span>
+              <Editable id="how.title_a">{t.how.title_a}</Editable> <Editable className="gt" id="how.title_b">{t.how.title_b}</Editable>
             </h2>
           </div>
-          <p>{t.how.sub}</p>
+          <p><Editable id="how.sub">{t.how.sub}</Editable></p>
         </div>
         <div className="stack" id="stack">
           {META.map((m, i) => (
             <div className="stack-card" key={m.n} style={{ top: m.top }}>
               <div className="n">{m.n}</div>
               <div>
-                <h3>{t.how.steps[i].title}</h3>
-                <p>{t.how.steps[i].body}</p>
+                <h3><Editable id={`how.steps.${i}.title`}>{t.how.steps[i].title}</Editable></h3>
+                <p><Editable id={`how.steps.${i}.body`}>{t.how.steps[i].body}</Editable></p>
               </div>
               <div className="glyph">
                 <svg viewBox="0 0 24 24">{m.icon}</svg>

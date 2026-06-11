@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { useT } from './LanguageProvider';
 import { useLiveData } from '@/lib/useLiveData';
+import Editable from '@/components/Editable';
 
 // One (program type × size) plan, as returned by /api/programs.
 interface Plan {
@@ -118,12 +119,12 @@ export default function ProgramsConfigurator() {
         <div className="wrap">
           <div className="shead reveal">
             <div>
-              <span className="idx">{t.programs.idx}</span>
+              <span className="idx"><Editable id="programs.idx">{t.programs.idx}</Editable></span>
               <h2 className="h2">
-                {t.programs.title_a} <span className="gt">{t.programs.title_b}</span>
+                <Editable id="programs.title_a">{t.programs.title_a}</Editable> <Editable className="gt" id="programs.title_b">{t.programs.title_b}</Editable>
               </h2>
             </div>
-            <p>{t.programs.sub}</p>
+            <p><Editable id="programs.sub">{t.programs.sub}</Editable></p>
           </div>
         </div>
       </section>
@@ -135,12 +136,12 @@ export default function ProgramsConfigurator() {
       <div className="wrap">
         <div className="shead reveal">
           <div>
-            <span className="idx">{t.programs.idx}</span>
+            <span className="idx"><Editable id="programs.idx">{t.programs.idx}</Editable></span>
             <h2 className="h2">
-              {t.programs.title_a} <span className="gt">{t.programs.title_b}</span>
+              <Editable id="programs.title_a">{t.programs.title_a}</Editable> <Editable className="gt" id="programs.title_b">{t.programs.title_b}</Editable>
             </h2>
           </div>
-          <p>{t.programs.sub}</p>
+          <p><Editable id="programs.sub">{t.programs.sub}</Editable></p>
         </div>
         <div className="config">
           <div className="reveal">
@@ -173,41 +174,41 @@ export default function ProgramsConfigurator() {
             </div>
             <div className="spec-list" id="specList">
               <div className="r">
-                <span className="k">{t.programs.spec.target}</span>
+                <span className="k"><Editable id="programs.spec.target">{t.programs.spec.target}</Editable></span>
                 <span className="v">{loc(active.target)}</span>
               </div>
               <div className="r">
-                <span className="k">{t.programs.spec.dd}</span>
+                <span className="k"><Editable id="programs.spec.dd">{t.programs.spec.dd}</Editable></span>
                 <span className="v">{active.drawdown}</span>
               </div>
               <div className="r">
-                <span className="k">{t.programs.spec.daily}</span>
+                <span className="k"><Editable id="programs.spec.daily">{t.programs.spec.daily}</Editable></span>
                 <span className="v">{active.dailyLoss}</span>
               </div>
               <div className="r">
-                <span className="k">{t.programs.spec.split}</span>
+                <span className="k"><Editable id="programs.spec.split">{t.programs.spec.split}</Editable></span>
                 <span className="v ok">{active.profitSplit}</span>
               </div>
               <div className="r">
-                <span className="k">{t.programs.spec.minDays}</span>
+                <span className="k"><Editable id="programs.spec.minDays">{t.programs.spec.minDays}</Editable></span>
                 <span className="v ok">{loc(active.minDays)}</span>
               </div>
               <div className="r">
-                <span className="k">{t.programs.spec.timeLimit}</span>
+                <span className="k"><Editable id="programs.spec.timeLimit">{t.programs.spec.timeLimit}</Editable></span>
                 <span className="v ok">{loc(active.timeLimit)}</span>
               </div>
               <div className="r">
-                <span className="k">{t.programs.spec.news}</span>
+                <span className="k"><Editable id="programs.spec.news">{t.programs.spec.news}</Editable></span>
                 <span className="v ok">{loc(active.newsEas)}</span>
               </div>
               <div className="r">
-                <span className="k">{t.programs.spec.payouts}</span>
+                <span className="k"><Editable id="programs.spec.payouts">{t.programs.spec.payouts}</Editable></span>
                 <span className="v">{loc(active.payouts)}</span>
               </div>
             </div>
           </div>
           <div className="buy reveal">
-            <div className="cap">{t.programs.balance}</div>
+            <div className="cap"><Editable id="programs.balance">{t.programs.balance}</Editable></div>
             <div className="acct" id="buyAcct">
               ${active.size.replace('K', '')}
               <span>K</span>
@@ -218,12 +219,12 @@ export default function ProgramsConfigurator() {
               </span>
               <div className="now" id="buyNow">
                 <span className="gt">${active.fee}</span>
-                <small>{t.programs.oneTime}</small>
+                <small><Editable id="programs.oneTime">{t.programs.oneTime}</Editable></small>
               </div>
             </div>
-            <div className="refund">{t.programs.refund}</div>
+            <div className="refund"><Editable id="programs.refund">{t.programs.refund}</Editable></div>
             <a href="#" className="btn btn-p btn-lg" data-magnetic>
-              {t.programs.cta}
+              <Editable id="programs.cta">{t.programs.cta}</Editable>
             </a>
           </div>
         </div>

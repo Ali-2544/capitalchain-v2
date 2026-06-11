@@ -1,6 +1,7 @@
 'use client';
 
 import { useT } from './LanguageProvider';
+import Editable from '@/components/Editable';
 
 export default function Affiliate() {
   const t = useT();
@@ -9,32 +10,32 @@ export default function Affiliate() {
       <div className="wrap">
         <div className="aff">
           <div className="reveal">
-            <span className="idx">{t.affiliate.idx}</span>
+            <span className="idx"><Editable id="affiliate.idx">{t.affiliate.idx}</Editable></span>
             <h2 className="h2" style={{ marginBottom: 18 }}>
-              {t.affiliate.title_a} <span className="gt">{t.affiliate.title_b}</span>
+              <Editable id="affiliate.title_a">{t.affiliate.title_a}</Editable> <Editable className="gt" id="affiliate.title_b">{t.affiliate.title_b}</Editable>
             </h2>
             <p style={{ color: 'var(--dim)', fontSize: 18, maxWidth: '44ch', marginBottom: 30 }}>
-              {t.affiliate.sub}
+              <Editable id="affiliate.sub">{t.affiliate.sub}</Editable>
             </p>
             <a href="#" className="btn btn-p btn-lg" data-magnetic>
-              {t.affiliate.cta}
+              <Editable id="affiliate.cta">{t.affiliate.cta}</Editable>
             </a>
           </div>
           <div className="aff-card reveal" data-tilt>
             <div className="pct">15%</div>
-            <div className="pl">{t.affiliate.pct}</div>
+            <div className="pl"><Editable id="affiliate.pct">{t.affiliate.pct}</Editable></div>
             <div className="arow">
               <div>
-                <div className="v gt">{t.affiliate.monthly}</div>
-                <div className="k">{t.affiliate.payouts}</div>
+                <Editable as="div" className="v gt" id="affiliate.monthly">{t.affiliate.monthly}</Editable>
+                <div className="k"><Editable id="affiliate.payouts">{t.affiliate.payouts}</Editable></div>
               </div>
               <div>
-                <div className="v gt">{t.affiliate.realtime}</div>
-                <div className="k">{t.affiliate.dashboard}</div>
+                <Editable as="div" className="v gt" id="affiliate.realtime">{t.affiliate.realtime}</Editable>
+                <div className="k"><Editable id="affiliate.dashboard">{t.affiliate.dashboard}</Editable></div>
               </div>
               <div>
-                <div className="v gt">{t.affiliate.noCap}</div>
-                <div className="k">{t.affiliate.earnings}</div>
+                <Editable as="div" className="v gt" id="affiliate.noCap">{t.affiliate.noCap}</Editable>
+                <div className="k"><Editable id="affiliate.earnings">{t.affiliate.earnings}</Editable></div>
               </div>
             </div>
           </div>

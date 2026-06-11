@@ -2,6 +2,7 @@
 
 import { useT } from '@/components/LanguageProvider';
 import ContactForm from '@/components/ContactForm';
+import Editable from '@/components/Editable';
 
 export default function ContactBody() {
   const t = useT().contactPage;
@@ -13,13 +14,13 @@ export default function ContactBody() {
         <div className="wrap">
           <span className="eyebrow reveal">
             <span className="dot" />
-            {t.hero.eyebrow}
+            <Editable id="contactPage.hero.eyebrow">{t.hero.eyebrow}</Editable>
           </span>
           <h1 className="reveal">
-            {t.hero.title_a} <span className="gt">{t.hero.title_b}</span>
+            <Editable id="contactPage.hero.title_a">{t.hero.title_a}</Editable> <Editable className="gt" id="contactPage.hero.title_b">{t.hero.title_b}</Editable>
           </h1>
           <p className="hero-sub reveal" style={{ maxWidth: '640px' }}>
-            {t.hero.sub}
+            <Editable id="contactPage.hero.sub">{t.hero.sub}</Editable>
           </p>
         </div>
       </section>
@@ -43,14 +44,14 @@ export default function ContactBody() {
                     <polyline points="22,6 12,13 2,6" />
                   </svg>
                 </div>
-                <h4 style={{ fontFamily: 'var(--fd)', fontSize: '20px', fontWeight: 600, margin: 0 }}>{t.direct.title}</h4>
+                <h4 style={{ fontFamily: 'var(--fd)', fontSize: '20px', fontWeight: 600, margin: 0 }}><Editable id="contactPage.direct.title">{t.direct.title}</Editable></h4>
               </div>
               <p style={{ color: 'var(--dim)', fontSize: '14.5px', marginBottom: '16px', lineHeight: 1.6 }}>
-                {t.direct.body}
+                <Editable id="contactPage.direct.body">{t.direct.body}</Editable>
               </p>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--line)', paddingTop: '16px' }}>
                 <span style={{ color: 'var(--text)', fontWeight: 600 }}>support@capitalchain.co</span>
-                <span style={{ fontSize: '12px', background: 'rgba(25,230,214,0.1)', color: 'var(--teal)', padding: '4px 10px', borderRadius: '20px' }}>{t.direct.badge}</span>
+                <span style={{ fontSize: '12px', background: 'rgba(25,230,214,0.1)', color: 'var(--teal)', padding: '4px 10px', borderRadius: '20px' }}><Editable id="contactPage.direct.badge">{t.direct.badge}</Editable></span>
               </div>
             </div>
 
@@ -62,13 +63,13 @@ export default function ContactBody() {
                     <path d="M20.3 4.4A19.8 19.8 0 0015.4 3l-.3.5a14.6 14.6 0 014.4 1.4 12.6 12.6 0 00-15 0A14.6 14.6 0 018.9 3.5L8.6 3a19.8 19.8 0 00-4.9 1.4C.6 9 0 13.5.3 17.9a19.9 19.9 0 006 3l.5-1.3a13 13 0 01-1.9-.9l.4-.3a14.2 14.2 0 0012.4 0l.4.3a13 13 0 01-1.9.9l.5 1.3a19.9 19.9 0 006-3c.4-5.1-.7-9.6-2.8-13.5zM8.3 15.3c-1.2 0-2.1-1.1-2.1-2.4S7.1 10.5 8.3 10.5s2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4zm7.4 0c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4z" />
                   </svg>
                 </div>
-                <h4 style={{ fontFamily: 'var(--fd)', fontSize: '20px', fontWeight: 600, margin: 0 }}>{t.discord.title}</h4>
+                <h4 style={{ fontFamily: 'var(--fd)', fontSize: '20px', fontWeight: 600, margin: 0 }}><Editable id="contactPage.discord.title">{t.discord.title}</Editable></h4>
               </div>
               <p style={{ color: 'var(--dim)', fontSize: '14.5px', marginBottom: '16px', lineHeight: 1.6 }}>
-                {t.discord.body}
+                <Editable id="contactPage.discord.body">{t.discord.body}</Editable>
               </p>
               <a href="/#community" className="btn btn-p" style={{ width: '100%', justifyContent: 'center' }}>
-                {t.discord.cta}
+                <Editable id="contactPage.discord.cta">{t.discord.cta}</Editable>
               </a>
             </div>
 
@@ -83,10 +84,10 @@ export default function ContactBody() {
                     <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                   </svg>
                 </div>
-                <h4 style={{ fontFamily: 'var(--fd)', fontSize: '20px', fontWeight: 600, margin: 0 }}>{t.business.title}</h4>
+                <h4 style={{ fontFamily: 'var(--fd)', fontSize: '20px', fontWeight: 600, margin: 0 }}><Editable id="contactPage.business.title">{t.business.title}</Editable></h4>
               </div>
               <p style={{ color: 'var(--dim)', fontSize: '14.5px', lineHeight: 1.6 }}>
-                {t.business.body} <strong style={{ color: 'var(--text)' }}>partners@capitalchain.co</strong>
+                <Editable id="contactPage.business.body">{t.business.body}</Editable> <strong style={{ color: 'var(--text)' }}>partners@capitalchain.co</strong>
               </p>
             </div>
           </div>
@@ -104,10 +105,10 @@ export default function ContactBody() {
                   <circle cx="12" cy="10" r="2.5" />
                 </svg>
               </div>
-              <span className="idx" style={{ color: 'var(--teal)' }}>{t.location.hq}</span>
-              <h3>{t.location.addr_a}<br />{t.location.addr_b}</h3>
+              <span className="idx" style={{ color: 'var(--teal)' }}><Editable id="contactPage.location.hq">{t.location.hq}</Editable></span>
+              <h3><Editable id="contactPage.location.addr_a">{t.location.addr_a}</Editable><br /><Editable id="contactPage.location.addr_b">{t.location.addr_b}</Editable></h3>
               <p style={{ color: 'var(--dim)', fontSize: 16, marginBottom: 30 }}>
-                {t.location.body}
+                <Editable id="contactPage.location.body">{t.location.body}</Editable>
               </p>
               <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
                 <a
@@ -116,7 +117,7 @@ export default function ContactBody() {
                   rel="noopener noreferrer"
                   className="btn btn-p"
                 >
-                  {t.location.maps}
+                  <Editable id="contactPage.location.maps">{t.location.maps}</Editable>
                 </a>
               </div>
             </div>

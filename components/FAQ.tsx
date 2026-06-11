@@ -1,9 +1,10 @@
 'use client';
 
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { useT } from './LanguageProvider';
+import Editable from '@/components/Editable';
 
-function FaqItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean; onToggle: () => void }) {
+function FaqItem({ q, a, open, onToggle }: { q: ReactNode; a: ReactNode; open: boolean; onToggle: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -31,18 +32,18 @@ export default function FAQ() {
       <div className="wrap">
         <div className="faq-grid">
           <div className="reveal">
-            <span className="idx">{t.faq.idx}</span>
+            <span className="idx"><Editable id="faq.idx">{t.faq.idx}</Editable></span>
             <h2 className="h2">
-              {t.faq.title_a} <span className="gt">{t.faq.title_b}</span>
+              <Editable id="faq.title_a">{t.faq.title_a}</Editable> <Editable className="gt" id="faq.title_b">{t.faq.title_b}</Editable>
             </h2>
-            <p style={{ color: 'var(--dim)', marginTop: 14 }}>{t.faq.sub}</p>
+            <p style={{ color: 'var(--dim)', marginTop: 14 }}><Editable id="faq.sub">{t.faq.sub}</Editable></p>
           </div>
           <div className="faq-list reveal">
             {t.faq.items.map((it, i) => (
               <FaqItem
-                key={it.q}
-                q={it.q}
-                a={it.a}
+                key={i}
+                q={<Editable id={`faq.items.${i}.q`}>{it.q}</Editable>}
+                a={<Editable id={`faq.items.${i}.a`}>{it.a}</Editable>}
                 open={open === i}
                 onToggle={() => setOpen(open === i ? null : i)}
               />

@@ -1,6 +1,7 @@
 'use client';
 
 import { useT } from './LanguageProvider';
+import Editable from '@/components/Editable';
 
 const ICONS = [
   <path key="0" d="M12 1v22M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6" />,
@@ -16,12 +17,12 @@ export default function WhoWeAre() {
       <div className="wrap">
         <div className="shead reveal">
           <div>
-            <span className="idx">{t.who.idx}</span>
+            <span className="idx"><Editable id="who.idx">{t.who.idx}</Editable></span>
             <h2 className="h2">
-              {t.who.title_a} <span className="gt">{t.who.title_b}</span>
+              <Editable id="who.title_a">{t.who.title_a}</Editable> <Editable className="gt" id="who.title_b">{t.who.title_b}</Editable>
             </h2>
           </div>
-          <p>{t.who.sub}</p>
+          <p><Editable id="who.sub">{t.who.sub}</Editable></p>
         </div>
         <div className="svc-grid">
           {t.who.cards.map((c, i) => (
@@ -29,8 +30,8 @@ export default function WhoWeAre() {
               <div className="ic">
                 <svg viewBox="0 0 24 24">{ICONS[i]}</svg>
               </div>
-              <h3>{c.h}</h3>
-              <p>{c.p}</p>
+              <h3><Editable id={`who.cards.${i}.h`}>{c.h}</Editable></h3>
+              <p><Editable id={`who.cards.${i}.p`}>{c.p}</Editable></p>
             </div>
           ))}
         </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useT } from './LanguageProvider';
+import Editable from '@/components/Editable';
 
 // TODO: replace with real verified testimonials — names, accounts and payouts are placeholders.
 const META = [
@@ -17,12 +18,12 @@ export default function Testimonials() {
       <div className="wrap">
         <div className="shead reveal">
           <div>
-            <span className="idx">{t.testimonials.idx}</span>
+            <span className="idx"><Editable id="testimonials.idx">{t.testimonials.idx}</Editable></span>
             <h2 className="h2">
-              {t.testimonials.title_a} <span className="gt">{t.testimonials.title_b}</span>
+              <Editable id="testimonials.title_a">{t.testimonials.title_a}</Editable> <Editable className="gt" id="testimonials.title_b">{t.testimonials.title_b}</Editable>
             </h2>
           </div>
-          <p>{t.testimonials.sub}</p>
+          <p><Editable id="testimonials.sub">{t.testimonials.sub}</Editable></p>
         </div>
       </div>
       <div className="wrap">
@@ -30,13 +31,13 @@ export default function Testimonials() {
           {META.map((m, i) => (
             <div className="hcard rev reveal" key={m.nm}>
               <div className="stars">★★★★★</div>
-              <p>{t.testimonials.reviews[i]}</p>
+              <p><Editable id={`testimonials.reviews.${i}`}>{t.testimonials.reviews[i]}</Editable></p>
               <div className="who">
                 <span className="av" />
                 <div>
                   <div className="nm">{m.nm}</div>
                   <div className="l">
-                    {m.size} · {t.testimonials.funded}
+                    {m.size} · <Editable id="testimonials.funded">{t.testimonials.funded}</Editable>
                   </div>
                 </div>
                 <span className="pay">{m.pay}</span>

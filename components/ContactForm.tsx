@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useT } from '@/components/LanguageProvider';
+import Editable from '@/components/Editable';
 
 export default function ContactForm() {
   const t = useT().contactPage.form;
@@ -25,27 +26,27 @@ export default function ContactForm() {
 
   return (
     <div className="tile feature" style={{ padding: '40px' }}>
-      <h3 style={{ fontSize: '24px', marginTop: 0, marginBottom: '24px' }}>{t.title}</h3>
+      <h3 style={{ fontSize: '24px', marginTop: 0, marginBottom: '24px' }}><Editable id="contactPage.form.title">{t.title}</Editable></h3>
 
       {status === 'success' ? (
         <div style={{ padding: '24px', border: '1px solid var(--green)', borderRadius: '14px', background: 'var(--soft)', textAlign: 'center' }}>
-          <h4 style={{ color: 'var(--green)', fontFamily: 'var(--fd)', fontSize: '20px', marginBottom: '8px' }}>{t.successTitle}</h4>
+          <h4 style={{ color: 'var(--green)', fontFamily: 'var(--fd)', fontSize: '20px', marginBottom: '8px' }}><Editable id="contactPage.form.successTitle">{t.successTitle}</Editable></h4>
           <p style={{ color: 'var(--dim)', fontSize: '14.5px' }}>
-            {t.successBody}
+            <Editable id="contactPage.form.successBody">{t.successBody}</Editable>
           </p>
           <button
             className="btn"
             style={{ marginTop: '20px' }}
             onClick={() => setStatus('idle')}
           >
-            {t.another}
+            <Editable id="contactPage.form.another">{t.another}</Editable>
           </button>
         </div>
       ) : (
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <label htmlFor="name" style={{ fontFamily: 'var(--fm)', fontSize: '12px', color: 'var(--dim)', textTransform: 'uppercase' }}>
-              {t.name}
+              <Editable id="contactPage.form.name">{t.name}</Editable>
             </label>
             <input
               type="text"
@@ -72,7 +73,7 @@ export default function ContactForm() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <label htmlFor="email" style={{ fontFamily: 'var(--fm)', fontSize: '12px', color: 'var(--dim)', textTransform: 'uppercase' }}>
-              {t.email}
+              <Editable id="contactPage.form.email">{t.email}</Editable>
             </label>
             <input
               type="email"
@@ -99,7 +100,7 @@ export default function ContactForm() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <label htmlFor="subject" style={{ fontFamily: 'var(--fm)', fontSize: '12px', color: 'var(--dim)', textTransform: 'uppercase' }}>
-              {t.inquiry}
+              <Editable id="contactPage.form.inquiry">{t.inquiry}</Editable>
             </label>
             <select
               id="subject"
@@ -133,7 +134,7 @@ export default function ContactForm() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <label htmlFor="message" style={{ fontFamily: 'var(--fm)', fontSize: '12px', color: 'var(--dim)', textTransform: 'uppercase' }}>
-              {t.message}
+              <Editable id="contactPage.form.message">{t.message}</Editable>
             </label>
             <textarea
               id="message"
@@ -165,7 +166,11 @@ export default function ContactForm() {
             style={{ width: '100%', justifyContent: 'center', padding: '14px 20px', marginTop: '8px' }}
             disabled={status === 'sending'}
           >
-            {status === 'sending' ? t.sending : t.send}
+            {status === 'sending' ? (
+              <Editable id="contactPage.form.sending">{t.sending}</Editable>
+            ) : (
+              <Editable id="contactPage.form.send">{t.send}</Editable>
+            )}
           </button>
         </form>
       )}

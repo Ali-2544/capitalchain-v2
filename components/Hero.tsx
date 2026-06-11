@@ -1,6 +1,7 @@
 'use client';
 
 import { useT } from './LanguageProvider';
+import Editable from './Editable';
 
 export default function Hero() {
   const t = useT();
@@ -8,13 +9,21 @@ export default function Hero() {
     <section className="hero">
       <div className="wrap">
         <h1 className="reveal">
-          {t.hero.title_a} <span className="gt">{t.hero.title_traders}</span> {t.hero.title_to}{' '}
-          <span className="gt">{t.hero.title_capital}</span>
+          <Editable id="hero.title_a">{t.hero.title_a}</Editable>{' '}
+          <span className="gt">
+            <Editable id="hero.title_traders">{t.hero.title_traders}</Editable>
+          </span>{' '}
+          <Editable id="hero.title_to">{t.hero.title_to}</Editable>{' '}
+          <span className="gt">
+            <Editable id="hero.title_capital">{t.hero.title_capital}</Editable>
+          </span>
         </h1>
-        <p className="hero-sub reveal">{t.hero.sub}</p>
+        <Editable id="hero.sub" as="p" className="hero-sub reveal">
+          {t.hero.sub}
+        </Editable>
         <div className="hero-actions reveal">
           <a href="#programs" className="btn btn-p btn-lg" data-magnetic>
-            {t.hero.cta}
+            <Editable id="hero.cta">{t.hero.cta}</Editable>
           </a>
           <span className="trustline">
             <span className="av">
@@ -22,7 +31,7 @@ export default function Hero() {
               <span />
               <span />
             </span>
-            {t.hero.trust}
+            <Editable id="hero.trust">{t.hero.trust}</Editable>
           </span>
         </div>
       </div>

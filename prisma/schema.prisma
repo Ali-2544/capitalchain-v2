@@ -25,6 +25,20 @@ model Payout {
   updatedAt   DateTime @updatedAt
 }
 
+// Inline-CMS content override. Each editable string/image on the site has a
+// stable `key`; an override is stored per `locale`. The frontend renders the
+// override when present, otherwise falls back to the i18n dictionary.
+model Content {
+  id        Int      @id @default(autoincrement())
+  key       String // e.g. "hero.title_a"
+  locale    String // "en" | "ar" | "hi" | "es" | "bn" | "ur" | "fr"
+  type      String   @default("text") // "text" | "html" | "image"
+  value     String   @default("") // text, sanitized HTML, or an /api/assets/<id> URL
+  updatedAt DateTime @updatedAt
+
+  @@unique([key, locale])
+}
+
 // One row = one (program type × account size) cell in the Programs configurator.
 // Drives the section's tabs, size pills, spec list and pricing card.
 model ProgramPlan {

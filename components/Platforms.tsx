@@ -1,6 +1,7 @@
 'use client';
 
 import { useT } from './LanguageProvider';
+import Editable from '@/components/Editable';
 
 const META = [
   { cls: 'a', badge: 'MT5 / MT4' },
@@ -18,19 +19,19 @@ export default function Platforms() {
       <div className="wrap">
         <div className="shead reveal">
           <div>
-            <span className="idx">{t.platforms.idx}</span>
+            <span className="idx"><Editable id="platforms.idx">{t.platforms.idx}</Editable></span>
             <h2 className="h2">
-              {t.platforms.title_a} <span className="gt">{t.platforms.title_b}</span>
+              <Editable id="platforms.title_a">{t.platforms.title_a}</Editable> <Editable className="gt" id="platforms.title_b">{t.platforms.title_b}</Editable>
             </h2>
           </div>
-          <p>{t.platforms.sub}</p>
+          <p><Editable id="platforms.sub">{t.platforms.sub}</Editable></p>
         </div>
         <div className="plat-bento">
           {META.map((m, i) => (
             <div className={`ptile ${m.cls} reveal`} key={m.cls} data-tilt>
               <span className="badge">{m.badge}</span>
-              <h4>{t.platforms.tiles[i].h}</h4>
-              <p>{t.platforms.tiles[i].p}</p>
+              <h4><Editable id={`platforms.tiles.${i}.h`}>{t.platforms.tiles[i].h}</Editable></h4>
+              <p><Editable id={`platforms.tiles.${i}.p`}>{t.platforms.tiles[i].p}</Editable></p>
             </div>
           ))}
         </div>

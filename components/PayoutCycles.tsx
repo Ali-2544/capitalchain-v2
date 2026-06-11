@@ -2,6 +2,7 @@
 
 import { Fragment } from 'react';
 import { useT } from './LanguageProvider';
+import Editable from '@/components/Editable';
 
 const Check = () => (
   <svg viewBox="0 0 24 24">
@@ -24,23 +25,23 @@ export default function PayoutCycles() {
     <section className="sec band" id="payouts">
       <div className="wrap">
         <div className="shead center reveal">
-          <span className="idx">{t.payouts.idx}</span>
+          <span className="idx"><Editable id="payouts.idx">{t.payouts.idx}</Editable></span>
           <h2 className="h2">
-            {t.payouts.title_a} <span className="gt">{t.payouts.title_b}</span>
+            <Editable id="payouts.title_a">{t.payouts.title_a}</Editable> <Editable className="gt" id="payouts.title_b">{t.payouts.title_b}</Editable>
           </h2>
-          <p>{t.payouts.sub}</p>
+          <p><Editable id="payouts.sub">{t.payouts.sub}</Editable></p>
         </div>
         <div className="cycles">
           {t.payouts.cards.map((c, i) => {
             const best = i === t.payouts.cards.length - 1;
             return (
               <div className={`cyc reveal${best ? ' best' : ''}`} key={i} data-tilt>
-                {best && <div className="badge">{t.payouts.maxSplit}</div>}
-                <div className="cn">{c.cn}</div>
+                {best && <div className="badge"><Editable id="payouts.maxSplit">{t.payouts.maxSplit}</Editable></div>}
+                <div className="cn"><Editable id={`payouts.cards.${i}.cn`}>{c.cn}</Editable></div>
                 <div className="split">
                   <span>{SPLITS[i]}</span>
                 </div>
-                <div className="spl-l">{t.payouts.split}</div>
+                <div className="spl-l"><Editable id="payouts.split">{t.payouts.split}</Editable></div>
                 <ul>
                   {c.items.map((item, j) => (
                     <li key={j}>

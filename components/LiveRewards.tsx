@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useT } from './LanguageProvider';
+import Editable from '@/components/Editable';
 import { useLiveData, timeAgo } from '@/lib/useLiveData';
 
 interface Settlement {
@@ -95,21 +96,21 @@ export default function LiveRewards() {
       <div className="wrap">
         <div className="shead reveal">
           <div>
-            <span className="idx">{t.live.idx}</span>
+            <span className="idx"><Editable id="live.idx">{t.live.idx}</Editable></span>
             <h2 className="h2">
-              {t.live.title_a} <span className="gt">{t.live.title_b}</span>
+              <Editable id="live.title_a">{t.live.title_a}</Editable> <Editable className="gt" id="live.title_b">{t.live.title_b}</Editable>
             </h2>
           </div>
-          <p>{t.live.sub}</p>
+          <p><Editable id="live.sub">{t.live.sub}</Editable></p>
         </div>
 
         <div className="rewards reveal">
           <div className="rewards-lead">
             <span className="rewards-tag">
-              <span className="lr-dot" /> {t.live.tag}
+              <span className="lr-dot" /> <Editable id="live.tag">{t.live.tag}</Editable>
             </span>
             <div className="rewards-total gt">$5.31M</div>
-            <p className="rewards-cap">{t.live.total}</p>
+            <p className="rewards-cap"><Editable id="live.total">{t.live.total}</Editable></p>
 
             <div className={`reward-feature${active ? ' is-on' : ''}`} aria-hidden={!active}>
               <div className="rf-top">
@@ -128,15 +129,15 @@ export default function LiveRewards() {
                 data-magnetic
                 style={{ marginTop: 22 }}
               >
-                {t.live.proof}
+                <Editable id="live.proof">{t.live.proof}</Editable>
               </a>
             </div>
           </div>
 
           <div className="rewards-list">
             <div className="rl-head">
-              <span>{t.live.recent}</span>
-              <a href="#rewards">{t.live.viewRewards}</a>
+              <span><Editable id="live.recent">{t.live.recent}</Editable></span>
+              <a href="#rewards"><Editable id="live.viewRewards">{t.live.viewRewards}</Editable></a>
             </div>
             <div
               className="rl-viewport"
@@ -176,7 +177,7 @@ export default function LiveRewards() {
                 })}
               </div>
             </div>
-            <div className="rl-foot">{t.live.onchain}</div>
+            <div className="rl-foot"><Editable id="live.onchain">{t.live.onchain}</Editable></div>
           </div>
         </div>
       </div>

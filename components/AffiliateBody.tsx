@@ -2,6 +2,7 @@
 
 import { useT } from '@/components/LanguageProvider';
 import AffiliateFAQ from '@/components/AffiliateFAQ';
+import Editable from '@/components/Editable';
 
 export default function AffiliateBody() {
   const t = useT().affiliatePage;
@@ -14,37 +15,37 @@ export default function AffiliateBody() {
           <div className="reveal">
             <span className="eyebrow">
               <span className="dot" />
-              {t.hero.eyebrow}
+              <Editable id="affiliatePage.hero.eyebrow">{t.hero.eyebrow}</Editable>
             </span>
             <h1 style={{ marginBottom: 24 }}>
-              {t.hero.title_a} <span className="gt">{t.hero.title_b}</span>
+              <Editable id="affiliatePage.hero.title_a">{t.hero.title_a}</Editable> <Editable className="gt" id="affiliatePage.hero.title_b">{t.hero.title_b}</Editable>
             </h1>
             <p className="hero-sub" style={{ marginBottom: 32 }}>
-              {t.hero.sub}
+              <Editable id="affiliatePage.hero.sub">{t.hero.sub}</Editable>
             </p>
             <div className="hero-actions">
               <a href="#" className="btn btn-p btn-lg" data-magnetic>
-                {t.hero.cta}
+                <Editable id="affiliatePage.hero.cta">{t.hero.cta}</Editable>
               </a>
             </div>
           </div>
 
           <div className="reveal">
             <div className="aff-card" data-tilt style={{ transform: 'none', transition: 'all 0.5s' }}>
-              <div className="pct">{t.hero.pct}</div>
-              <div className="pl">{t.hero.pl}</div>
+              <Editable as="div" className="pct" id="affiliatePage.hero.pct">{t.hero.pct}</Editable>
+              <div className="pl"><Editable id="affiliatePage.hero.pl">{t.hero.pl}</Editable></div>
               <div className="arow">
                 <div>
-                  <div className="v gt">{t.hero.monthlyV}</div>
-                  <div className="k">{t.hero.monthlyK}</div>
+                  <Editable as="div" className="v gt" id="affiliatePage.hero.monthlyV">{t.hero.monthlyV}</Editable>
+                  <div className="k"><Editable id="affiliatePage.hero.monthlyK">{t.hero.monthlyK}</Editable></div>
                 </div>
                 <div>
-                  <div className="v gt">{t.hero.realtimeV}</div>
-                  <div className="k">{t.hero.realtimeK}</div>
+                  <Editable as="div" className="v gt" id="affiliatePage.hero.realtimeV">{t.hero.realtimeV}</Editable>
+                  <div className="k"><Editable id="affiliatePage.hero.realtimeK">{t.hero.realtimeK}</Editable></div>
                 </div>
                 <div>
-                  <div className="v gt">{t.hero.noCapV}</div>
-                  <div className="k">{t.hero.noCapK}</div>
+                  <Editable as="div" className="v gt" id="affiliatePage.hero.noCapV">{t.hero.noCapV}</Editable>
+                  <div className="k"><Editable id="affiliatePage.hero.noCapK">{t.hero.noCapK}</Editable></div>
                 </div>
               </div>
             </div>
@@ -56,9 +57,9 @@ export default function AffiliateBody() {
       <section className="sec band">
         <div className="wrap">
           <div className="shead reveal center">
-            <span className="idx">{t.how.idx}</span>
-            <h2 className="h2">{t.how.title}</h2>
-            <p>{t.how.sub}</p>
+            <span className="idx"><Editable id="affiliatePage.how.idx">{t.how.idx}</Editable></span>
+            <h2 className="h2"><Editable id="affiliatePage.how.title">{t.how.title}</Editable></h2>
+            <p><Editable id="affiliatePage.how.sub">{t.how.sub}</Editable></p>
           </div>
 
           <div className="grid-3 reveal">
@@ -69,8 +70,8 @@ export default function AffiliateBody() {
                     {String(i + 1).padStart(2, '0')}
                   </span>
                 </div>
-                <h3>{step.h}</h3>
-                <p>{step.p}</p>
+                <h3><Editable id={`affiliatePage.how.steps.${i}.h`}>{step.h}</Editable></h3>
+                <p><Editable id={`affiliatePage.how.steps.${i}.p`}>{step.p}</Editable></p>
               </div>
             ))}
           </div>
@@ -81,17 +82,17 @@ export default function AffiliateBody() {
       <section className="sec">
         <div className="wrap">
           <div className="shead reveal center">
-            <span className="idx">{t.why.idx}</span>
-            <h2 className="h2">{t.why.title}</h2>
-            <p>{t.why.sub}</p>
+            <span className="idx"><Editable id="affiliatePage.why.idx">{t.why.idx}</Editable></span>
+            <h2 className="h2"><Editable id="affiliatePage.why.title">{t.why.title}</Editable></h2>
+            <p><Editable id="affiliatePage.why.sub">{t.why.sub}</Editable></p>
           </div>
 
           <div className="bento reveal">
             {/* Tile 1: Big Feature */}
             <div className="tile big feature">
-              <div className="big-num gt">{t.why.bigNum}</div>
-              <h3>{t.why.bigH}</h3>
-              <p>{t.why.bigP}</p>
+              <Editable as="div" className="big-num gt" id="affiliatePage.why.bigNum">{t.why.bigNum}</Editable>
+              <h3><Editable id="affiliatePage.why.bigH">{t.why.bigH}</Editable></h3>
+              <p><Editable id="affiliatePage.why.bigP">{t.why.bigP}</Editable></p>
             </div>
 
             {/* Tile 2: Medium */}
@@ -101,8 +102,8 @@ export default function AffiliateBody() {
                   <path d="M3 3v18h18M7 16l4-4 4 4 6-6" />
                 </svg>
               </div>
-              <h3>{t.why.tiles[0].h}</h3>
-              <p>{t.why.tiles[0].p}</p>
+              <h3><Editable id="affiliatePage.why.tiles.0.h">{t.why.tiles[0].h}</Editable></h3>
+              <p><Editable id="affiliatePage.why.tiles.0.p">{t.why.tiles[0].p}</Editable></p>
             </div>
 
             {/* Tile 3: Medium */}
@@ -112,8 +113,8 @@ export default function AffiliateBody() {
                   <path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 14a4 4 0 114-4 4 4 0 01-4 4z" />
                 </svg>
               </div>
-              <h3>{t.why.tiles[1].h}</h3>
-              <p>{t.why.tiles[1].p}</p>
+              <h3><Editable id="affiliatePage.why.tiles.1.h">{t.why.tiles[1].h}</Editable></h3>
+              <p><Editable id="affiliatePage.why.tiles.1.p">{t.why.tiles[1].p}</Editable></p>
             </div>
 
             {/* Tile 4: Small */}
@@ -123,8 +124,8 @@ export default function AffiliateBody() {
                   <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 114-4 4 4 0 01-4 4zm14 14v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
                 </svg>
               </div>
-              <h3>{t.why.tiles[2].h}</h3>
-              <p>{t.why.tiles[2].p}</p>
+              <h3><Editable id="affiliatePage.why.tiles.2.h">{t.why.tiles[2].h}</Editable></h3>
+              <p><Editable id="affiliatePage.why.tiles.2.p">{t.why.tiles[2].p}</Editable></p>
             </div>
 
             {/* Tile 5: Small */}
@@ -134,8 +135,8 @@ export default function AffiliateBody() {
                   <path d="M21 12h-4l-3 9L9 3l-3 9H2" />
                 </svg>
               </div>
-              <h3>{t.why.tiles[3].h}</h3>
-              <p>{t.why.tiles[3].p}</p>
+              <h3><Editable id="affiliatePage.why.tiles.3.h">{t.why.tiles[3].h}</Editable></h3>
+              <p><Editable id="affiliatePage.why.tiles.3.p">{t.why.tiles[3].p}</Editable></p>
             </div>
 
             {/* Tile 6: Small */}
@@ -145,8 +146,8 @@ export default function AffiliateBody() {
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
               </div>
-              <h3>{t.why.tiles[4].h}</h3>
-              <p>{t.why.tiles[4].p}</p>
+              <h3><Editable id="affiliatePage.why.tiles.4.h">{t.why.tiles[4].h}</Editable></h3>
+              <p><Editable id="affiliatePage.why.tiles.4.p">{t.why.tiles[4].p}</Editable></p>
             </div>
           </div>
         </div>
@@ -157,9 +158,9 @@ export default function AffiliateBody() {
         <div className="wrap">
           <div className="faq-grid">
             <div className="reveal">
-              <span className="idx">{t.faq.idx}</span>
-              <h2 className="h2">{t.faq.title}</h2>
-              <p style={{ color: 'var(--dim)', marginTop: 12 }}>{t.faq.sub}</p>
+              <span className="idx"><Editable id="affiliatePage.faq.idx">{t.faq.idx}</Editable></span>
+              <h2 className="h2"><Editable id="affiliatePage.faq.title">{t.faq.title}</Editable></h2>
+              <p style={{ color: 'var(--dim)', marginTop: 12 }}><Editable id="affiliatePage.faq.sub">{t.faq.sub}</Editable></p>
             </div>
 
             <AffiliateFAQ />

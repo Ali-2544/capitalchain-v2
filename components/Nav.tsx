@@ -1,16 +1,17 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useTheme } from './ThemeProvider';
 import { LANGS, useLang, useT } from './LanguageProvider';
+import EditableImage from '@/components/EditableImage';
+import EditableLink from '@/components/EditableLink';
 
 function Logo() {
   return (
     <a href="/" className="logo" aria-label="Capital Chain">
-      <Image className="logo-img logo-dark" src="/logo.png" alt="Capital Chain" width={150} height={33} priority />
-      <Image className="logo-img logo-light" src="/logo-light.png" alt="Capital Chain" width={150} height={33} priority />
+      <EditableImage id="brand.logoDark" className="logo-img logo-dark" src="/logo.png" alt="Capital Chain" width={150} height={33} />
+      <EditableImage id="brand.logoLight" className="logo-img logo-light" src="/logo-light.png" alt="Capital Chain" width={150} height={33} />
     </a>
   );
 }
@@ -66,13 +67,13 @@ export default function Nav() {
   const pathname = usePathname();
 
   const links = [
-    { href: '/', label: t.nav.home },
-    { href: '/rewards', label: t.nav.rewards },
-    { href: '/affiliate', label: t.nav.affiliate },
-    { href: '/blog', label: t.nav.blog },
-    { href: '/about', label: t.nav.about },
-    { href: '/contact', label: t.nav.contact },
-    { href: '/terms', label: t.nav.terms },
+    { key: 'home', href: '/', label: t.nav.home },
+    { key: 'rewards', href: '/rewards', label: t.nav.rewards },
+    { key: 'affiliate', href: '/affiliate', label: t.nav.affiliate },
+    { key: 'blog', href: '/blog', label: t.nav.blog },
+    { key: 'about', href: '/about', label: t.nav.about },
+    { key: 'contact', href: '/contact', label: t.nav.contact },
+    { key: 'terms', href: '/terms', label: t.nav.terms },
   ];
 
   useEffect(() => {
@@ -94,9 +95,14 @@ export default function Nav() {
           <Logo />
           <div className="nav-links">
             {links.map((l) => (
-              <a key={l.href} href={l.href} className={pathname === l.href ? 'on' : undefined}>
+              <EditableLink
+                key={l.href}
+                id={`nav.${l.key}`}
+                href={l.href}
+                className={pathname === l.href ? 'on' : undefined}
+              >
                 {l.label}
-              </a>
+              </EditableLink>
             ))}
           </div>
           <div className="nav-cta">
@@ -110,12 +116,12 @@ export default function Nav() {
               </svg>
             </button>
             <LangSwitch />
-            <a href="#" className="btn nav-login">
+            <EditableLink id="nav.login" href="#" className="btn nav-login">
               {t.nav.login}
-            </a>
-            <a href="/#programs" className="btn btn-p nav-buy" data-magnetic>
+            </EditableLink>
+            <EditableLink id="nav.buy" href="/#programs" className="btn btn-p nav-buy" data-magnetic>
               {t.nav.buy}
-            </a>
+            </EditableLink>
           </div>
           <button
             className="menu-btn"
@@ -131,22 +137,23 @@ export default function Nav() {
         <div className="mobile-menu">
           <div className="wrap">
             {links.map((l) => (
-              <a
+              <EditableLink
                 key={l.href}
+                id={`nav.${l.key}`}
                 href={l.href}
                 className={pathname === l.href ? 'on' : undefined}
                 onClick={() => setMenuOpen(false)}
               >
                 {l.label}
-              </a>
+              </EditableLink>
             ))}
             <div className="mobile-cta">
-              <a href="#" className="btn">
+              <EditableLink id="nav.login" href="#" className="btn">
                 {t.nav.login}
-              </a>
-              <a href="/#programs" className="btn btn-p" data-magnetic onClick={() => setMenuOpen(false)}>
+              </EditableLink>
+              <EditableLink id="nav.buy" href="/#programs" className="btn btn-p" data-magnetic onClick={() => setMenuOpen(false)}>
                 {t.nav.buy}
-              </a>
+              </EditableLink>
             </div>
           </div>
         </div>
