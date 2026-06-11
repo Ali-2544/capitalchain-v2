@@ -13,13 +13,62 @@ datasource db {
 
 model Payout {
   id          Int      @id @default(autoincrement())
-  flag        String // emoji flag, e.g. "🇵🇰"
+  flag        String // emoji flag, e.g. "🇵🇰" — auto-derived from `country` in the dashboard
   country     String
   traderName  String // "Rashmeet Kaur" — certificate "awarded to" + feed name
   amount      String // display string, e.g. "$2,140"
   amountValue Int      @default(0) // numeric value (auto-derived) for sorting / leaderboard
   accountSize String   @default("") // e.g. "$100,000" — shown on the certificate + leaderboard role
+  plan        String   @default("") // e.g. "1 Step Nitro" — shown in the rewards ledger
   method      String   @default("USDT (TRC-20)")
   createdAt   DateTime @default(now()) // certificate date + feed "time ago"
   updatedAt   DateTime @updatedAt
+}
+
+// One row = one (program type × account size) cell in the Programs configurator.
+// Drives the section's tabs, size pills, spec list and pricing card.
+model ProgramPlan {
+  id          Int      @id @default(autoincrement())
+  programType String // '1step' | '2step' | 'instant'
+  size        String // '5K', '25K', '50K', '100K', '200K', '500K'
+  sizeOrder   Int      @default(0) // pill order within a program type
+  fee         Int // current one-time fee (USD)
+  was         Int // crossed-out original fee (USD)
+  target      String // profit target, e.g. "8%" / "8% / 5%" / "None"
+  drawdown    String // max drawdown, e.g. "10%"
+  dailyLoss   String // daily loss limit, e.g. "5%"
+  profitSplit String   @default("100%")
+  minDays     String   @default("None")
+  timeLimit   String   @default("Unlimited")
+  newsEas     String   @default("Allowed")
+  payouts     String   @default("4 cycles")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([programType, size])
+}
+
+// Binary image stored in the database (cover images + inline blog images).
+// Served via GET /api/assets/[id]; uploaded from the dashboard.
+model Asset {
+  id        Int      @id @default(autoincrement())
+  mime      String // e.g. "image/png"
+  data      Bytes // the raw image bytes
+  createdAt DateTime @default(now())
+  coverFor  Blog[] // blogs that use this asset as their cover
+}
+
+// A blog post authored in the dashboard (WYSIWYG → sanitized HTML body).
+model Blog {
+  id           Int      @id @default(autoincrement())
+  slug         String   @unique // URL slug, auto-derived from title
+  title        String
+  excerpt      String   @default("") // short summary for the listing page
+  body         String   @default("") // sanitized HTML from the rich-text editor
+  author       String   @default("Capital Chain")
+  coverAssetId Int? // optional cover image (stored as an Asset)
+  coverAsset   Asset?   @relation(fields: [coverAssetId], references: [id], onDelete: SetNull)
+  published    Boolean  @default(false) // only published posts show on the public site
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

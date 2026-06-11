@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { useT } from '@/components/LanguageProvider';
 
 export default function ContactForm() {
+  const t = useT().contactPage.form;
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,33 +25,33 @@ export default function ContactForm() {
 
   return (
     <div className="tile feature" style={{ padding: '40px' }}>
-      <h3 style={{ fontSize: '24px', marginTop: 0, marginBottom: '24px' }}>Send us a message</h3>
-      
+      <h3 style={{ fontSize: '24px', marginTop: 0, marginBottom: '24px' }}>{t.title}</h3>
+
       {status === 'success' ? (
         <div style={{ padding: '24px', border: '1px solid var(--green)', borderRadius: '14px', background: 'var(--soft)', textAlign: 'center' }}>
-          <h4 style={{ color: 'var(--green)', fontFamily: 'var(--fd)', fontSize: '20px', marginBottom: '8px' }}>Message Sent!</h4>
+          <h4 style={{ color: 'var(--green)', fontFamily: 'var(--fd)', fontSize: '20px', marginBottom: '8px' }}>{t.successTitle}</h4>
           <p style={{ color: 'var(--dim)', fontSize: '14.5px' }}>
-            Thank you for reaching out. A support agent will review your inquiry and get back to you shortly (usually within an hour).
+            {t.successBody}
           </p>
-          <button 
-            className="btn" 
+          <button
+            className="btn"
             style={{ marginTop: '20px' }}
             onClick={() => setStatus('idle')}
           >
-            Send another message
+            {t.another}
           </button>
         </div>
       ) : (
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <label htmlFor="name" style={{ fontFamily: 'var(--fm)', fontSize: '12px', color: 'var(--dim)', textTransform: 'uppercase' }}>
-              Full Name
+              {t.name}
             </label>
             <input
               type="text"
               id="name"
               required
-              placeholder="John Doe"
+              placeholder={t.namePh}
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               style={{
@@ -70,13 +72,13 @@ export default function ContactForm() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <label htmlFor="email" style={{ fontFamily: 'var(--fm)', fontSize: '12px', color: 'var(--dim)', textTransform: 'uppercase' }}>
-              Email Address
+              {t.email}
             </label>
             <input
               type="email"
               id="email"
               required
-              placeholder="you@example.com"
+              placeholder={t.emailPh}
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               style={{
@@ -97,7 +99,7 @@ export default function ContactForm() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <label htmlFor="subject" style={{ fontFamily: 'var(--fm)', fontSize: '12px', color: 'var(--dim)', textTransform: 'uppercase' }}>
-              Inquiry Type
+              {t.inquiry}
             </label>
             <select
               id="subject"
@@ -122,22 +124,22 @@ export default function ContactForm() {
               onFocus={(e) => (e.target.style.borderColor = 'var(--teal)')}
               onBlur={(e) => (e.target.style.borderColor = 'var(--line)')}
             >
-              <option value="support">General Support & Payouts</option>
-              <option value="billing">Billing & Refund Policy</option>
-              <option value="rules">Evaluation Rules & Violations</option>
-              <option value="partnership">Affiliates & Partnerships</option>
+              <option value="support">{t.subjectSupport}</option>
+              <option value="billing">{t.subjectBilling}</option>
+              <option value="rules">{t.subjectRules}</option>
+              <option value="partnership">{t.subjectPartnership}</option>
             </select>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <label htmlFor="message" style={{ fontFamily: 'var(--fm)', fontSize: '12px', color: 'var(--dim)', textTransform: 'uppercase' }}>
-              Message
+              {t.message}
             </label>
             <textarea
               id="message"
               required
               rows={5}
-              placeholder="How can we help you?"
+              placeholder={t.messagePh}
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               style={{
@@ -163,7 +165,7 @@ export default function ContactForm() {
             style={{ width: '100%', justifyContent: 'center', padding: '14px 20px', marginTop: '8px' }}
             disabled={status === 'sending'}
           >
-            {status === 'sending' ? 'Sending message...' : 'Send Message →'}
+            {status === 'sending' ? t.sending : t.send}
           </button>
         </form>
       )}

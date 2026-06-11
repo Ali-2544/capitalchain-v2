@@ -7,10 +7,6 @@ export default function Hero() {
   return (
     <section className="hero">
       <div className="wrap">
-        <span className="eyebrow reveal">
-          <span className="dot" />
-          {t.hero.eyebrow}
-        </span>
         <h1 className="reveal">
           {t.hero.title_a} <span className="gt">{t.hero.title_traders}</span> {t.hero.title_to}{' '}
           <span className="gt">{t.hero.title_capital}</span>

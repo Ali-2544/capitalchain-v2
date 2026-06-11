@@ -1,4 +1,5 @@
 import { prisma } from './prisma';
+import { countryToFlag } from './flags';
 
 // Single managed resource now: every payout lives in one table.
 export type ResourceName = 'payouts';
@@ -20,7 +21,7 @@ export const RESOURCES: Record<ResourceName, ResourceDef> = {
   payouts: {
     delegate: prisma.payout as unknown as Delegate,
     orderBy: { createdAt: 'desc' },
-    fields: ['flag', 'country', 'traderName', 'amount', 'accountSize', 'method'],
+    fields: ['flag', 'country', 'traderName', 'amount', 'accountSize', 'plan', 'method'],
   },
 };
 
@@ -40,6 +41,20 @@ export function parseAmount(s: string): number {
   return Math.round(v);
 }
 
+/**
+ * Normalize a money field to a USD display string (we only pay in USD):
+ *  "2140" -> "$2,140" · "$10000" -> "$10,000" · "1000000" -> "$1,000,000"
+ *  "$867K" / "867K" -> "$867K" (suffixed values keep their form) · "" -> ""
+ */
+export function usd(s: string): string {
+  let v = (s ?? '').trim();
+  if (!v) return '';
+  v = v.replace(/^\$+\s*/, ''); // strip any leading $ the admin already typed
+  const digits = v.replace(/,/g, '');
+  if (/^\d+(\.\d+)?$/.test(digits)) v = Number(digits).toLocaleString('en-US'); // pure number → add commas
+  return '$' + v;
+}
+
 /** Keep only writable fields; auto-derive amountValue from amount. */
 export function pickFields(_name: ResourceName, body: Record<string, unknown>) {
   const out: Record<string, unknown> = {};
@@ -47,6 +62,15 @@ export function pickFields(_name: ResourceName, body: Record<string, unknown>) {
     if (body[f] === undefined || body[f] === null) continue;
     out[f] = String(body[f]);
   }
+  // We only pay in USD — force the $ prefix (and commas) on money fields.
+  if (typeof out.amount === 'string') out.amount = usd(out.amount);
+  if (typeof out.accountSize === 'string') out.accountSize = usd(out.accountSize);
   if (typeof out.amount === 'string') out.amountValue = parseAmount(out.amount);
+  // Flag is derived from the country name — admins never type the emoji.
+  // Keep any explicitly-provided flag only if the country can't be resolved.
+  if (typeof out.country === 'string') {
+    const derived = countryToFlag(out.country);
+    if (derived) out.flag = derived;
+  }
   return out;
 }

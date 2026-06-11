@@ -1,25 +1,48 @@
-// TODO: replace with real payout feed. Names, flags and amounts are placeholders.
-// Amounts are fixed (not Math.random as in the mockup) so SSR markup is stable.
-const NAMES = [
-  'Ahmed R.', 'Sofia L.', 'Daniel K.', 'Mei Chen', 'Carlos V.', 'Priya S.',
-  'Omar F.', 'Lukas B.', 'Aisha N.', 'Tomáš H.', 'Yuki T.', 'Imran B.',
-];
-const FLAGS = ['🇦🇪', '🇪🇸', '🇩🇪', '🇸🇬', '🇧🇷', '🇮🇳', '🇪🇬', '🇦🇹', '🇵🇰', '🇨🇿', '🇯🇵', '🇬🇧'];
-const AMOUNTS = [4820, 1340, 7650, 2980, 6210, 920, 8470, 3760, 5290, 1880, 7010, 2450, 9320, 1610];
+'use client';
 
-function Chip({ i }: { i: number }) {
+import { useMemo } from 'react';
+import { useLiveData } from '@/lib/useLiveData';
+
+interface RawSettlement {
+  id?: number;
+  flag: string;
+  name: string;
+  amount: string;
+}
+
+// Fallback shown only until /api/settlements loads (or if the DB is empty).
+// Once the dashboard has payouts, the ticker shows those — nothing else.
+const FALLBACK: RawSettlement[] = [
+  { flag: '🇦🇪', name: 'Ahmed R.', amount: '$4,820' },
+  { flag: '🇪🇸', name: 'Sofia L.', amount: '$1,340' },
+  { flag: '🇩🇪', name: 'Daniel K.', amount: '$7,650' },
+  { flag: '🇸🇬', name: 'Mei Chen', amount: '$2,980' },
+  { flag: '🇧🇷', name: 'Carlos V.', amount: '$6,210' },
+  { flag: '🇮🇳', name: 'Priya S.', amount: '$920' },
+];
+
+function Chip({ s }: { s: RawSettlement }) {
   return (
     <span className="chip">
-      <span className="f">{FLAGS[i % FLAGS.length]}</span>
-      <span className="n">{NAMES[i % NAMES.length]}</span>
-      <span className="a">+${AMOUNTS[i % AMOUNTS.length].toLocaleString('en-US')}</span>
+      <span className="f">{s.flag}</span>
+      <span className="n">{s.name}</span>
+      <span className="a">+{s.amount.replace(/^\+/, '')}</span>
     </span>
   );
 }
 
 export default function Ticker() {
-  // Duplicate the run (14 + 14) so the marquee loops seamlessly.
-  const run = Array.from({ length: 14 }, (_, i) => i);
+  const rows = useLiveData<RawSettlement>('/api/settlements', FALLBACK);
+
+  // Repeat the available payouts to fill a wide marquee, then duplicate the
+  // whole run (A + B) so the loop is seamless.
+  const run = useMemo(() => {
+    const src = rows.length ? rows : FALLBACK;
+    const out: RawSettlement[] = [];
+    for (let i = 0; i < Math.max(14, src.length); i++) out.push(src[i % src.length]);
+    return out;
+  }, [rows]);
+
   return (
     <div className="ticker">
       <span className="lbl">
@@ -27,11 +50,11 @@ export default function Ticker() {
         LIVE
       </span>
       <div className="chips" id="chips">
-        {run.map((i) => (
-          <Chip key={`a-${i}`} i={i} />
+        {run.map((s, i) => (
+          <Chip key={`a-${i}`} s={s} />
         ))}
-        {run.map((i) => (
-          <Chip key={`b-${i}`} i={i} />
+        {run.map((s, i) => (
+          <Chip key={`b-${i}`} s={s} />
         ))}
       </div>
     </div>

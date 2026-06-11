@@ -28,7 +28,7 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'CapitalChain — We Connect Traders To Capital',
   description:
-    'Capital Chain is the bridge between your forex trading skills and real earnings — built on transparency, fast payouts and leading technology.',
+    'Trade with straightforward rules and clear challenges at Capital Chain. Join a global community of traders in a simulated environment and earn generous rewards. Start your challenge today.',
 };
 
 export default function RootLayout({
@@ -38,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
-      <body className="light">
+      <body className="light" suppressHydrationWarning>
         <ThemeProvider>
           <LanguageProvider>
             {/* Fixed full-viewport WebGL globe — rendered once, persists across routes. */}

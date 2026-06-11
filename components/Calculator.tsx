@@ -1,12 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useT } from './LanguageProvider';
+import { useLiveData } from '@/lib/useLiveData';
 
-// Calculator data + logic ported verbatim from the mockup's <script>.
-const SZ = [5000, 25000, 100000, 200000, 500000];
 const SPLITS = [0.6, 0.7, 0.8, 1.0];
 const fmt = (n: number) => '$' + Math.round(n).toLocaleString('en-US');
+
+// "5K" -> 5000 · "100K" -> 100000 · "2M" -> 2000000
+function parseSize(s: string): number {
+  const m = /^([\d.]+)\s*([KkMm]?)/.exec(String(s).replace(/[,$\s]/g, ''));
+  if (!m) return 0;
+  let v = parseFloat(m[1]) || 0;
+  const suf = m[2].toLowerCase();
+  if (suf === 'k') v *= 1e3;
+  else if (suf === 'm') v *= 1e6;
+  return Math.round(v);
+}
+
+// Fallback account sizes (mirrors the Programs section) until /api/programs loads.
+const FALLBACK_SIZES = ['5K', '25K', '50K', '100K', '200K', '500K'].map((size, sizeOrder) => ({ size, sizeOrder }));
 
 const FEAT_ICONS = [
   <path key="0" d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 6v6l4 2" />,
@@ -15,11 +28,26 @@ const FEAT_ICONS = [
 
 export default function Calculator() {
   const t = useT();
-  const [acc, setAcc] = useState(2); // index into SZ
+  // Account sizes come from the Programs data — the same sizes the dashboard manages.
+  const plans = useLiveData<{ size: string; sizeOrder: number }>('/api/programs', FALLBACK_SIZES);
+  const [acc, setAcc] = useState(2); // index into the size list
   const [ret, setRet] = useState(8); // monthly return %
   const [split, setSplit] = useState(3); // index into SPLITS
 
-  const size = SZ[acc];
+  // Distinct account sizes, sorted ascending.
+  const sizes = useMemo(() => {
+    const set = new Set<number>();
+    for (const p of plans) {
+      const v = parseSize(p.size);
+      if (v) set.add(v);
+    }
+    const arr = [...set].sort((a, b) => a - b);
+    return arr.length ? arr : FALLBACK_SIZES.map((f) => parseSize(f.size));
+  }, [plans]);
+
+  const maxIdx = sizes.length - 1;
+  const safeAcc = Math.min(acc, maxIdx);
+  const size = sizes[safeAcc];
   const payout = size * (ret / 100) * SPLITS[split];
 
   return (
@@ -58,9 +86,9 @@ export default function Calculator() {
                 type="range"
                 id="accSlider"
                 min="0"
-                max="4"
+                max={maxIdx}
                 step="1"
-                value={acc}
+                value={safeAcc}
                 onChange={(e) => setAcc(+e.target.value)}
               />
             </div>

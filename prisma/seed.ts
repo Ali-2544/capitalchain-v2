@@ -36,10 +36,13 @@ const PAYOUTS = [
   { flag: '🇰🇷', country: 'South Korea', traderName: 'Yuki T.', amount: '$2,450', accountSize: '$100,000', method: 'USDT (TRC-20)', minutesAgo: 1440 },
 ];
 
+const PLANS = ['1 Step Nitro', '2 Step Plus', 'Instant Pro', 'Instant Plus', '1 Step Standard'];
+
 async function main() {
   await prisma.payout.deleteMany();
   const now = Date.now();
-  for (const p of PAYOUTS) {
+  for (let i = 0; i < PAYOUTS.length; i++) {
+    const p = PAYOUTS[i];
     await prisma.payout.create({
       data: {
         flag: p.flag,
@@ -48,6 +51,7 @@ async function main() {
         amount: p.amount,
         amountValue: parseAmount(p.amount),
         accountSize: p.accountSize,
+        plan: PLANS[i % PLANS.length],
         method: p.method,
         createdAt: new Date(now - p.minutesAgo * 60_000),
       },

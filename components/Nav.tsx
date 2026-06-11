@@ -69,6 +69,7 @@ export default function Nav() {
     { href: '/', label: t.nav.home },
     { href: '/rewards', label: t.nav.rewards },
     { href: '/affiliate', label: t.nav.affiliate },
+    { href: '/blog', label: t.nav.blog },
     { href: '/about', label: t.nav.about },
     { href: '/contact', label: t.nav.contact },
     { href: '/terms', label: t.nav.terms },
