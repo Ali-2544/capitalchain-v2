@@ -1,7 +1,8 @@
 // Coerce an admin payload into a valid ProgramPlan write object.
-const INT_FIELDS = ['fee', 'was', 'sizeOrder'] as const;
+const INT_FIELDS = ['fee', 'was', 'sizeOrder', 'typeOrder'] as const;
 const STR_FIELDS = [
   'programType',
+  'typeLabel',
   'size',
   'target',
   'drawdown',

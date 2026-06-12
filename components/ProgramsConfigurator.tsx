@@ -10,6 +10,8 @@ import EditableLink from '@/components/EditableLink';
 interface Plan {
   id?: number;
   programType: string;
+  typeLabel?: string;
+  typeOrder?: number;
   size: string;
   sizeOrder: number;
   fee: number;
@@ -47,9 +49,16 @@ const FALLBACK_DATA: Record<string, Record<string, { fee: number; was: number; t
   },
 };
 
+const FALLBACK_LABELS: Record<string, { label: string; order: number }> = {
+  '1step': { label: 'One Step', order: 0 },
+  '2step': { label: 'Two Step', order: 1 },
+};
+
 const FALLBACK: Plan[] = Object.entries(FALLBACK_DATA).flatMap(([programType, sizes]) =>
   Object.entries(sizes).map(([size, c]) => ({
     programType,
+    typeLabel: FALLBACK_LABELS[programType]?.label ?? '',
+    typeOrder: FALLBACK_LABELS[programType]?.order ?? 0,
     size,
     sizeOrder: SIZE_ORDER.indexOf(size),
     fee: c.fee,
@@ -65,12 +74,18 @@ const FALLBACK: Plan[] = Object.entries(FALLBACK_DATA).flatMap(([programType, si
   })),
 );
 
-const TAB_IDS = ['1step', '2step'] as const; // 'instant' tab removed
+// Turn a raw type key into a readable tab label when no explicit one is set:
+// "1step" -> "1 Step", "atomic" -> "Atomic".
+function humanizeType(type: string): string {
+  const step = type.match(/^(\d+)\s*step$/i);
+  if (step) return `${step[1]} Step`;
+  return type.charAt(0).toUpperCase() + type.slice(1);
+}
 
 export default function ProgramsConfigurator() {
   const t = useT();
   const plans = useLiveData<Plan>('/api/programs', FALLBACK);
-  const [tab, setTab] = useState<string>('1step');
+  const [tab, setTab] = useState<string>('');
   const [size, setSize] = useState('100K');
 
   // Group plans by program type, each ordered by sizeOrder.
@@ -81,6 +96,19 @@ export default function ProgramsConfigurator() {
     for (const k of Object.keys(by)) by[k].sort((a, b) => a.sizeOrder - b.sizeOrder);
     return by;
   }, [plans]);
+
+  // Tabs are derived entirely from the data: every distinct program type that
+  // has at least one plan becomes a tab, ordered by typeOrder then label.
+  const tabs = useMemo(() => {
+    const known = t.programs.tabs as Record<string, string>;
+    return Object.entries(byType)
+      .map(([type, list]) => {
+        const first = list[0];
+        const label = first?.typeLabel?.trim() || known[type] || humanizeType(type);
+        return { type, label, order: first?.typeOrder ?? 0 };
+      })
+      .sort((a, b) => a.order - b.order || a.label.localeCompare(b.label));
+  }, [byType, t]);
 
   // Translate known keyword values so the spec list stays localized.
   const loc = (v: string) => {
@@ -98,10 +126,9 @@ export default function ProgramsConfigurator() {
     }
   };
 
-  // Only show tabs that actually have plans, and always resolve to a valid one,
-  // so clicking a tab can never collapse the configurator.
-  const availableTabs = TAB_IDS.filter((id) => (byType[id]?.length ?? 0) > 0);
-  const activeTab = (availableTabs as string[]).includes(tab) ? tab : availableTabs[0] ?? '1step';
+  // Always resolve to a tab that actually has plans, so clicking can never
+  // collapse the configurator.
+  const activeTab = tabs.some((tb) => tb.type === tab) ? tab : tabs[0]?.type ?? '';
   const sizes = byType[activeTab] ?? [];
   const active = sizes.find((s) => s.size === size) ?? sizes[0];
 
@@ -139,19 +166,19 @@ export default function ProgramsConfigurator() {
         <div className="config">
           <div className="reveal">
             <div className="seg">
-              {availableTabs.map((id) => (
+              {tabs.map((tb) => (
                 <button
-                  key={id}
-                  className={id === activeTab ? 'active' : undefined}
-                  data-tab={id}
-                  onClick={() => setTab(id)}
+                  key={tb.type}
+                  className={tb.type === activeTab ? 'active' : undefined}
+                  data-tab={tb.type}
+                  onClick={() => setTab(tb.type)}
                 >
-                  {t.programs.tabs[id]}
+                  {tb.label}
                 </button>
               ))}
             </div>
             <div className="seg-note" id="segNote">
-              {t.programs.notes[activeTab as (typeof TAB_IDS)[number]]}
+              {(t.programs.notes as Record<string, string>)[activeTab] ?? ''}
             </div>
             <div className="size-track" id="sizeRow">
               {sizes.map((s) => (

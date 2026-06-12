@@ -4,15 +4,11 @@ import { useCallback, useEffect, useState } from 'react';
 
 type Row = Record<string, unknown> & { id?: number; __isNew?: boolean };
 
-const TYPES = [
-  { v: '1step', label: '1-Step' },
-  { v: '2step', label: '2-Step' },
-  { v: 'instant', label: 'Instant' },
-];
-
-// k = field key, label = header, w = optional column type
-const FIELDS: { k: string; label: string; type?: 'number' | 'type' }[] = [
-  { k: 'programType', label: 'Type', type: 'type' },
+// k = field key, label = header, type = optional column type, ph = placeholder hint
+const FIELDS: { k: string; label: string; type?: 'number'; ph?: string }[] = [
+  { k: 'programType', label: 'Type key', ph: 'e.g. standard, atomic, 1step' },
+  { k: 'typeLabel', label: 'Tab label', ph: 'e.g. Standard' },
+  { k: 'typeOrder', label: 'Tab order', type: 'number' },
   { k: 'size', label: 'Size' },
   { k: 'sizeOrder', label: 'Order', type: 'number' },
   { k: 'fee', label: 'Fee', type: 'number' },
@@ -50,7 +46,9 @@ export default function ProgramsManager() {
     setRows((rs) => [
       {
         __isNew: true,
-        programType: '1step',
+        programType: '',
+        typeLabel: '',
+        typeOrder: 0,
         profitSplit: '100%',
         minDays: 'None',
         timeLimit: 'Unlimited',
@@ -104,7 +102,9 @@ export default function ProgramsManager() {
           <h3>Programs</h3>
           <p>
             One row = one account size within a program type. Drives the “Configure your funded
-            account” section — tabs, size pills, the spec list and the pricing card.
+            account” section — tabs, size pills, the spec list and the pricing card. To add a new
+            program tab (e.g. Standard, Atomic), give its rows the same <b>Type key</b> + <b>Tab
+            label</b>; <b>Tab order</b> sets the left-to-right tab position.
           </p>
         </div>
         <div className="adm-actions">
@@ -127,24 +127,13 @@ export default function ProgramsManager() {
               <tr key={row.id ?? `new-${i}`}>
                 {FIELDS.map((f) => (
                   <td key={f.k}>
-                    {f.type === 'type' ? (
-                      <select
-                        className="adm-input"
-                        value={String(row[f.k] ?? '1step')}
-                        onChange={(e) => setField(i, f.k, e.target.value)}
-                      >
-                        {TYPES.map((t) => (
-                          <option key={t.v} value={t.v}>{t.label}</option>
-                        ))}
-                      </select>
-                    ) : (
-                      <input
-                        className="adm-input"
-                        type={f.type === 'number' ? 'number' : 'text'}
-                        value={String(row[f.k] ?? '')}
-                        onChange={(e) => setField(i, f.k, e.target.value)}
-                      />
-                    )}
+                    <input
+                      className="adm-input"
+                      type={f.type === 'number' ? 'number' : 'text'}
+                      placeholder={f.ph ?? ''}
+                      value={String(row[f.k] ?? '')}
+                      onChange={(e) => setField(i, f.k, e.target.value)}
+                    />
                   </td>
                 ))}
                 <td className="adm-row-actions">

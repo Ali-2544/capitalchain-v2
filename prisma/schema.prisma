@@ -44,7 +44,9 @@ model Content {
 // Drives the section's tabs, size pills, spec list and pricing card.
 model ProgramPlan {
   id          Int      @id @default(autoincrement())
-  programType String // '1step' | '2step' | 'instant'
+  programType String // type key — any value, e.g. '1step', 'standard', 'atomic'
+  typeLabel   String   @default("") // tab display name, e.g. "One Step" (falls back to a humanized type)
+  typeOrder   Int      @default(0) // order of this type's tab among the program types
   size        String // '5K', '25K', '50K', '100K', '200K', '500K'
   sizeOrder   Int      @default(0) // pill order within a program type
   fee         Int // current one-time fee (USD)
