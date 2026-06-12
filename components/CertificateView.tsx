@@ -17,9 +17,10 @@ interface Props {
   amount: string;
   size: string;
   date: string;
+  txUrl?: string;
 }
 
-export default function CertificateView({ name, amount, size, date }: Props) {
+export default function CertificateView({ name, amount, size, date, txUrl }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [busy, setBusy] = useState<'png' | 'pdf' | null>(null);
 
@@ -112,6 +113,11 @@ export default function CertificateView({ name, amount, size, date }: Props) {
         <button className="cert-print cert-print-ghost" onClick={() => window.print()} disabled={busy !== null}>
           Print
         </button>
+        {txUrl ? (
+          <a className="cert-print cert-print-ghost" href={txUrl} target="_blank" rel="noreferrer noopener">
+            Verify transaction ↗
+          </a>
+        ) : null}
       </div>
     </div>
   );

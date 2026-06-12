@@ -6,6 +6,7 @@ import { useTheme } from './ThemeProvider';
 import { LANGS, useLang, useT } from './LanguageProvider';
 import EditableImage from '@/components/EditableImage';
 import EditableLink from '@/components/EditableLink';
+import { useContent } from './ContentProvider';
 
 function Logo() {
   return (
@@ -62,11 +63,13 @@ function LangSwitch() {
 export default function Nav() {
   const { toggleTheme } = useTheme();
   const t = useT();
+  const { editMode, overrides, save } = useContent();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  const links = [
+  // The built-in page links. Order/visibility/extra links are managed in the DB.
+  const DEFAULT_NAV: { key: string; href: string; label: React.ReactNode }[] = [
     { key: 'home', href: '/', label: t.nav.home },
     { key: 'rewards', href: '/rewards', label: t.nav.rewards },
     { key: 'affiliate', href: '/affiliate', label: t.nav.affiliate },
@@ -75,6 +78,41 @@ export default function Nav() {
     { key: 'contact', href: '/contact', label: t.nav.contact },
     { key: 'terms', href: '/terms', label: t.nav.terms },
   ];
+
+  const parseList = (raw?: string): string[] => {
+    if (!raw) return [];
+    try {
+      const p = JSON.parse(raw);
+      if (Array.isArray(p)) return p.filter((k): k is string => typeof k === 'string');
+    } catch {
+      /* ignore */
+    }
+    return [];
+  };
+
+  // Final order = saved order (if any) with any missing defaults appended.
+  const savedOrder = parseList(overrides['en::nav.order']?.value);
+  const order = savedOrder.length ? [...savedOrder] : DEFAULT_NAV.map((d) => d.key);
+  for (const d of DEFAULT_NAV) if (!order.includes(d.key)) order.push(d.key);
+
+  const hidden = parseList(overrides['en::nav.hidden']?.value);
+
+  const items = order.map((key) => {
+    const def = DEFAULT_NAV.find((d) => d.key === key);
+    return def
+      ? { key, href: def.href, label: def.label, custom: false }
+      : { key, href: '#', label: 'New link' as React.ReactNode, custom: true };
+  });
+
+  const saveOrder = (next: string[]) => save('nav.order', 'en', 'text', JSON.stringify(next));
+  const saveHidden = (next: string[]) => save('nav.hidden', 'en', 'text', JSON.stringify(next));
+  const hideItem = (key: string) => saveHidden(Array.from(new Set([...hidden, key])));
+  const restoreItem = (key: string) => saveHidden(hidden.filter((k) => k !== key));
+  const removeCustom = (key: string) => saveOrder(order.filter((k) => k !== key));
+  const addItem = () => saveOrder([...order, `custom-${Date.now()}`]);
+
+  // What visitors see: everything that isn't hidden.
+  const visibleItems = items.filter((it) => !hidden.includes(it.key));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -94,16 +132,39 @@ export default function Nav() {
         <div className="bar">
           <Logo />
           <div className="nav-links">
-            {links.map((l) => (
-              <EditableLink
-                key={l.href}
-                id={`nav.${l.key}`}
-                href={l.href}
-                className={pathname === l.href ? 'on' : undefined}
-              >
-                {l.label}
-              </EditableLink>
-            ))}
+            {(editMode ? items : visibleItems).map((it) => {
+              const isHidden = hidden.includes(it.key);
+              return (
+                <span key={it.key} className={`nav-item${isHidden ? ' nav-item-hidden' : ''}`}>
+                  <EditableLink
+                    id={`nav.${it.key}`}
+                    href={it.href}
+                    className={pathname === it.href ? 'on' : undefined}
+                  >
+                    {it.label}
+                  </EditableLink>
+                  {editMode && (
+                    <button
+                      type="button"
+                      className="nav-toggle"
+                      title={isHidden ? 'Show in menu' : it.custom ? 'Remove link' : 'Hide from menu'}
+                      onClick={() => {
+                        if (isHidden) restoreItem(it.key);
+                        else if (it.custom) removeCustom(it.key);
+                        else hideItem(it.key);
+                      }}
+                    >
+                      {isHidden ? '↺' : '✕'}
+                    </button>
+                  )}
+                </span>
+              );
+            })}
+            {editMode && (
+              <button type="button" className="nav-add" onClick={addItem} title="Add a menu link">
+                + Add
+              </button>
+            )}
           </div>
           <div className="nav-cta">
             <button className="theme-tg" id="themeTg" aria-label="Toggle theme" onClick={toggleTheme}>
@@ -136,15 +197,15 @@ export default function Nav() {
       {menuOpen && (
         <div className="mobile-menu">
           <div className="wrap">
-            {links.map((l) => (
+            {visibleItems.map((it) => (
               <EditableLink
-                key={l.href}
-                id={`nav.${l.key}`}
-                href={l.href}
-                className={pathname === l.href ? 'on' : undefined}
+                key={it.key}
+                id={`nav.${it.key}`}
+                href={it.href}
+                className={pathname === it.href ? 'on' : undefined}
                 onClick={() => setMenuOpen(false)}
               >
-                {l.label}
+                {it.label}
               </EditableLink>
             ))}
             <div className="mobile-cta">

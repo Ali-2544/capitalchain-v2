@@ -37,8 +37,13 @@ const ContentContext = createContext<ContentContextValue | null>(null);
 export function ContentProvider({ children }: { children: React.ReactNode }) {
   const [overrides, setOverrides] = useState<OverrideMap>({});
   const [authed, setAuthed] = useState(false);
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditModeState] = useState(false);
   const [editing, setEditing] = useState<EditTarget | null>(null);
+
+  // Persist edit mode across page navigations/reloads. Site links are plain
+  // <a> tags (full reloads), so without this, edit mode would silently switch
+  // off every time the admin moved to another page.
+  const EDIT_KEY = 'cc_edit_mode';
 
   const openEditor = useCallback((id: string, value: string) => setEditing({ id, value, kind: 'text' }), []);
   const openLinkEditor = useCallback(
@@ -47,6 +52,17 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
   );
   const closeEditor = useCallback(() => setEditing(null), []);
 
+  // Toggle edit mode AND remember the choice, so it survives the full-page
+  // reloads caused by navigating between pages via plain <a> links.
+  const setEditMode = useCallback((on: boolean) => {
+    setEditModeState(on);
+    try {
+      localStorage.setItem(EDIT_KEY, on ? '1' : '0');
+    } catch {
+      /* storage unavailable — ignore */
+    }
+  }, []);
+
   // When in edit mode, mark the body so scroll-reveal animations are forced
   // visible (sections re-mount and the reveal observer won't fire on them).
   // Also close any open editor when leaving edit mode.
@@ -54,6 +70,20 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
     document.body.classList.toggle('cms-editing', editMode);
     if (!editMode) setEditing(null);
   }, [editMode]);
+
+  // Once we confirm the admin is still authenticated, restore the persisted
+  // edit-mode choice. If they're not authed, force edit mode off.
+  useEffect(() => {
+    if (!authed) {
+      setEditModeState(false);
+      return;
+    }
+    try {
+      if (localStorage.getItem(EDIT_KEY) === '1') setEditModeState(true);
+    } catch {
+      /* ignore */
+    }
+  }, [authed]);
 
   const refresh = useCallback(async () => {
     try {

@@ -37,7 +37,10 @@ export async function POST(req: Request) {
       create: { key, locale, type, value },
     });
     return NextResponse.json(saved);
-  } catch {
+  } catch (e) {
+    // Surface the real reason in server logs (unreachable DB, missing table,
+    // unset DATABASE_URL, auth failure, etc.) so staging can be diagnosed.
+    console.error('[admin/content POST] DB error:', e);
     return NextResponse.json({ error: 'Database not reachable.' }, { status: 503 });
   }
 }
@@ -52,7 +55,8 @@ export async function DELETE(req: Request) {
   try {
     await prisma.content.deleteMany({ where: { key, locale } });
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (e) {
+    console.error('[admin/content DELETE] DB error:', e);
     return NextResponse.json({ error: 'Database not reachable.' }, { status: 503 });
   }
 }

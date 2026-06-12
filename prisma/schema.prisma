@@ -21,6 +21,7 @@ model Payout {
   accountSize String   @default("") // e.g. "$100,000" — shown on the certificate + leaderboard role
   plan        String   @default("") // e.g. "1 Step Nitro" — shown in the rewards ledger
   method      String   @default("USDT (TRC-20)")
+  txUrl       String   @default("") // blockchain explorer / proof link so anyone can verify the transfer
   createdAt   DateTime @default(now()) // certificate date + feed "time ago"
   updatedAt   DateTime @updatedAt
 }

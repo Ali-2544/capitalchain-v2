@@ -27,6 +27,7 @@ export default async function CertificatePage({ params }: { params: Promise<{ id
       amount={payout.amount}
       size={payout.accountSize}
       date={date}
+      txUrl={payout.txUrl}
     />
   );
 }

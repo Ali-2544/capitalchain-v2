@@ -2,6 +2,7 @@
 
 import { useT } from './LanguageProvider';
 import Editable from '@/components/Editable';
+import EditableLink from '@/components/EditableLink';
 
 export default function Affiliate() {
   const t = useT();
@@ -17,9 +18,7 @@ export default function Affiliate() {
             <p style={{ color: 'var(--dim)', fontSize: 18, maxWidth: '44ch', marginBottom: 30 }}>
               <Editable id="affiliate.sub">{t.affiliate.sub}</Editable>
             </p>
-            <a href="#" className="btn btn-p btn-lg" data-magnetic>
-              <Editable id="affiliate.cta">{t.affiliate.cta}</Editable>
-            </a>
+            <EditableLink id="affiliate.cta" href="#" className="btn btn-p btn-lg" data-magnetic>{t.affiliate.cta}</EditableLink>
           </div>
           <div className="aff-card reveal" data-tilt>
             <div className="pct"><Editable id="affiliate.commissionPct">15%</Editable></div>

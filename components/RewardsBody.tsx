@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useT } from '@/components/LanguageProvider';
 import Editable from '@/components/Editable';
+import EditableLink from '@/components/EditableLink';
 import Ticker from '@/components/Ticker';
 
 interface LedgerRow {
@@ -13,6 +14,7 @@ interface LedgerRow {
   size: string;
   plan: string;
   amt: string;
+  txUrl?: string;
 }
 interface Rail {
   amt: string;
@@ -107,9 +109,7 @@ export default function RewardsBody() {
               <Editable className="gt" id="rewardsPage.heroTitle_b">{t.heroTitle_b}</Editable>
             </h1>
             <p><Editable id="rewardsPage.heroP">{t.heroP}</Editable></p>
-            <a href="/#programs" className="btn btn-p" data-magnetic>
-              <Editable id="rewardsPage.heroCta">{t.heroCta}</Editable>
-            </a>
+            <EditableLink id="rewardsPage.heroCta" href="/#programs" className="btn btn-p" data-magnetic>{t.heroCta}</EditableLink>
           </div>
 
           <div className="rw-right">
@@ -344,7 +344,7 @@ export default function RewardsBody() {
                       <td>{r.plan}</td>
                       <td className="amt gt">{r.amt}</td>
                       <td className="tx">
-                        <a href={`/certificate/${r.id}`} target="_blank" rel="noreferrer"><Editable id="rewardsPage.thTx">{t.thTx}</Editable> ↗</a>
+                        <a href={r.txUrl || `/certificate/${r.id}`} target="_blank" rel="noreferrer"><Editable id="rewardsPage.thTx">{t.thTx}</Editable> ↗</a>
                       </td>
                     </tr>
                   ))

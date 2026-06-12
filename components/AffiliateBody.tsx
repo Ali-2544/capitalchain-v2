@@ -3,6 +3,7 @@
 import { useT } from '@/components/LanguageProvider';
 import AffiliateFAQ from '@/components/AffiliateFAQ';
 import Editable from '@/components/Editable';
+import EditableLink from '@/components/EditableLink';
 
 export default function AffiliateBody() {
   const t = useT().affiliatePage;
@@ -24,9 +25,7 @@ export default function AffiliateBody() {
               <Editable id="affiliatePage.hero.sub">{t.hero.sub}</Editable>
             </p>
             <div className="hero-actions">
-              <a href="#" className="btn btn-p btn-lg" data-magnetic>
-                <Editable id="affiliatePage.hero.cta">{t.hero.cta}</Editable>
-              </a>
+              <EditableLink id="affiliatePage.hero.cta" href="#" className="btn btn-p btn-lg" data-magnetic>{t.hero.cta}</EditableLink>
             </div>
           </div>
 

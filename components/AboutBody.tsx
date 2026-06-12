@@ -2,6 +2,7 @@
 
 import { useT } from '@/components/LanguageProvider';
 import Editable from '@/components/Editable';
+import EditableLink from '@/components/EditableLink';
 import EditableImage from '@/components/EditableImage';
 
 export default function AboutBody() {
@@ -93,9 +94,9 @@ export default function AboutBody() {
                 <Editable id="aboutPage.community.p_b">{t.community.p_b}</Editable>
               </p>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 12 }}>
-                <a href="/#community" className="btn btn-p" data-magnetic><Editable id="aboutPage.community.joinCta">{t.community.joinCta}</Editable></a>
-                <a href="/#programs" className="btn"><Editable id="aboutPage.community.coursesCta">{t.community.coursesCta}</Editable></a>
-                <a href="/#community" className="btn"><Editable id="aboutPage.community.chatCta">{t.community.chatCta}</Editable></a>
+                <EditableLink id="aboutPage.community.joinCta" href="/#community" className="btn btn-p" data-magnetic>{t.community.joinCta}</EditableLink>
+                <EditableLink id="aboutPage.community.coursesCta" href="/#programs" className="btn">{t.community.coursesCta}</EditableLink>
+                <EditableLink id="aboutPage.community.chatCta" href="/#community" className="btn">{t.community.chatCta}</EditableLink>
               </div>
             </div>
           </div>
@@ -180,15 +181,12 @@ export default function AboutBody() {
                 <Editable id="aboutPage.location.body">{t.location.body}</Editable>
               </p>
               <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
-                <a href="/#community" className="btn btn-p" data-magnetic><Editable id="aboutPage.location.contactCta">{t.location.contactCta}</Editable></a>
-                <a
-                  href="https://maps.google.com"
+                <EditableLink id="aboutPage.location.contactCta" href="/#community" className="btn btn-p" data-magnetic>{t.location.contactCta}</EditableLink>
+                <EditableLink id="aboutPage.location.mapsCta" href="https://maps.google.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn"
-                >
-                  <Editable id="aboutPage.location.mapsCta">{t.location.mapsCta}</Editable>
-                </a>
+                >{t.location.mapsCta}</EditableLink>
               </div>
             </div>
           </div>

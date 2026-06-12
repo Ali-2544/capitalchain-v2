@@ -21,7 +21,7 @@ export const RESOURCES: Record<ResourceName, ResourceDef> = {
   payouts: {
     delegate: prisma.payout as unknown as Delegate,
     orderBy: { createdAt: 'desc' },
-    fields: ['flag', 'country', 'traderName', 'amount', 'accountSize', 'plan', 'method'],
+    fields: ['flag', 'country', 'traderName', 'amount', 'accountSize', 'plan', 'method', 'txUrl'],
   },
 };
 

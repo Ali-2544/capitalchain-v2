@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useT } from './LanguageProvider';
 import Editable from '@/components/Editable';
+import EditableLink from '@/components/EditableLink';
 import { useLiveData, timeAgo } from '@/lib/useLiveData';
 
 interface Settlement {
@@ -13,6 +14,7 @@ interface Settlement {
   amt: string;
   time: string;
   net: string;
+  txUrl: string;
 }
 
 // Raw row can come from the API (amount/method/createdAt) or the fallback (amt/time/net).
@@ -27,6 +29,7 @@ interface RawSettlement {
   net?: string;
   createdAt?: string;
   time?: string;
+  txUrl?: string;
 }
 
 // Fallback shown until /api/settlements loads (or if the DB is empty).
@@ -50,6 +53,7 @@ function normalize(r: RawSettlement): Settlement {
     amt: r.amt ?? r.amount ?? '',
     net: r.net ?? r.method ?? '',
     time: r.time ?? (r.createdAt ? timeAgo(r.createdAt) : ''),
+    txUrl: r.txUrl ?? '',
   };
 }
 
@@ -112,7 +116,7 @@ export default function LiveRewards() {
             <div className="rewards-total gt"><Editable id="live.totalAmount">$5.31M</Editable></div>
             <p className="rewards-cap"><Editable id="live.total">{t.live.total}</Editable></p>
 
-            <div className={`reward-feature${active ? ' is-on' : ''}`} aria-hidden={!active}>
+            <div className={`reward-feature${card ? ' is-on' : ''}`} aria-hidden={card ? undefined : true}>
               <div className="rf-top">
                 <span className="rf-flag">{card.flag}</span> {card.country.toUpperCase()}
               </div>
@@ -121,6 +125,8 @@ export default function LiveRewards() {
               <div className="rf-meta">
                 {card.time} {t.live.ago} · {card.net}
               </div>
+              {/* Destination is dynamic (each payout → its own certificate), so this is a
+                  plain anchor — only the label is editable, never the href. */}
               <a
                 href={certHref(card.id) ?? '#rewards'}
                 target={card.id ? '_blank' : undefined}
@@ -128,16 +134,27 @@ export default function LiveRewards() {
                 className="btn btn-p"
                 data-magnetic
                 style={{ marginTop: 22 }}
-              >
-                <Editable id="live.proof">{t.live.proof}</Editable>
-              </a>
+                onClick={(e) => {
+                  if (!card.id) e.preventDefault();
+                }}
+              ><Editable id="live.proof">{t.live.proof}</Editable></a>
+              {card.txUrl ? (
+                <a
+                  className="rf-verify"
+                  href={card.txUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <Editable id="live.verify">{t.live.verify}</Editable> ↗
+                </a>
+              ) : null}
             </div>
           </div>
 
           <div className="rewards-list">
             <div className="rl-head">
               <span><Editable id="live.recent">{t.live.recent}</Editable></span>
-              <a href="#rewards"><Editable id="live.viewRewards">{t.live.viewRewards}</Editable></a>
+              <EditableLink id="live.viewRewards" href="#rewards">{t.live.viewRewards}</EditableLink>
             </div>
             <div
               className="rl-viewport"

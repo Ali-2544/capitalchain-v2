@@ -3,6 +3,7 @@
 import { useT } from '@/components/LanguageProvider';
 import ContactForm from '@/components/ContactForm';
 import Editable from '@/components/Editable';
+import EditableLink from '@/components/EditableLink';
 
 export default function ContactBody() {
   const t = useT().contactPage;
@@ -50,7 +51,7 @@ export default function ContactBody() {
                 <Editable id="contactPage.direct.body">{t.direct.body}</Editable>
               </p>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--line)', paddingTop: '16px' }}>
-                <span style={{ color: 'var(--text)', fontWeight: 600 }}>support@capitalchain.co</span>
+                <span style={{ color: 'var(--text)', fontWeight: 600 }}><Editable id="contactPage.direct.email">support@capitalchain.co</Editable></span>
                 <span style={{ fontSize: '12px', background: 'rgba(25,230,214,0.1)', color: 'var(--teal)', padding: '4px 10px', borderRadius: '20px' }}><Editable id="contactPage.direct.badge">{t.direct.badge}</Editable></span>
               </div>
             </div>
@@ -68,9 +69,7 @@ export default function ContactBody() {
               <p style={{ color: 'var(--dim)', fontSize: '14.5px', marginBottom: '16px', lineHeight: 1.6 }}>
                 <Editable id="contactPage.discord.body">{t.discord.body}</Editable>
               </p>
-              <a href="/#community" className="btn btn-p" style={{ width: '100%', justifyContent: 'center' }}>
-                <Editable id="contactPage.discord.cta">{t.discord.cta}</Editable>
-              </a>
+              <EditableLink id="contactPage.discord.cta" href="/#community" className="btn btn-p" style={{ width: '100%', justifyContent: 'center' }}>{t.discord.cta}</EditableLink>
             </div>
 
             {/* Card 3: Partnerships */}
@@ -87,7 +86,7 @@ export default function ContactBody() {
                 <h4 style={{ fontFamily: 'var(--fd)', fontSize: '20px', fontWeight: 600, margin: 0 }}><Editable id="contactPage.business.title">{t.business.title}</Editable></h4>
               </div>
               <p style={{ color: 'var(--dim)', fontSize: '14.5px', lineHeight: 1.6 }}>
-                <Editable id="contactPage.business.body">{t.business.body}</Editable> <strong style={{ color: 'var(--text)' }}>partners@capitalchain.co</strong>
+                <Editable id="contactPage.business.body">{t.business.body}</Editable> <strong style={{ color: 'var(--text)' }}><Editable id="contactPage.business.email">partners@capitalchain.co</Editable></strong>
               </p>
             </div>
           </div>
@@ -111,14 +110,11 @@ export default function ContactBody() {
                 <Editable id="contactPage.location.body">{t.location.body}</Editable>
               </p>
               <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
-                <a
-                  href="https://maps.google.com"
+                <EditableLink id="contactPage.location.maps" href="https://maps.google.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-p"
-                >
-                  <Editable id="contactPage.location.maps">{t.location.maps}</Editable>
-                </a>
+                >{t.location.maps}</EditableLink>
               </div>
             </div>
           </div>

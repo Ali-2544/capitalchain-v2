@@ -65,22 +65,42 @@ function computeOrder(saved?: string): string[] {
   return out;
 }
 
+function parseHidden(saved?: string): string[] {
+  if (!saved) return [];
+  try {
+    const parsed = JSON.parse(saved);
+    if (Array.isArray(parsed)) return parsed.filter((k) => typeof k === 'string' && k in REGISTRY);
+  } catch {
+    /* ignore */
+  }
+  return [];
+}
+
 export default function HomeSections() {
   const { overrides, editMode, save } = useContent();
   const saved = overrides['en::home.order']?.value;
+  const savedHidden = overrides['en::home.hidden']?.value;
 
   const [items, setItems] = useState<string[]>(() => computeOrder(saved));
+  const [hidden, setHidden] = useState<string[]>(() => parseHidden(savedHidden));
   const dragKey = useRef<string | null>(null);
   const [over, setOver] = useState<string | null>(null);
 
-  // Keep local order in sync with the saved override.
+  // Keep local state in sync with the saved overrides.
   useEffect(() => {
     setItems(computeOrder(saved));
   }, [saved]);
+  useEffect(() => {
+    setHidden(parseHidden(savedHidden));
+  }, [savedHidden]);
 
-  const persist = async (next: string[]) => {
+  const persistOrder = async (next: string[]) => {
     setItems(next);
     await save('home.order', 'en', 'text', JSON.stringify(next));
+  };
+  const persistHidden = async (next: string[]) => {
+    setHidden(next);
+    await save('home.hidden', 'en', 'text', JSON.stringify(next));
   };
 
   const onDrop = async (targetKey: string) => {
@@ -90,7 +110,7 @@ export default function HomeSections() {
     if (!from || from === targetKey) return;
     const next = items.filter((k) => k !== from);
     next.splice(next.indexOf(targetKey), 0, from);
-    await persist(next);
+    await persistOrder(next);
   };
 
   // Simple, reliable reordering: move a section up or down by one.
@@ -100,8 +120,11 @@ export default function HomeSections() {
     if (i < 0 || j < 0 || j >= items.length) return;
     const next = [...items];
     [next[i], next[j]] = [next[j], next[i]];
-    await persist(next);
+    await persistOrder(next);
   };
+
+  const remove = (key: string) => persistHidden(Array.from(new Set([...hidden, key])));
+  const restore = (key: string) => persistHidden(hidden.filter((k) => k !== key));
 
   return (
     <>
@@ -109,9 +132,24 @@ export default function HomeSections() {
         const entry = REGISTRY[key];
         if (!entry) return null;
         const { Comp, label } = entry;
+        const isHidden = hidden.includes(key);
 
-        if (!editMode) return <Comp key={key} />;
+        // Live site: skip removed sections entirely.
+        if (!editMode) return isHidden ? null : <Comp key={key} />;
 
+        // Edit mode, removed: show a compact strip with a Restore button.
+        if (isHidden) {
+          return (
+            <div key={key} className="section-removed">
+              <span className="section-removed-label">⊘ {label} — removed (hidden on site)</span>
+              <button type="button" className="btn btn-p section-restore" onClick={() => restore(key)}>
+                Restore
+              </button>
+            </div>
+          );
+        }
+
+        // Edit mode, visible: section with reorder + remove controls.
         return (
           <div
             key={key}
@@ -156,6 +194,15 @@ export default function HomeSections() {
                 aria-label="Move section down"
               >
                 ▼
+              </button>
+              <button
+                type="button"
+                className="section-move section-remove"
+                onClick={() => remove(key)}
+                title="Remove section (hide on site)"
+                aria-label="Remove section"
+              >
+                ✕
               </button>
             </div>
             <Comp />

@@ -16,6 +16,7 @@ export async function GET() {
         country: true,
         amount: true,
         method: true,
+        txUrl: true,
         createdAt: true,
       },
     });

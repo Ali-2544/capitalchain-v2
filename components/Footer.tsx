@@ -2,6 +2,7 @@
 
 import { useT } from './LanguageProvider';
 import Editable from '@/components/Editable';
+import EditableLink from '@/components/EditableLink';
 import EditableImage from '@/components/EditableImage';
 
 export default function Footer() {
@@ -16,9 +17,7 @@ export default function Footer() {
           </div>
           <div className="form">
             <input type="email" placeholder={t.footer.emailPlaceholder} aria-label="email" />
-            <a href="#" className="btn btn-p" data-magnetic>
-              <Editable id="footer.subscribe">{t.footer.subscribe}</Editable>
-            </a>
+            <EditableLink id="footer.subscribe" href="#" className="btn btn-p" data-magnetic>{t.footer.subscribe}</EditableLink>
           </div>
         </div>
         <div className="foot-grid">
@@ -31,24 +30,24 @@ export default function Footer() {
           </div>
           <div className="foot-col">
             <h5><Editable id="footer.platform">{t.footer.platform}</Editable></h5>
-            <a href="/#programs"><Editable id="footer.programs">{t.footer.programs}</Editable></a>
-            <a href="/#payouts"><Editable id="footer.payouts">{t.footer.payouts}</Editable></a>
-            <a href="/#scaling"><Editable id="footer.scaling">{t.footer.scaling}</Editable></a>
-            <a href="/#platforms"><Editable id="footer.platforms">{t.footer.platforms}</Editable></a>
+            <EditableLink id="footer.programs" href="/#programs">{t.footer.programs}</EditableLink>
+            <EditableLink id="footer.payouts" href="/#payouts">{t.footer.payouts}</EditableLink>
+            <EditableLink id="footer.scaling" href="/#scaling">{t.footer.scaling}</EditableLink>
+            <EditableLink id="footer.platforms" href="/#platforms">{t.footer.platforms}</EditableLink>
           </div>
           <div className="foot-col">
             <h5><Editable id="footer.company">{t.footer.company}</Editable></h5>
-            <a href="/about"><Editable id="footer.about">{t.footer.about}</Editable></a>
-            <a href="/affiliate"><Editable id="footer.affiliate">{t.footer.affiliate}</Editable></a>
-            <a href="/#community"><Editable id="footer.community">{t.footer.community}</Editable></a>
-            <a href="/contact"><Editable id="footer.contact">{t.footer.contact}</Editable></a>
+            <EditableLink id="footer.about" href="/about">{t.footer.about}</EditableLink>
+            <EditableLink id="footer.affiliate" href="/affiliate">{t.footer.affiliate}</EditableLink>
+            <EditableLink id="footer.community" href="/#community">{t.footer.community}</EditableLink>
+            <EditableLink id="footer.contact" href="/contact">{t.footer.contact}</EditableLink>
           </div>
           <div className="foot-col">
             <h5><Editable id="footer.legal">{t.footer.legal}</Editable></h5>
-            <a href="/terms"><Editable id="footer.termsOfUse">{t.footer.termsOfUse}</Editable></a>
-            <a href="/terms#risk"><Editable id="footer.privacy">{t.footer.privacy}</Editable></a>
-            <a href="/terms#risk"><Editable id="footer.risk">{t.footer.risk}</Editable></a>
-            <a href="/terms#refund"><Editable id="footer.refund">{t.footer.refund}</Editable></a>
+            <EditableLink id="footer.termsOfUse" href="/terms">{t.footer.termsOfUse}</EditableLink>
+            <EditableLink id="footer.privacy" href="/terms#risk">{t.footer.privacy}</EditableLink>
+            <EditableLink id="footer.risk" href="/terms#risk">{t.footer.risk}</EditableLink>
+            <EditableLink id="footer.refund" href="/terms#refund">{t.footer.refund}</EditableLink>
           </div>
         </div>
         <div className="disclaimer">

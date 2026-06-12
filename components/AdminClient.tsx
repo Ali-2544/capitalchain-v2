@@ -15,6 +15,7 @@ const PAYOUT_FIELDS: { k: string; label: string }[] = [
   { k: 'accountSize', label: 'Account size' },
   { k: 'plan', label: 'Plan' },
   { k: 'method', label: 'Method' },
+  { k: 'txUrl', label: 'Transaction link' },
 ];
 
 function PayoutsManager() {
@@ -118,7 +119,9 @@ function PayoutsManager() {
                             ? 'e.g. 2140 ($ added)'
                             : f.k === 'accountSize'
                               ? 'e.g. 100000 ($ added)'
-                              : ''
+                              : f.k === 'txUrl'
+                                ? 'e.g. https://tronscan.org/#/transaction/…'
+                                : ''
                       }
                       onChange={(e) => setField(i, f.k, e.target.value)}
                     />

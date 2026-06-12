@@ -80,6 +80,7 @@ export async function GET() {
       size: r.accountSize || '—',
       plan: r.plan || r.method || '—',
       amt: r.amount,
+      txUrl: r.txUrl || '',
     }));
 
     return NextResponse.json({
