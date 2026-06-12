@@ -295,8 +295,8 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .ptile .badge{font-family:var(--fm);font-weight:700;color:var(--teal);font-size:13px;letter-spacing:.05em}
 .ptile h4{font-family:var(--fd);font-weight:600;font-size:20px;margin:auto 0 6px}
 .ptile p{font-size:14px;color:var(--dim)}
-.ptile.a{grid-column:span 5}.ptile.b{grid-column:span 4}.ptile.c{grid-column:span 3}
-.ptile.d{grid-column:span 4}.ptile.e{grid-column:span 4}.ptile.f{grid-column:span 4}
+/* 4 tiles (cTrader + API removed): clean 2×2 grid */
+.ptile.a{grid-column:span 6}.ptile.d{grid-column:span 6}.ptile.e{grid-column:span 6}.ptile.f{grid-column:span 6}
 
 .hscroll{display:flex;gap:18px;overflow-x:auto;padding:6px 40px 22px;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -40px}
 .hscroll::-webkit-scrollbar{display:none}

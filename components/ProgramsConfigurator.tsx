@@ -44,14 +44,6 @@ const FALLBACK_DATA: Record<string, Record<string, { fee: number; was: number; t
     '200K': { fee: 699, was: 799, target: '8% / 5%', dd: '12%', daily: '5%' },
     '500K': { fee: 1499, was: 1799, target: '8% / 5%', dd: '12%', daily: '5%' },
   },
-  instant: {
-    '5K': { fee: 199, was: 249, target: 'None', dd: '6%', daily: '4%' },
-    '25K': { fee: 699, was: 849, target: 'None', dd: '6%', daily: '4%' },
-    '50K': { fee: 1199, was: 1399, target: 'None', dd: '6%', daily: '4%' },
-    '100K': { fee: 1999, was: 2399, target: 'None', dd: '6%', daily: '4%' },
-    '200K': { fee: 3499, was: 3999, target: 'None', dd: '6%', daily: '4%' },
-    '500K': { fee: 7999, was: 8999, target: 'None', dd: '6%', daily: '4%' },
-  },
 };
 
 const FALLBACK: Plan[] = Object.entries(FALLBACK_DATA).flatMap(([programType, sizes]) =>
@@ -72,7 +64,7 @@ const FALLBACK: Plan[] = Object.entries(FALLBACK_DATA).flatMap(([programType, si
   })),
 );
 
-const TAB_IDS = ['1step', '2step', 'instant'] as const;
+const TAB_IDS = ['1step', '2step'] as const; // 'instant' tab removed
 
 export default function ProgramsConfigurator() {
   const t = useT();

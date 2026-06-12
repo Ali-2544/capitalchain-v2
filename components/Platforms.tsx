@@ -3,13 +3,13 @@
 import { useT } from './LanguageProvider';
 import Editable from '@/components/Editable';
 
+// cTrader + API tiles removed. `tile` indexes into the i18n tiles array so the
+// remaining tiles keep their correct content/Editable ids.
 const META = [
-  { cls: 'a', badge: 'MT5 / MT4' },
-  { cls: 'b', badge: 'cTRADER' },
-  { cls: 'c', badge: 'API' },
-  { cls: 'd', badge: '⚡ SPEED' },
-  { cls: 'e', badge: '📈 LEVERAGE' },
-  { cls: 'f', badge: '✓ FREEDOM' },
+  { cls: 'a', badge: 'MT5', tile: 0 }, // MetaTrader
+  { cls: 'd', badge: '⚡ SPEED', tile: 3 },
+  { cls: 'e', badge: '📈 LEVERAGE', tile: 4 },
+  { cls: 'f', badge: '✓ FREEDOM', tile: 5 },
 ];
 
 export default function Platforms() {
@@ -27,11 +27,11 @@ export default function Platforms() {
           <p><Editable id="platforms.sub">{t.platforms.sub}</Editable></p>
         </div>
         <div className="plat-bento">
-          {META.map((m, i) => (
+          {META.map((m) => (
             <div className={`ptile ${m.cls} reveal`} key={m.cls} data-tilt>
-              <span className="badge"><Editable id={`platforms.tiles.${i}.badge`}>{m.badge}</Editable></span>
-              <h4><Editable id={`platforms.tiles.${i}.h`}>{t.platforms.tiles[i].h}</Editable></h4>
-              <p><Editable id={`platforms.tiles.${i}.p`}>{t.platforms.tiles[i].p}</Editable></p>
+              <span className="badge"><Editable id={`platforms.tiles.${m.tile}.badge`}>{m.badge}</Editable></span>
+              <h4><Editable id={`platforms.tiles.${m.tile}.h`}>{t.platforms.tiles[m.tile].h}</Editable></h4>
+              <p><Editable id={`platforms.tiles.${m.tile}.p`}>{t.platforms.tiles[m.tile].p}</Editable></p>
             </div>
           ))}
         </div>
