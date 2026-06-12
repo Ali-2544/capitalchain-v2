@@ -35,12 +35,13 @@ export default function Testimonials() {
               <div className="who">
                 <span className="av" />
                 <div>
-                  <div className="nm">{m.nm}</div>
+                  <div className="nm"><Editable id={`testimonials.cards.${i}.nm`}>{m.nm}</Editable></div>
                   <div className="l">
-                    {m.size} · <Editable id="testimonials.funded">{t.testimonials.funded}</Editable>
+                    <Editable id={`testimonials.cards.${i}.size`}>{m.size}</Editable> ·{' '}
+                    <Editable id="testimonials.funded">{t.testimonials.funded}</Editable>
                   </div>
                 </div>
-                <span className="pay">{m.pay}</span>
+                <span className="pay"><Editable id={`testimonials.cards.${i}.pay`}>{m.pay}</Editable></span>
               </div>
             </div>
           ))}

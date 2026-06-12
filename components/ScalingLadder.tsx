@@ -3,13 +3,8 @@
 import { useT } from './LanguageProvider';
 import Editable from '@/components/Editable';
 
-const AMTS = [
-  <>$100<span>K</span></>,
-  <>$200<span>K</span></>,
-  <>$400<span>K</span></>,
-  <>$1<span>M</span></>,
-  <>$2M</>,
-];
+// Plain strings so each amount is inline-editable via <Editable>.
+const AMTS = ['$100K', '$200K', '$400K', '$1M', '$2M'];
 
 export default function ScalingLadder() {
   const t = useT();
@@ -31,7 +26,7 @@ export default function ScalingLadder() {
             return (
               <div className={`rung reveal${peak ? ' peak' : ''}`} key={i}>
                 <div className="lv"><Editable id={`scaling.rungs.${i}`}>{lv}</Editable></div>
-                <div className="amt">{AMTS[i]}</div>
+                <div className="amt"><Editable id={`scaling.amt.${i}`}>{AMTS[i]}</Editable></div>
               </div>
             );
           })}

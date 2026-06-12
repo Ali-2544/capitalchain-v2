@@ -1,6 +1,5 @@
 'use client';
 
-import { Fragment } from 'react';
 import { useT } from './LanguageProvider';
 import Editable from '@/components/Editable';
 
@@ -9,13 +8,6 @@ const Check = () => (
     <path d="M20 6L9 17l-5-5" />
   </svg>
 );
-
-// Render **bold** segments inside an otherwise plain translated string.
-function rich(s: string) {
-  return s.split('**').map((part, i) =>
-    i % 2 === 1 ? <b key={i}>{part}</b> : <Fragment key={i}>{part}</Fragment>,
-  );
-}
 
 const SPLITS = ['60%', '70%', '80%', '100%'];
 
@@ -39,14 +31,16 @@ export default function PayoutCycles() {
                 {best && <div className="badge"><Editable id="payouts.maxSplit">{t.payouts.maxSplit}</Editable></div>}
                 <div className="cn"><Editable id={`payouts.cards.${i}.cn`}>{c.cn}</Editable></div>
                 <div className="split">
-                  <span>{SPLITS[i]}</span>
+                  <span><Editable id={`payouts.split.${i}`}>{SPLITS[i]}</Editable></span>
                 </div>
                 <div className="spl-l"><Editable id="payouts.split">{t.payouts.split}</Editable></div>
                 <ul>
                   {c.items.map((item, j) => (
                     <li key={j}>
                       <Check />
-                      {rich(item)}
+                      <Editable id={`payouts.cards.${i}.items.${j}`}>
+                        {item.replace(/\*\*/g, '')}
+                      </Editable>
                     </li>
                   ))}
                 </ul>

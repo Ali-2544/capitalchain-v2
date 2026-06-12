@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import { useLiveData } from '@/lib/useLiveData';
+import Editable from '@/components/Editable';
 
 interface RawSettlement {
   id?: number;
@@ -47,7 +48,7 @@ export default function Ticker() {
     <div className="ticker">
       <span className="lbl">
         <span className="p" />
-        LIVE
+        <Editable id="ticker.live">LIVE</Editable>
       </span>
       <div className="chips" id="chips">
         {run.map((s, i) => (

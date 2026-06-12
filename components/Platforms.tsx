@@ -29,7 +29,7 @@ export default function Platforms() {
         <div className="plat-bento">
           {META.map((m, i) => (
             <div className={`ptile ${m.cls} reveal`} key={m.cls} data-tilt>
-              <span className="badge">{m.badge}</span>
+              <span className="badge"><Editable id={`platforms.tiles.${i}.badge`}>{m.badge}</Editable></span>
               <h4><Editable id={`platforms.tiles.${i}.h`}>{t.platforms.tiles[i].h}</Editable></h4>
               <p><Editable id={`platforms.tiles.${i}.p`}>{t.platforms.tiles[i].p}</Editable></p>
             </div>

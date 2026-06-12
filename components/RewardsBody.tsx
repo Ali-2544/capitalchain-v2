@@ -98,8 +98,8 @@ export default function RewardsBody() {
           <div className="rw-hero-card">
             <span className="rw-tag"><Editable id="rewardsPage.heroTag">{t.heroTag}</Editable></span>
             <div className="rw-receipts">
-              <span className="rw-receipt">+$1,800</span>
-              <span className="rw-receipt alt">+$640</span>
+              <span className="rw-receipt"><Editable id="rewardsPage.receipt0">+$1,800</Editable></span>
+              <span className="rw-receipt alt"><Editable id="rewardsPage.receipt1">+$640</Editable></span>
             </div>
             <h1 className="rw-h1">
               <Editable id="rewardsPage.heroTitle_a">{t.heroTitle_a}</Editable>
@@ -126,7 +126,7 @@ export default function RewardsBody() {
               </div>
               <div className="rw-statbox">
                 <span className="rw-tag"><Editable id="rewardsPage.statAvgTag">{t.statAvgTag}</Editable></span>
-                <div className="v gt">1hr 28min</div>
+                <div className="v gt"><Editable id="rewardsPage.statAvgVal">1hr 28min</Editable></div>
                 <div className="s"><Editable id="rewardsPage.statAvgSub">{t.statAvgSub}</Editable></div>
               </div>
             </div>
@@ -153,23 +153,23 @@ export default function RewardsBody() {
               </svg>
               <div className="rw-mile-row">
                 <div className="rw-mile">
-                  <div className="d">AUG 9, 2024</div>
-                  <div className="a gt">$50K</div>
+                  <div className="d"><Editable id="rewardsPage.miles.0.d">AUG 9, 2024</Editable></div>
+                  <div className="a gt"><Editable id="rewardsPage.miles.0.a">$50K</Editable></div>
                   <div className="l"><Editable id="rewardsPage.miles.0.l">{t.miles[0].l}</Editable></div>
                 </div>
                 <div className="rw-mile">
-                  <div className="d">DEC 2024</div>
-                  <div className="a gt">$1M</div>
+                  <div className="d"><Editable id="rewardsPage.miles.1.d">DEC 2024</Editable></div>
+                  <div className="a gt"><Editable id="rewardsPage.miles.1.a">$1M</Editable></div>
                   <div className="l"><Editable id="rewardsPage.miles.1.l">{t.miles[1].l}</Editable></div>
                 </div>
                 <div className="rw-mile">
-                  <div className="d">FEB 2026</div>
-                  <div className="a gt">$3M</div>
+                  <div className="d"><Editable id="rewardsPage.miles.2.d">FEB 2026</Editable></div>
+                  <div className="a gt"><Editable id="rewardsPage.miles.2.a">$3M</Editable></div>
                   <div className="l"><Editable id="rewardsPage.miles.2.l">{t.miles[2].l}</Editable></div>
                 </div>
                 <div className="rw-mile">
                   <div className="d"><Editable id="rewardsPage.onHorizon">{t.onHorizon}</Editable></div>
-                  <div className="a muted">$6M</div>
+                  <div className="a muted"><Editable id="rewardsPage.miles.3.a">$6M</Editable></div>
                   <div className="l"><Editable id="rewardsPage.miles.3.l">{t.miles[3].l}</Editable></div>
                 </div>
               </div>
@@ -190,7 +190,7 @@ export default function RewardsBody() {
                   <b>{count}</b> <Editable id="rewardsPage.rewardsLabel">{t.rewardsLabel}</Editable>
                 </span>
                 <span>
-                  <b>99.2%</b> <Editable id="rewardsPage.slaLabel">{t.slaLabel}</Editable>
+                  <b><Editable id="rewardsPage.slaPct">99.2%</Editable></b> <Editable id="rewardsPage.slaLabel">{t.slaLabel}</Editable>
                 </span>
                 <span>
                   <b>{data.countriesCount}+</b> <Editable id="rewardsPage.countriesLabel">{t.countriesLabel}</Editable>
@@ -233,14 +233,14 @@ export default function RewardsBody() {
                   <div className="t"><Editable id="rewardsPage.fame.1.t">{t.fame[1].t}</Editable></div>
                   <div className="m"><Editable id="rewardsPage.fame.1.m">{t.fame[1].m}</Editable></div>
                 </div>
-                <div className="amt gt">7 sec</div>
+                <div className="amt gt"><Editable id="rewardsPage.fame.1.amt">7 sec</Editable></div>
               </div>
               <div className="rw-rec">
                 <div>
                   <div className="t"><Editable id="rewardsPage.fame.2.t">{t.fame[2].t}</Editable></div>
                   <div className="m"><Editable id="rewardsPage.fame.2.m">{t.fame[2].m}</Editable></div>
                 </div>
-                <div className="amt gt">$61,570</div>
+                <div className="amt gt"><Editable id="rewardsPage.fame.2.amt">$61,570</Editable></div>
               </div>
               <div className="rw-rec">
                 <div>

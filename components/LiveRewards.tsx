@@ -109,7 +109,7 @@ export default function LiveRewards() {
             <span className="rewards-tag">
               <span className="lr-dot" /> <Editable id="live.tag">{t.live.tag}</Editable>
             </span>
-            <div className="rewards-total gt">$5.31M</div>
+            <div className="rewards-total gt"><Editable id="live.totalAmount">$5.31M</Editable></div>
             <p className="rewards-cap"><Editable id="live.total">{t.live.total}</Editable></p>
 
             <div className={`reward-feature${active ? ' is-on' : ''}`} aria-hidden={!active}>
