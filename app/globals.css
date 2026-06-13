@@ -16,7 +16,9 @@
   --footer-bg:rgba(7,13,26,.92);
   --fd:var(--font-display),'Space Grotesk',sans-serif;
   --fb:var(--font-body),'Hanken Grotesk',sans-serif;
-  --fm:var(--font-mono),'JetBrains Mono',monospace;
+  /* "mono" slots now use the Hanken body font too — only headings (--fd) keep
+     their own typeface. (Kept as a variable so spacing/uppercase rules still work.) */
+  --fm:var(--font-body),'Hanken Grotesk',sans-serif;
   --w:1380px;
 }
 /* ===== LIGHT (brand teal on light) ===== */
@@ -694,12 +696,12 @@ body.cms-editing .reveal{opacity:1!important;transform:none!important}
 
 
 /* ===== i18n: Arabic / Hindi fonts + RTL ===== */
-html[lang="ar"]{--fd:'Noto Kufi Arabic','Geeza Pro','Segoe UI',Tahoma,sans-serif;--fb:'Noto Naskh Arabic','Geeza Pro','Segoe UI',Tahoma,sans-serif;--fm:'Noto Naskh Arabic','Geeza Pro',monospace}
-html[lang="ur"]{--fd:'Noto Naskh Arabic','Geeza Pro','Segoe UI',Tahoma,sans-serif;--fb:'Noto Naskh Arabic','Geeza Pro','Segoe UI',Tahoma,sans-serif;--fm:'Noto Naskh Arabic','Geeza Pro',monospace}
+html[lang="ar"]{--fd:'Noto Kufi Arabic','Geeza Pro','Segoe UI',Tahoma,sans-serif;--fb:'Noto Naskh Arabic','Geeza Pro','Segoe UI',Tahoma,sans-serif;--fm:'Noto Naskh Arabic','Geeza Pro','Segoe UI',Tahoma,sans-serif}
+html[lang="ur"]{--fd:'Noto Naskh Arabic','Geeza Pro','Segoe UI',Tahoma,sans-serif;--fb:'Noto Naskh Arabic','Geeza Pro','Segoe UI',Tahoma,sans-serif;--fm:'Noto Naskh Arabic','Geeza Pro','Segoe UI',Tahoma,sans-serif}
 /* RTL scripts (Arabic/Urdu) need more vertical room than the tight Latin display line-height */
 body.rtl h1,body.rtl .h2,body.rtl .shead h2,body.rtl .rw-h1{line-height:1.4}
-html[lang="hi"]{--fd:'Noto Sans Devanagari','Nirmala UI','Mangal',sans-serif;--fb:'Noto Sans Devanagari','Nirmala UI','Mangal',sans-serif;--fm:'Noto Sans Devanagari','Nirmala UI',monospace}
-html[lang="bn"]{--fd:'Noto Sans Bengali','Nirmala UI','Vrinda',sans-serif;--fb:'Noto Sans Bengali','Nirmala UI','Vrinda',sans-serif;--fm:'Noto Sans Bengali','Nirmala UI',monospace}
+html[lang="hi"]{--fd:'Noto Sans Devanagari','Nirmala UI','Mangal',sans-serif;--fb:'Noto Sans Devanagari','Nirmala UI','Mangal',sans-serif;--fm:'Noto Sans Devanagari','Nirmala UI','Mangal',sans-serif}
+html[lang="bn"]{--fd:'Noto Sans Bengali','Nirmala UI','Vrinda',sans-serif;--fb:'Noto Sans Bengali','Nirmala UI','Vrinda',sans-serif;--fm:'Noto Sans Bengali','Nirmala UI','Vrinda',sans-serif}
 body.rtl{direction:rtl}
 /* brand wordmark, marquees and code-like bits stay LTR for legibility */
 body.rtl .logo,body.rtl .promo .row,body.rtl .ticker,body.rtl .chips,body.rtl .rw-total-num,body.rtl .rewards-total{direction:ltr}

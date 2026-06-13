@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { countryToFlag } from '@/lib/flags';
 import BlogManager from '@/components/BlogManager';
-import ProgramsManager from '@/components/ProgramsManager';
 
 type Row = Record<string, unknown> & { id?: number; __isNew?: boolean };
 
@@ -211,20 +210,8 @@ function IconBlog() {
     </svg>
   );
 }
-function IconPrograms() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden>
-      <rect x="3" y="4" width="7" height="7" rx="1.5" />
-      <rect x="14" y="4" width="7" height="7" rx="1.5" />
-      <rect x="3" y="14" width="7" height="6" rx="1.5" />
-      <rect x="14" y="14" width="7" height="6" rx="1.5" />
-    </svg>
-  );
-}
-
 const TABS = [
   { key: 'payouts', label: 'Payouts', icon: IconPayouts },
-  { key: 'programs', label: 'Programs', icon: IconPrograms },
   { key: 'blog', label: 'Blog', icon: IconBlog },
 ] as const;
 type TabKey = (typeof TABS)[number]['key'];
@@ -282,7 +269,6 @@ export default function AdminClient() {
       <div className="adm-content">
         <main className="adm-main">
           {tab === 'payouts' && <PayoutsManager />}
-          {tab === 'programs' && <ProgramsManager />}
           {tab === 'blog' && <BlogManager />}
         </main>
       </div>

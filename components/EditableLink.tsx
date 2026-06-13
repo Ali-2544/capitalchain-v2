@@ -4,11 +4,12 @@ import { useLang } from './LanguageProvider';
 import { useContent } from './ContentProvider';
 
 /**
- * An <a> whose label (per-language) and URL (global) are both inline-editable.
- * In edit mode, clicking opens the popover with a Label field + a Link URL field
- * instead of navigating.
+ * A link that is normally STATIC (renders its fixed href + label from code).
  *
- *   <EditableLink id="nav.buy" href="/#programs" className="btn">{t.nav.buy}</EditableLink>
+ * The one exception is the navigation menu: ids beginning with `nav.` stay
+ * dynamic so the menu can still be managed from the frontend (label + URL are
+ * read from / edited via the content overrides). Everything else ignores the
+ * CMS entirely and renders a plain anchor.
  */
 export default function EditableLink({
   id,
@@ -25,6 +26,18 @@ export default function EditableLink({
   const { lang } = useLang();
   const { overrides, editMode, openLinkEditor } = useContent();
 
+  const isNav = id.startsWith('nav.');
+
+  // Static links: fixed href + label, no overrides, never editable.
+  if (!isNav) {
+    return (
+      <a href={href} className={className} {...rest}>
+        {children}
+      </a>
+    );
+  }
+
+  // Nav links stay dynamic.
   const fallback = typeof children === 'string' ? children : '';
   const label = overrides[`${lang}::${id}`]?.value ?? fallback;
   const url = overrides[`en::${id}.href`]?.value || href;

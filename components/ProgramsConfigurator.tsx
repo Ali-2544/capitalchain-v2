@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from 'react';
 import { useT } from './LanguageProvider';
-import { useLiveData } from '@/lib/useLiveData';
 import Editable from '@/components/Editable';
 import EditableLink from '@/components/EditableLink';
 
@@ -84,7 +83,8 @@ function humanizeType(type: string): string {
 
 export default function ProgramsConfigurator() {
   const t = useT();
-  const plans = useLiveData<Plan>('/api/programs', FALLBACK);
+  // Static: program tabs/prices come from the fixed data below, not the database.
+  const plans = FALLBACK;
   const [tab, setTab] = useState<string>('');
   const [size, setSize] = useState('100K');
 

@@ -17,7 +17,7 @@ export default function EditModeToggle() {
       className={`edit-fab${editMode ? ' on' : ''}`}
       onClick={() => setEditMode(!editMode)}
     >
-      {editMode ? `✓ Done — editing ${lang.toUpperCase()}` : '✎ Edit page'}
+      {editMode ? `✓ Done — menu (${lang.toUpperCase()})` : '✎ Edit menu'}
     </button>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Space_Grotesk, Hanken_Grotesk, JetBrains_Mono } from 'next/font/google';
+import { Space_Grotesk, Hanken_Grotesk } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { LanguageProvider } from '@/components/LanguageProvider';
@@ -21,12 +21,6 @@ const body = Hanken_Grotesk({
   variable: '--font-body',
   display: 'swap',
 });
-const mono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  variable: '--font-mono',
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   title: 'CapitalChain — We Connect Traders To Capital',
@@ -40,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body className="light" suppressHydrationWarning>
         <ThemeProvider>
           <LanguageProvider>
