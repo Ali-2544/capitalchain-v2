@@ -154,7 +154,7 @@ export default function LiveRewards() {
           <div className="rewards-list">
             <div className="rl-head">
               <span><Editable id="live.recent">{t.live.recent}</Editable></span>
-              <EditableLink id="live.viewRewards" href="#rewards">{t.live.viewRewards}</EditableLink>
+              <EditableLink id="live.viewRewards" href="/rewards">{t.live.viewRewards}</EditableLink>
             </div>
             <div
               className="rl-viewport"

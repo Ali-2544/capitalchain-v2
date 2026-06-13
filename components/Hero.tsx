@@ -3,6 +3,7 @@
 import { useT } from './LanguageProvider';
 import Editable from './Editable';
 import EditableLink from '@/components/EditableLink';
+import { LINKS, EXTERNAL } from '@/lib/links';
 
 export default function Hero() {
   const t = useT();
@@ -23,7 +24,7 @@ export default function Hero() {
           {t.hero.sub}
         </Editable>
         <div className="hero-actions reveal">
-          <EditableLink id="hero.cta" href="#programs" className="btn btn-p btn-lg" data-magnetic>{t.hero.cta}</EditableLink>
+          <EditableLink id="hero.cta" href={LINKS.checkout} className="btn btn-p btn-lg" data-magnetic {...EXTERNAL}>{t.hero.cta}</EditableLink>
           <span className="trustline">
             <span className="av">
               <span />

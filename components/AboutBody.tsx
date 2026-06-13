@@ -4,6 +4,7 @@ import { useT } from '@/components/LanguageProvider';
 import Editable from '@/components/Editable';
 import EditableLink from '@/components/EditableLink';
 import EditableImage from '@/components/EditableImage';
+import { LINKS, EXTERNAL } from '@/lib/links';
 
 export default function AboutBody() {
   const t = useT().aboutPage;
@@ -94,9 +95,9 @@ export default function AboutBody() {
                 <Editable id="aboutPage.community.p_b">{t.community.p_b}</Editable>
               </p>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 12 }}>
-                <EditableLink id="aboutPage.community.joinCta" href="/#community" className="btn btn-p" data-magnetic>{t.community.joinCta}</EditableLink>
-                <EditableLink id="aboutPage.community.coursesCta" href="/#programs" className="btn">{t.community.coursesCta}</EditableLink>
-                <EditableLink id="aboutPage.community.chatCta" href="/#community" className="btn">{t.community.chatCta}</EditableLink>
+                <EditableLink id="aboutPage.community.joinCta" href={LINKS.discord} className="btn btn-p" data-magnetic {...EXTERNAL}>{t.community.joinCta}</EditableLink>
+                <EditableLink id="aboutPage.community.coursesCta" href={LINKS.checkout} className="btn" {...EXTERNAL}>{t.community.coursesCta}</EditableLink>
+                <EditableLink id="aboutPage.community.chatCta" href={LINKS.telegramCommunity} className="btn" {...EXTERNAL}>{t.community.chatCta}</EditableLink>
               </div>
             </div>
           </div>
@@ -181,7 +182,7 @@ export default function AboutBody() {
                 <Editable id="aboutPage.location.body">{t.location.body}</Editable>
               </p>
               <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
-                <EditableLink id="aboutPage.location.contactCta" href="/#community" className="btn btn-p" data-magnetic>{t.location.contactCta}</EditableLink>
+                <EditableLink id="aboutPage.location.contactCta" href="/contact" className="btn btn-p" data-magnetic>{t.location.contactCta}</EditableLink>
                 <EditableLink id="aboutPage.location.mapsCta" href="https://maps.google.com"
                   target="_blank"
                   rel="noopener noreferrer"

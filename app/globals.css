@@ -380,6 +380,10 @@ footer{border-top:1px solid var(--line);padding:72px 0 40px;background:var(--foo
 .foot-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr;gap:44px;margin-bottom:52px}
 .foot-brand .logo{margin-bottom:18px}
 .foot-brand p{color:var(--dim);font-size:14.5px;max-width:300px;line-height:1.6}
+.foot-social{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+.foot-social-link{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid var(--line);border-radius:10px;color:var(--dim);background:var(--surface);transition:color .2s,border-color .2s,transform .2s}
+.foot-social-link svg{width:18px;height:18px;fill:currentColor}
+.foot-social-link:hover{color:var(--teal);border-color:var(--teal);transform:translateY(-2px)}
 .foot-col h5{font-family:var(--fm);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:18px}
 .foot-col a{display:block;color:var(--dim);font-size:14.5px;margin-bottom:12px;transition:.2s}
 .foot-col a:hover{color:var(--teal)}

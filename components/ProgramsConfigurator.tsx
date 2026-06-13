@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { useT } from './LanguageProvider';
 import Editable from '@/components/Editable';
 import EditableLink from '@/components/EditableLink';
+import { LINKS, EXTERNAL } from '@/lib/links';
 
 // One (program type × size) plan, as returned by /api/programs.
 interface Plan {
@@ -243,7 +244,7 @@ export default function ProgramsConfigurator() {
               </div>
             </div>
             <div className="refund"><Editable id="programs.refund">{t.programs.refund}</Editable></div>
-            <EditableLink id="programs.cta" href="#" className="btn btn-p btn-lg" data-magnetic>{t.programs.cta}</EditableLink>
+            <EditableLink id="programs.cta" href={LINKS.checkout} className="btn btn-p btn-lg" data-magnetic {...EXTERNAL}>{t.programs.cta}</EditableLink>
           </div>
         </div>
       </div>

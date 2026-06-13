@@ -3,6 +3,7 @@
 import { useT } from './LanguageProvider';
 import Editable from '@/components/Editable';
 import EditableLink from '@/components/EditableLink';
+import { LINKS, EXTERNAL } from '@/lib/links';
 
 export default function Community() {
   const t = useT();
@@ -27,8 +28,7 @@ export default function Community() {
             </div>
             <h3><Editable id="community.discordH">{t.community.discordH}</Editable></h3>
             <p><Editable id="community.discordP">{t.community.discordP}</Editable></p>
-            {/* TODO: replace "#" with the real Discord invite URL */}
-            <EditableLink id="community.discordCta" href="#" className="btn btn-p btn-lg" data-magnetic data-discord>{t.community.discordCta}</EditableLink>
+            <EditableLink id="community.discordCta" href={LINKS.discord} className="btn btn-p btn-lg" data-magnetic data-discord {...EXTERNAL}>{t.community.discordCta}</EditableLink>
           </div>
           <div className="support reveal">
             <div className="ic">

@@ -5,6 +5,7 @@ import { useT } from '@/components/LanguageProvider';
 import Editable from '@/components/Editable';
 import EditableLink from '@/components/EditableLink';
 import Ticker from '@/components/Ticker';
+import { LINKS, EXTERNAL } from '@/lib/links';
 
 interface LedgerRow {
   id: number;
@@ -109,7 +110,7 @@ export default function RewardsBody() {
               <Editable className="gt" id="rewardsPage.heroTitle_b">{t.heroTitle_b}</Editable>
             </h1>
             <p><Editable id="rewardsPage.heroP">{t.heroP}</Editable></p>
-            <EditableLink id="rewardsPage.heroCta" href="/#programs" className="btn btn-p" data-magnetic>{t.heroCta}</EditableLink>
+            <EditableLink id="rewardsPage.heroCta" href={LINKS.checkout} className="btn btn-p" data-magnetic {...EXTERNAL}>{t.heroCta}</EditableLink>
           </div>
 
           <div className="rw-right">

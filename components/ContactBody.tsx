@@ -4,6 +4,7 @@ import { useT } from '@/components/LanguageProvider';
 import ContactForm from '@/components/ContactForm';
 import Editable from '@/components/Editable';
 import EditableLink from '@/components/EditableLink';
+import { LINKS, EXTERNAL } from '@/lib/links';
 
 export default function ContactBody() {
   const t = useT().contactPage;
@@ -69,7 +70,7 @@ export default function ContactBody() {
               <p style={{ color: 'var(--dim)', fontSize: '14.5px', marginBottom: '16px', lineHeight: 1.6 }}>
                 <Editable id="contactPage.discord.body">{t.discord.body}</Editable>
               </p>
-              <EditableLink id="contactPage.discord.cta" href="/#community" className="btn btn-p" style={{ width: '100%', justifyContent: 'center' }}>{t.discord.cta}</EditableLink>
+              <EditableLink id="contactPage.discord.cta" href={LINKS.discord} className="btn btn-p" style={{ width: '100%', justifyContent: 'center' }} {...EXTERNAL}>{t.discord.cta}</EditableLink>
             </div>
 
             {/* Card 3: Partnerships */}

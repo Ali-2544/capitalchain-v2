@@ -3,6 +3,7 @@
 import { useT } from './LanguageProvider';
 import Editable from '@/components/Editable';
 import EditableLink from '@/components/EditableLink';
+import { LINKS, EXTERNAL } from '@/lib/links';
 
 export default function Affiliate() {
   const t = useT();
@@ -18,7 +19,7 @@ export default function Affiliate() {
             <p style={{ color: 'var(--dim)', fontSize: 18, maxWidth: '44ch', marginBottom: 30 }}>
               <Editable id="affiliate.sub">{t.affiliate.sub}</Editable>
             </p>
-            <EditableLink id="affiliate.cta" href="#" className="btn btn-p btn-lg" data-magnetic>{t.affiliate.cta}</EditableLink>
+            <EditableLink id="affiliate.cta" href={LINKS.getStarted} className="btn btn-p btn-lg" data-magnetic {...EXTERNAL}>{t.affiliate.cta}</EditableLink>
           </div>
           <div className="aff-card reveal" data-tilt>
             <div className="pct"><Editable id="affiliate.commissionPct">15%</Editable></div>
