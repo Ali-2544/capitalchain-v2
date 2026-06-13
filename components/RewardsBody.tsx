@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useT } from '@/components/LanguageProvider';
 import Editable from '@/components/Editable';
 import EditableLink from '@/components/EditableLink';
@@ -9,9 +9,11 @@ import { LINKS, EXTERNAL } from '@/lib/links';
 
 interface LedgerRow {
   id: number;
+  ts: number;
   date: string;
   flag: string;
   trader: string;
+  country: string;
   size: string;
   plan: string;
   amt: string;
@@ -24,13 +26,24 @@ interface Rail {
   count: number;
   pct: number;
 }
+interface Milestone {
+  d: string;
+  a: string;
+  l: string;
+  horizon?: boolean;
+}
 interface RewardsData {
   count: number;
   countriesCount: number;
   totalCompact: string;
   totalExact: string;
+  avgReward: string;
+  firstDate: string;
   countries: { flag: string; name: string; amt: string }[];
+  busiest: { flag: string; name: string; amt: string } | null;
   largest: { amt: string; meta: string } | null;
+  receipts: string[];
+  milestones: Milestone[];
   rails: { crypto: Rail; bank: Rail };
   ledger: LedgerRow[];
 }
@@ -41,14 +54,22 @@ const FALLBACK: RewardsData = {
   countriesCount: 0,
   totalCompact: '$0',
   totalExact: '$0',
+  avgReward: '$0',
+  firstDate: '',
   countries: [],
+  busiest: null,
   largest: null,
+  receipts: [],
+  milestones: [],
   rails: {
     crypto: { amt: '$0', avg: '$0', max: '$0', count: 0, pct: 0 },
     bank: { amt: '$0', avg: '$0', max: '$0', count: 0, pct: 0 },
   },
   ledger: [],
 };
+
+const PAGE_SIZE = 10;
+const RANGES: Record<string, number> = { '24': 24 * 3600e3, '7': 7 * 86400e3, '30': 30 * 86400e3 };
 
 export default function RewardsBody() {
   const t = useT().rewardsPage;
@@ -75,8 +96,35 @@ export default function RewardsBody() {
   }, []);
 
   const count = data.count.toLocaleString('en-US');
-  const shownTo = Math.min(data.ledger.length || 0, 12);
   const { crypto, bank } = data.rails;
+
+  // Ledger controls — real search, date-range filter and pagination.
+  const [query, setQuery] = useState('');
+  const [range, setRange] = useState('all');
+  const [page, setPage] = useState(0);
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    const span = RANGES[range];
+    const now = Date.now();
+    return data.ledger.filter((r) => {
+      if (span && now - r.ts > span) return false;
+      if (q && !`${r.trader} ${r.country} ${r.plan} ${r.size}`.toLowerCase().includes(q)) return false;
+      return true;
+    });
+  }, [data.ledger, query, range]);
+
+  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const safePage = Math.min(page, pageCount - 1);
+  const pageRows = filtered.slice(safePage * PAGE_SIZE, safePage * PAGE_SIZE + PAGE_SIZE);
+  const from = filtered.length ? safePage * PAGE_SIZE + 1 : 0;
+  const to = safePage * PAGE_SIZE + pageRows.length;
+
+  const resetFilters = () => {
+    setQuery('');
+    setRange('all');
+    setPage(0);
+  };
 
   return (
     <main className="rw-dash">
@@ -101,8 +149,9 @@ export default function RewardsBody() {
           <div className="rw-hero-card">
             <span className="rw-tag"><Editable id="rewardsPage.heroTag">{t.heroTag}</Editable></span>
             <div className="rw-receipts">
-              <span className="rw-receipt"><Editable id="rewardsPage.receipt0">+$1,800</Editable></span>
-              <span className="rw-receipt alt"><Editable id="rewardsPage.receipt1">+$640</Editable></span>
+              {(data.receipts.length ? data.receipts : ['+$0', '+$0']).slice(0, 2).map((r, i) => (
+                <span className={`rw-receipt${i ? ' alt' : ''}`} key={i}>{r}</span>
+              ))}
             </div>
             <h1 className="rw-h1">
               <Editable id="rewardsPage.heroTitle_a">{t.heroTitle_a}</Editable>
@@ -126,9 +175,9 @@ export default function RewardsBody() {
                 <div className="s"><Editable id="rewardsPage.statRewardsSub">{t.statRewardsSub}</Editable></div>
               </div>
               <div className="rw-statbox">
-                <span className="rw-tag"><Editable id="rewardsPage.statAvgTag">{t.statAvgTag}</Editable></span>
-                <div className="v gt"><Editable id="rewardsPage.statAvgVal">1hr 28min</Editable></div>
-                <div className="s"><Editable id="rewardsPage.statAvgSub">{t.statAvgSub}</Editable></div>
+                <span className="rw-tag">Avg reward</span>
+                <div className="v gt">{data.avgReward}</div>
+                <div className="s">per funded payout</div>
               </div>
             </div>
 
@@ -153,26 +202,13 @@ export default function RewardsBody() {
                 </defs>
               </svg>
               <div className="rw-mile-row">
-                <div className="rw-mile">
-                  <div className="d"><Editable id="rewardsPage.miles.0.d">AUG 9, 2024</Editable></div>
-                  <div className="a gt"><Editable id="rewardsPage.miles.0.a">$50K</Editable></div>
-                  <div className="l"><Editable id="rewardsPage.miles.0.l">{t.miles[0].l}</Editable></div>
-                </div>
-                <div className="rw-mile">
-                  <div className="d"><Editable id="rewardsPage.miles.1.d">DEC 2024</Editable></div>
-                  <div className="a gt"><Editable id="rewardsPage.miles.1.a">$1M</Editable></div>
-                  <div className="l"><Editable id="rewardsPage.miles.1.l">{t.miles[1].l}</Editable></div>
-                </div>
-                <div className="rw-mile">
-                  <div className="d"><Editable id="rewardsPage.miles.2.d">FEB 2026</Editable></div>
-                  <div className="a gt"><Editable id="rewardsPage.miles.2.a">$3M</Editable></div>
-                  <div className="l"><Editable id="rewardsPage.miles.2.l">{t.miles[2].l}</Editable></div>
-                </div>
-                <div className="rw-mile">
-                  <div className="d"><Editable id="rewardsPage.onHorizon">{t.onHorizon}</Editable></div>
-                  <div className="a muted"><Editable id="rewardsPage.miles.3.a">$6M</Editable></div>
-                  <div className="l"><Editable id="rewardsPage.miles.3.l">{t.miles[3].l}</Editable></div>
-                </div>
+                {(data.milestones.length ? data.milestones : [{ d: '—', a: '$0', l: '' }]).map((m, i) => (
+                  <div className="rw-mile" key={i}>
+                    <div className="d">{m.d}</div>
+                    <div className={m.horizon ? 'a muted' : 'a gt'}>{m.a}</div>
+                    <div className="l">{m.l}</div>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -191,7 +227,7 @@ export default function RewardsBody() {
                   <b>{count}</b> <Editable id="rewardsPage.rewardsLabel">{t.rewardsLabel}</Editable>
                 </span>
                 <span>
-                  <b><Editable id="rewardsPage.slaPct">99.2%</Editable></b> <Editable id="rewardsPage.slaLabel">{t.slaLabel}</Editable>
+                  <b>{data.avgReward}</b> avg reward
                 </span>
                 <span>
                   <b>{data.countriesCount}+</b> <Editable id="rewardsPage.countriesLabel">{t.countriesLabel}</Editable>
@@ -225,28 +261,28 @@ export default function RewardsBody() {
               <div className="rw-rec">
                 <div>
                   <div className="t"><Editable id="rewardsPage.fame.0.t">{t.fame[0].t}</Editable></div>
-                  <div className="m">{data.largest?.meta || <Editable id="rewardsPage.fame.0.m">{t.fame[0].m}</Editable>}</div>
+                  <div className="m">{data.largest?.meta || '—'}</div>
                 </div>
                 <div className="amt gt">{data.largest?.amt || '—'}</div>
               </div>
               <div className="rw-rec">
                 <div>
-                  <div className="t"><Editable id="rewardsPage.fame.1.t">{t.fame[1].t}</Editable></div>
-                  <div className="m"><Editable id="rewardsPage.fame.1.m">{t.fame[1].m}</Editable></div>
+                  <div className="t">Average reward</div>
+                  <div className="m">across all {count} payouts</div>
                 </div>
-                <div className="amt gt"><Editable id="rewardsPage.fame.1.amt">7 sec</Editable></div>
+                <div className="amt gt">{data.avgReward}</div>
               </div>
               <div className="rw-rec">
                 <div>
-                  <div className="t"><Editable id="rewardsPage.fame.2.t">{t.fame[2].t}</Editable></div>
-                  <div className="m"><Editable id="rewardsPage.fame.2.m">{t.fame[2].m}</Editable></div>
+                  <div className="t">Most rewarded country</div>
+                  <div className="m">{data.busiest ? `${data.busiest.flag} ${data.busiest.name}` : '—'}</div>
                 </div>
-                <div className="amt gt"><Editable id="rewardsPage.fame.2.amt">$61,570</Editable></div>
+                <div className="amt gt">{data.busiest?.amt || '—'}</div>
               </div>
               <div className="rw-rec">
                 <div>
                   <div className="t"><Editable id="rewardsPage.fame.3.t">{t.fame[3].t}</Editable></div>
-                  <div className="m"><Editable id="rewardsPage.fame.3.m">{t.fame[3].m}</Editable></div>
+                  <div className="m">since launch</div>
                 </div>
                 <div className="amt gt">{data.totalCompact}</div>
               </div>
@@ -303,19 +339,30 @@ export default function RewardsBody() {
         <div className="rw-panel rw-ledger-panel reveal">
           <div className="rw-panel-head">
             <span className="rw-tag">
-              <Editable id="rewardsPage.ledgerTag">{t.ledgerTag}</Editable> <span className="muted"><Editable id="rewardsPage.ledgerScope">{t.ledgerScope}</Editable></span>
+              <Editable id="rewardsPage.ledgerTag">{t.ledgerTag}</Editable> <span className="muted">{data.firstDate ? t.ledgerScope.replace('AUG 9 2024', data.firstDate) : t.ledgerScope}</span>
             </span>
-            <span className="rw-tag muted">{t.showing.replace('1–10', `1–${shownTo}`).replace('3,621', count)}</span>
+            <span className="rw-tag muted">Showing {from}–{to} of {filtered.length.toLocaleString('en-US')}</span>
           </div>
           <div className="rw-ledger-controls">
-            <select className="rw-input" defaultValue="all" aria-label={t.thDate}>
+            <select
+              className="rw-input"
+              value={range}
+              onChange={(e) => { setRange(e.target.value); setPage(0); }}
+              aria-label={t.thDate}
+            >
               <option value="all">{t.rangeAll}</option>
               <option value="30">{t.range30}</option>
               <option value="7">{t.range7}</option>
               <option value="24">{t.range24}</option>
             </select>
-            <input className="rw-input grow" placeholder={t.searchPh} aria-label={t.searchPh} />
-            <button className="rw-input rw-reset" type="button"><Editable id="rewardsPage.reset">{t.reset}</Editable></button>
+            <input
+              className="rw-input grow"
+              placeholder={t.searchPh}
+              aria-label={t.searchPh}
+              value={query}
+              onChange={(e) => { setQuery(e.target.value); setPage(0); }}
+            />
+            <button className="rw-input rw-reset" type="button" onClick={resetFilters}>{t.reset}</button>
           </div>
           <div className="rw-ledger-wrap">
             <table className="rw-ledger">
@@ -330,12 +377,14 @@ export default function RewardsBody() {
                 </tr>
               </thead>
               <tbody>
-                {data.ledger.length === 0 ? (
+                {pageRows.length === 0 ? (
                   <tr>
-                    <td colSpan={6} style={{ textAlign: 'center', color: 'var(--dim)' }}>—</td>
+                    <td colSpan={6} style={{ textAlign: 'center', color: 'var(--dim)' }}>
+                      {data.ledger.length === 0 ? '—' : 'No rewards match your filters.'}
+                    </td>
                   </tr>
                 ) : (
-                  data.ledger.map((r) => (
+                  pageRows.map((r) => (
                     <tr key={r.id}>
                       <td>{r.date}</td>
                       <td>
@@ -356,10 +405,10 @@ export default function RewardsBody() {
           <div className="rw-ledger-foot">
             <span><Editable id="rewardsPage.ledgerFoot">{t.ledgerFoot}</Editable></span>
             <span className="rw-pager">
-              <b>1–{shownTo}</b>
-              <button type="button"><Editable id="rewardsPage.prev">{t.prev}</Editable></button>
-              <button type="button"><Editable id="rewardsPage.next">{t.next}</Editable></button>
-              <span className="muted"><Editable id="rewardsPage.filterState">{t.filterState}</Editable></span>
+              <b>{from}–{to}</b>
+              <button type="button" onClick={() => setPage((p) => Math.max(0, p - 1))} disabled={safePage <= 0}>{t.prev}</button>
+              <button type="button" onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))} disabled={safePage >= pageCount - 1}>{t.next}</button>
+              <span className="muted">Page {safePage + 1} / {pageCount}</span>
             </span>
           </div>
         </div>

@@ -8,6 +8,7 @@ import EditModeToggle from '@/components/EditModeToggle';
 import EditorPopover from '@/components/EditorPopover';
 import GlobeMount from '@/components/GlobeMount';
 import Effects from '@/components/Effects';
+import Intercom from '@/components/Intercom';
 
 const display = Space_Grotesk({
   subsets: ['latin'],
@@ -47,6 +48,8 @@ export default function RootLayout({
               {/* Admin-only floating inline-edit toggle + editor popover. */}
               <EditModeToggle />
               <EditorPopover />
+              {/* Intercom live chat (lazy-loaded on first interaction). */}
+              <Intercom />
             </ContentProvider>
           </LanguageProvider>
         </ThemeProvider>

@@ -155,7 +155,12 @@ h1{font-family:var(--fd);font-weight:700;font-size:clamp(3rem,8vw,7.2rem);line-h
 .section-removed{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:10px auto;max-width:760px;padding:12px 18px;border:1px dashed var(--line);border-radius:12px;background:var(--soft)}
 .section-removed-label{font-family:var(--fm);font-size:13px;color:var(--faint)}
 .section-restore{padding:7px 16px;font-size:13px}
-.edit-fab{position:fixed;inset-block-end:22px;inset-inline-end:22px;z-index:120;font-family:var(--fb);font-weight:700;font-size:14px;padding:12px 20px;border-radius:100px;border:none;cursor:pointer;background:linear-gradient(120deg,#00E0E0,#10C8DE);color:#04181A;box-shadow:0 12px 32px -10px rgba(0,224,224,.6);transition:transform .15s}
+/* Custom Intercom launcher — a clearly-visible branded chat button. */
+.cc-chat-fab{position:fixed;inset-block-end:24px;inset-inline-end:24px;z-index:118;width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#00E0E0,#10C8DE);color:#04181A;box-shadow:0 14px 34px -8px rgba(0,224,224,.55),0 6px 16px rgba(0,0,0,.28);transition:transform .2s,box-shadow .2s}
+.cc-chat-fab:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 18px 40px -8px rgba(0,224,224,.7),0 6px 16px rgba(0,0,0,.3)}
+.cc-chat-fab svg{width:27px;height:27px}
+/* Admin edit button stacks above the chat button so they don't overlap. */
+.edit-fab{position:fixed;inset-block-end:96px;inset-inline-end:22px;z-index:120;font-family:var(--fb);font-weight:700;font-size:14px;padding:12px 20px;border-radius:100px;border:none;cursor:pointer;background:linear-gradient(120deg,#00E0E0,#10C8DE);color:#04181A;box-shadow:0 12px 32px -10px rgba(0,224,224,.6);transition:transform .15s}
 .edit-fab:hover{transform:translateY(-2px)}
 .edit-fab.on{background:linear-gradient(120deg,#10C8DE,#0aa6c4);color:#fff}
 .editable-img{position:relative;display:inline-block;cursor:pointer}
@@ -235,6 +240,28 @@ section{position:relative;z-index:3}
 .buy .now small{font-size:1rem;color:var(--dim);font-weight:600}
 .buy .refund{font-family:var(--fm);font-size:12.5px;color:var(--green);margin:14px 0 28px;display:flex;align-items:center;gap:8px}
 .buy .btn{width:100%;justify-content:center}
+/* Challenge configurator: dual toggle + columnar spec table + features + payments */
+.seg-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:0}
+.seg-row .seg{margin-bottom:18px}
+.spec-cols{border-top:1px solid var(--line);margin-top:4px}
+.spec-cols-head{display:flex;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.spec-cols-head .sc-name{flex:1;font-family:var(--fd);font-weight:600;font-size:15px;color:var(--text)}
+.sc-vals{display:flex;width:48%;min-width:170px;justify-content:space-between;gap:8px}
+.spec-cols-head .sc-vals span{flex:1;text-align:right;font-family:var(--fm);font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--faint)}
+.scol-row{display:flex;align-items:center;padding:15px 0;border-bottom:1px solid var(--line-2)}
+.scol-name{flex:1;display:flex;align-items:center;gap:12px;color:var(--dim);font-size:14.5px}
+.scol-name img{width:20px;height:20px;object-fit:contain;flex:none}
+.scol-vals{display:flex;width:48%;min-width:170px;justify-content:space-between;gap:8px}
+.scol-vals .v{flex:1;text-align:right;font-weight:600;font-size:14.5px;color:var(--text)}
+.scol-vals .v.ok{color:var(--green)}
+.feat-pills{display:flex;gap:14px;margin-top:26px;flex-wrap:wrap}
+.feat-pill{flex:1;min-width:160px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 18px;border:1px solid var(--line);border-radius:100px;background:var(--surface);font-size:14px;color:var(--dim)}
+.feat-pill .chk{width:23px;height:23px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;color:var(--btn-ink);flex:none}
+.buy .pstep{font-family:var(--fm);font-size:13px;color:var(--dim);margin-top:8px}
+.pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:26px}
+.pay-tile{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.pay-tile img{width:34px;height:34px;border-radius:7px;object-fit:cover;flex:none}
+.pay-tile span{font-size:13px;font-weight:600;color:var(--text)}
 
 .stack{display:flex;flex-direction:column;gap:30px}
 .stack-card{position:sticky;border:1px solid var(--line);border-radius:24px;background:linear-gradient(160deg,var(--surface-2),color-mix(in srgb,var(--bg) 95%,transparent));backdrop-filter:blur(12px);padding:48px;display:grid;grid-template-columns:auto 1fr auto;gap:34px;align-items:center;box-shadow:0 -10px 60px -40px rgba(0,0,0,.6)}
@@ -687,16 +714,26 @@ body.cms-editing .reveal{opacity:1!important;transform:none!important}
   align-items: start;
 }
 
-.terms-nav-link {
-  color: var(--dim);
-  font-size: 14.5px;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.terms-nav-link:hover {
-  color: var(--teal);
-}
+.terms-toc-h{font-family:var(--fm);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+.terms-toc{display:flex;flex-direction:column;gap:4px;max-height:70vh;overflow:auto}
+.terms-nav-link{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:start;background:none;border:1px solid transparent;border-radius:10px;padding:10px 12px;color:var(--dim);font-family:var(--fb);font-size:14px;line-height:1.35;cursor:pointer;transition:.18s}
+.terms-nav-link:hover{color:var(--text);background:var(--soft)}
+.terms-nav-link.on{color:var(--teal);border-color:var(--teal);background:color-mix(in srgb,var(--teal) 10%,transparent)}
+.terms-toc-num{font-family:var(--fm);font-size:12px;font-weight:700;color:var(--faint);flex:none;min-width:18px}
+.terms-nav-link.on .terms-toc-num{color:var(--teal)}
+.terms-panel-h{font-family:var(--fd);font-size:clamp(1.4rem,2.4vw,2rem);font-weight:700;letter-spacing:-.02em;margin-bottom:24px}
+/* Rendered HTML content (migrated terms) */
+.terms-html{color:var(--dim);font-size:15.5px;line-height:1.75}
+.terms-html h2{font-family:var(--fd);font-size:19px;font-weight:600;color:var(--text);margin:30px 0 12px;letter-spacing:-.01em}
+.terms-html h3{font-family:var(--fd);font-size:16px;font-weight:600;color:var(--text);margin:22px 0 8px}
+.terms-html h2:first-child,.terms-html h3:first-child{margin-top:0}
+.terms-html p{margin:0 0 14px}
+.terms-html strong{color:var(--text);font-weight:600}
+.terms-html ul,.terms-html ol{margin:0 0 16px;padding-inline-start:22px;display:flex;flex-direction:column;gap:8px}
+.terms-html li{line-height:1.6}
+.terms-html li::marker{color:var(--teal)}
+.terms-html hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.terms-html a{color:var(--teal)}
 
 
 /* ===== i18n: Arabic / Hindi fonts + RTL ===== */

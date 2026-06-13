@@ -70,13 +70,15 @@ export default function Nav() {
   const pathname = usePathname();
 
   // The built-in page links. Order/visibility/extra links are managed in the DB.
-  const DEFAULT_NAV: { key: string; href: string; label: React.ReactNode }[] = [
+  // `external` links open in a new tab (e.g. the hosted help centre).
+  const DEFAULT_NAV: { key: string; href: string; label: React.ReactNode; external?: boolean }[] = [
     { key: 'home', href: '/', label: t.nav.home },
     { key: 'rewards', href: '/rewards', label: t.nav.rewards },
     { key: 'affiliate', href: '/affiliate', label: t.nav.affiliate },
     { key: 'blog', href: '/blog', label: t.nav.blog },
     { key: 'about', href: '/about', label: t.nav.about },
     { key: 'contact', href: '/contact', label: t.nav.contact },
+    { key: 'faq', href: 'https://help.capitalchain.co/en/', label: 'FAQ', external: true },
     { key: 'terms', href: '/terms', label: t.nav.terms },
   ];
 
@@ -101,8 +103,8 @@ export default function Nav() {
   const items = order.map((key) => {
     const def = DEFAULT_NAV.find((d) => d.key === key);
     return def
-      ? { key, href: def.href, label: def.label, custom: false }
-      : { key, href: '#', label: 'New link' as React.ReactNode, custom: true };
+      ? { key, href: def.href, label: def.label, custom: false, external: !!def.external }
+      : { key, href: '#', label: 'New link' as React.ReactNode, custom: true, external: false };
   });
 
   const saveOrder = (next: string[]) => save('nav.order', 'en', 'text', JSON.stringify(next));
@@ -141,6 +143,7 @@ export default function Nav() {
                     id={`nav.${it.key}`}
                     href={it.href}
                     className={pathname === it.href ? 'on' : undefined}
+                    {...(it.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                   >
                     {it.label}
                   </EditableLink>
@@ -205,6 +208,7 @@ export default function Nav() {
                 href={it.href}
                 className={pathname === it.href ? 'on' : undefined}
                 onClick={() => setMenuOpen(false)}
+                {...(it.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               >
                 {it.label}
               </EditableLink>
