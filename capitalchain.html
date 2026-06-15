@@ -1,723 +1,2993 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CapitalChain — We Connect Traders To Capital</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-  /* ===== DARK (default) ===== */
-  :root{
-    --bg:#050A14;--bg-2:#081020;
-    --surface:rgba(13,24,44,.6);--surface-2:#0E1B30;
-    --line:rgba(60,200,205,.13);--line-2:rgba(60,200,205,.06);
-    --text:#EAF3F4;--dim:#86A0AB;--faint:#4A6068;
-    --teal:#19E6D6;--teal-2:#5BF0E4;--green:#33E29A;
-    --glow:rgba(25,230,214,.45);--soft:rgba(25,230,214,.11);
-    --grad:linear-gradient(120deg,#18E7D2,#33E29A);
-    --grad-text:linear-gradient(115deg,#27EADB 10%,#7BF0CE 90%);
-    --btn-ink:#03110C;
-    --spot:rgba(25,230,214,.08);
-    --mesh-1:rgba(25,230,214,.10);--mesh-2:rgba(51,226,154,.07);
-    --footer-bg:rgba(7,13,26,.92);
-    --fd:'Space Grotesk',sans-serif;--fb:'Hanken Grotesk',sans-serif;--fm:'JetBrains Mono',monospace;
-    --w:1380px;
-  }
-  /* ===== LIGHT (brand teal on light) ===== */
-  body.light{
-    --bg:#EEF5F4;--bg-2:#FFFFFF;
-    --surface:rgba(255,255,255,.72);--surface-2:#E4EEED;
-    --line:rgba(14,135,128,.16);--line-2:rgba(14,135,128,.08);
-    --text:#08231F;--dim:#42605B;--faint:#86A39E;
-    --teal:#0DA99E;--teal-2:#12C4B6;--green:#16B57C;
-    --glow:rgba(13,169,158,.35);--soft:rgba(13,169,158,.1);
-    --grad:linear-gradient(120deg,#10BCAC,#16C386);
-    --grad-text:linear-gradient(115deg,#0AA294 10%,#13B07A 90%);
-    --btn-ink:#FFFFFF;
-    --spot:rgba(13,169,158,.07);
-    --mesh-1:rgba(13,169,158,.12);--mesh-2:rgba(22,181,124,.09);
-    --footer-bg:rgba(228,238,237,.94);
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative;transition:background .4s,color .4s}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CapitalChain — We Connect Traders To Capital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ===== DARK (default) ===== */
+    :root {
+      --bg: #050A14;
+      --bg-2: #081020;
+      --surface: rgba(13, 24, 44, .6);
+      --surface-2: #0E1B30;
+      --line: rgba(60, 200, 205, .13);
+      --line-2: rgba(60, 200, 205, .06);
+      --text: #EAF3F4;
+      --dim: #86A0AB;
+      --faint: #4A6068;
+      --teal: #19E6D6;
+      --teal-2: #5BF0E4;
+      --green: #33E29A;
+      --glow: rgba(25, 230, 214, .45);
+      --soft: rgba(25, 230, 214, .11);
+      --grad: linear-gradient(120deg, #18E7D2, #33E29A);
+      --grad-text: linear-gradient(115deg, #27EADB 10%, #7BF0CE 90%);
+      --btn-ink: #03110C;
+      --spot: rgba(25, 230, 214, .08);
+      --mesh-1: rgba(25, 230, 214, .10);
+      --mesh-2: rgba(51, 226, 154, .07);
+      --footer-bg: rgba(7, 13, 26, .92);
+      --fd: 'Space Grotesk', sans-serif;
+      --fb: 'Hanken Grotesk', sans-serif;
+      --fm: 'JetBrains Mono', monospace;
+      --w: 1380px;
+    }
 
-  #prog{position:fixed;top:0;left:0;height:2px;width:0;background:var(--grad);z-index:200;box-shadow:0 0 12px var(--glow)}
-  #globe{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;transition:opacity .4s}
-  .mesh{position:fixed;inset:0;z-index:0;pointer-events:none;
-    background:radial-gradient(60% 50% at 78% 30%,var(--mesh-1),transparent 60%),radial-gradient(50% 50% at 12% 8%,var(--mesh-2),transparent 60%)}
-  .scrim{position:fixed;inset:0;z-index:1;pointer-events:none}
-  .scrim.t{background:radial-gradient(ellipse 70% 55% at 74% 30%,transparent,color-mix(in srgb,var(--bg) 36%,transparent) 58%,color-mix(in srgb,var(--bg) 80%,transparent) 100%)}
-  .scrim.v{background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 20%,transparent) 0%,transparent 16%,transparent 72%,color-mix(in srgb,var(--bg) 60%,transparent) 100%)}
-  #spot{position:fixed;width:480px;height:480px;border-radius:50%;z-index:1;pointer-events:none;left:0;top:0;transform:translate(-50%,-50%);background:radial-gradient(circle,var(--spot),transparent 65%);opacity:0;transition:opacity .4s}
+    /* ===== LIGHT (brand teal on light) ===== */
+    body.light {
+      --bg: #EEF5F4;
+      --bg-2: #FFFFFF;
+      --surface: rgba(255, 255, 255, .72);
+      --surface-2: #E4EEED;
+      --line: rgba(14, 135, 128, .16);
+      --line-2: rgba(14, 135, 128, .08);
+      --text: #08231F;
+      --dim: #42605B;
+      --faint: #86A39E;
+      --teal: #0DA99E;
+      --teal-2: #12C4B6;
+      --green: #16B57C;
+      --glow: rgba(13, 169, 158, .35);
+      --soft: rgba(13, 169, 158, .1);
+      --grad: linear-gradient(120deg, #10BCAC, #16C386);
+      --grad-text: linear-gradient(115deg, #0AA294 10%, #13B07A 90%);
+      --btn-ink: #FFFFFF;
+      --spot: rgba(13, 169, 158, .07);
+      --mesh-1: rgba(13, 169, 158, .12);
+      --mesh-2: rgba(22, 181, 124, .09);
+      --footer-bg: rgba(228, 238, 237, .94);
+    }
 
-  .wrap{max-width:var(--w);margin:0 auto;padding:0 40px;position:relative;z-index:3}
-  a{color:inherit;text-decoration:none}.mono{font-family:var(--fm)}
-  .gt{background:var(--grad-text);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
 
-  .promo{background:var(--grad);color:var(--btn-ink);font-family:var(--fm);font-size:13px;font-weight:700;letter-spacing:.04em;overflow:hidden;position:relative;z-index:70;padding:9px 0}
-  .promo .row{display:flex;gap:60px;white-space:nowrap;animation:slide 26s linear infinite;width:max-content}
-  @keyframes slide{to{transform:translateX(-50%)}}
+    html {
+      scroll-behavior: smooth
+    }
 
-  header{position:sticky;top:0;z-index:60}
-  .bar{display:flex;align-items:center;justify-content:space-between;height:74px;transition:.3s;border-bottom:1px solid transparent}
-  header.scrolled .bar{background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(18px) saturate(160%);border-color:var(--line)}
-  .logo{display:flex;align-items:center;gap:11px;font-family:var(--fd);font-weight:700;letter-spacing:-.02em;font-size:21px}
-  .logo .mark{width:32px;height:32px;flex:none}
-  .logo .mark .lkp{stroke:var(--teal)}
-  .logo b{color:var(--teal);font-weight:700}
-  .nav-links{display:flex;gap:28px;align-items:center}
-  .nav-links a{font-size:14.5px;color:var(--dim);font-weight:500;transition:.2s;position:relative}
-  .nav-links a.on,.nav-links a:hover{color:var(--text)}
-  .nav-links a.on::after{content:"";position:absolute;left:0;right:0;bottom:-26px;height:2px;background:var(--teal);box-shadow:0 0 10px var(--glow)}
-  .nav-cta{display:flex;align-items:center;gap:12px}
-  .lang{font-family:var(--fm);font-size:13px;color:var(--dim);display:flex;align-items:center;gap:6px}
-  .theme-tg{width:38px;height:38px;border-radius:11px;border:1px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}
-  .theme-tg:hover{border-color:var(--teal)}
-  .theme-tg svg{width:18px;height:18px;stroke:var(--teal);fill:none;stroke-width:2}
-  .theme-tg .moon{display:none}
-  body.light .theme-tg .sun{display:none}body.light .theme-tg .moon{display:block}
-  .btn{font-family:var(--fb);font-weight:600;font-size:14.5px;padding:11px 20px;border-radius:12px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--text);transition:.22s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
-  .btn:hover{border-color:var(--teal);background:var(--soft)}
-  .btn-p{background:var(--grad);color:var(--btn-ink);border-color:transparent;font-weight:700;box-shadow:0 6px 24px -10px var(--glow)}
-  .btn-p:hover{box-shadow:0 12px 38px -8px var(--glow);transform:translateY(-1px)}
-  .btn-lg{padding:16px 30px;font-size:16px;border-radius:14px;letter-spacing:.02em}
-  .menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:10px;color:var(--text);padding:9px 11px;cursor:pointer}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--fb);
+      font-size: 17px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      position: relative;
+      transition: background .4s, color .4s
+    }
 
-  .hero{min-height:90vh;display:flex;align-items:center;padding:90px 0 70px;position:relative}
-  .hero .wrap{width:100%}
-  .eyebrow{font-family:var(--fm);font-size:12px;letter-spacing:.18em;color:var(--teal);text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;margin-bottom:30px;padding:8px 15px;border:1px solid var(--line);border-radius:100px;background:var(--surface);backdrop-filter:blur(8px)}
-  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal);animation:blink 2s infinite}
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-  h1{font-family:var(--fd);font-weight:700;font-size:clamp(3rem,8vw,7.2rem);line-height:.94;letter-spacing:-.03em;margin-bottom:30px;max-width:13ch}
-  .hero-sub{font-size:clamp(18px,2vw,21px);color:var(--dim);max-width:520px;margin-bottom:40px;line-height:1.55}
-  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
-  .trustline{display:flex;align-items:center;gap:11px;font-size:14px;color:var(--dim);font-family:var(--fm)}
-  .trustline .av{display:flex}
-  .trustline .av span{width:28px;height:28px;border-radius:50%;border:2px solid var(--bg);margin-left:-10px;background:var(--grad)}
-  .trustline .av span:first-child{margin-left:0}
+    #prog {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--grad);
+      z-index: 200;
+      box-shadow: 0 0 12px var(--glow)
+    }
 
-  /* trust band */
-  .trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg-2) 55%,transparent);backdrop-filter:blur(10px);position:relative;z-index:3}
-  .trust .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
-  .trust .st{padding:34px 24px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
-  .trust .st:last-child{border-right:none}
-  .trust .st .v{font-family:var(--fd);font-weight:700;font-size:clamp(1.9rem,3.2vw,2.7rem);letter-spacing:-.03em;line-height:1}
-  .trust .st .v b{color:var(--teal)}
-  .trust .st .k{font-family:var(--fm);font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:.09em}
-  .trust .st .tp{display:flex;align-items:center;gap:8px}
-  .trust .st .tp .stars{color:#00B67A;font-size:15px;letter-spacing:1px}
-  .trust .st .tp .tx{font-family:var(--fm);font-size:12px;color:var(--dim)}
+    #globe {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      transition: opacity .4s
+    }
 
-  .ticker{overflow:hidden;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 50%,transparent);position:relative;z-index:3;padding:16px 0}
-  .ticker .lbl{position:absolute;left:0;top:0;bottom:0;z-index:2;display:flex;align-items:center;gap:9px;padding:0 24px;background:linear-gradient(90deg,var(--bg) 70%,transparent);font-family:var(--fm);font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.1em}
-  .ticker .lbl .p{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:blink 1.4s infinite}
-  .chips{display:flex;gap:12px;white-space:nowrap;animation:slide 40s linear infinite;width:max-content}
-  .ticker:hover .chips{animation-play-state:paused}
-  .chip{display:inline-flex;align-items:center;gap:10px;padding:9px 16px;border:1px solid var(--line);border-radius:100px;background:var(--surface);font-size:13.5px}
-  .chip .f{font-size:15px}.chip .n{color:var(--dim)}.chip .a{font-family:var(--fm);font-weight:700;color:var(--green)}
+    .mesh {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(60% 50% at 78% 30%, var(--mesh-1), transparent 60%), radial-gradient(50% 50% at 12% 8%, var(--mesh-2), transparent 60%)
+    }
 
-  section{position:relative;z-index:3}
-  .band{background:linear-gradient(180deg,color-mix(in srgb,var(--bg-2) 90%,transparent),color-mix(in srgb,var(--bg) 93%,transparent));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .sec{padding:128px 0}
-  .shead{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:60px;flex-wrap:wrap}
-  .shead.center{justify-content:center;text-align:center;flex-direction:column;align-items:center}
-  .idx{font-family:var(--fm);font-size:13px;color:var(--teal);letter-spacing:.1em;display:block;margin-bottom:18px}
-  .shead h2,.h2{font-family:var(--fd);font-weight:700;font-size:clamp(2.4rem,5vw,4rem);letter-spacing:-.03em;line-height:1;max-width:18ch}
-  .shead p{color:var(--dim);font-size:18px;max-width:380px;line-height:1.55}
-  .shead.center p{max-width:560px}
+    .scrim {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none
+    }
 
-  .bento{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:minmax(180px,auto);gap:16px}
-  .tile{border:1px solid var(--line);border-radius:22px;padding:32px;background:var(--surface);backdrop-filter:blur(12px);position:relative;overflow:hidden;transition:transform .25s,border-color .25s;display:flex;flex-direction:column;transform-style:preserve-3d}
-  .tile::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 0%,var(--soft),transparent 60%);opacity:0;transition:.3s}
-  .tile:hover{border-color:var(--teal)}.tile:hover::before{opacity:1}
-  .tile .ic{width:52px;height:52px;border-radius:14px;background:var(--soft);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:auto}
-  .tile .ic svg{width:25px;height:25px;stroke:var(--teal);fill:none;stroke-width:1.7}
-  .tile h3{font-family:var(--fd);font-weight:600;font-size:22px;margin:26px 0 8px;letter-spacing:-.01em}
-  .tile p{font-size:14.5px;color:var(--dim);line-height:1.55}
-  .tile.big{grid-column:span 6;grid-row:span 2}.tile.med{grid-column:span 6}.tile.sm{grid-column:span 4}
-  .tile.feature{background:linear-gradient(150deg,var(--soft),var(--surface));border-color:var(--teal)}
-  .tile.feature .big-num{font-family:var(--fd);font-weight:700;font-size:clamp(4rem,9vw,7rem);letter-spacing:-.04em;line-height:1;margin-bottom:8px}
-  .tile.feature h3{font-size:26px}
+    .scrim.t {
+      background: radial-gradient(ellipse 70% 55% at 74% 30%, transparent, color-mix(in srgb, var(--bg) 36%, transparent) 58%, color-mix(in srgb, var(--bg) 80%, transparent) 100%)
+    }
 
-  .config{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:start}
-  .seg{display:inline-flex;gap:6px;padding:6px;border:1px solid var(--line);border-radius:14px;background:var(--surface);backdrop-filter:blur(8px);margin-bottom:28px}
-  .seg button{font-family:var(--fb);font-weight:600;font-size:14.5px;padding:10px 20px;border-radius:9px;border:none;background:transparent;color:var(--dim);cursor:pointer;transition:.22s}
-  .seg button:hover{color:var(--text)}
-  .seg button.active{background:var(--grad);color:var(--btn-ink);box-shadow:0 6px 18px -8px var(--glow)}
-  .seg-note{font-family:var(--fm);font-size:13px;color:var(--faint);margin-bottom:34px;line-height:1.6;max-width:46ch}
-  .size-track{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
-  .size-pill{font-family:var(--fm);font-size:14px;padding:13px 22px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--dim);cursor:pointer;transition:.2s}
-  .size-pill:hover{color:var(--text);border-color:var(--teal)}
-  .size-pill.active{border-color:var(--teal);color:var(--text);background:var(--soft);box-shadow:0 0 0 1px var(--teal) inset}
-  .spec-list{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;border-top:1px solid var(--line)}
-  .spec-list .r{display:flex;justify-content:space-between;align-items:center;padding:17px 0;border-bottom:1px solid var(--line-2);font-size:15px}
-  .spec-list .r .k{color:var(--dim);font-family:var(--fm);font-size:13px}
-  .spec-list .r .v{font-weight:600}.spec-list .r .v.ok{color:var(--green)}
-  .buy{border:1px solid var(--teal);border-radius:26px;padding:38px 34px;background:linear-gradient(165deg,var(--soft),var(--surface));backdrop-filter:blur(14px);position:sticky;top:110px}
-  .buy .cap{font-family:var(--fm);font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
-  .buy .acct{font-family:var(--fd);font-weight:700;font-size:clamp(3rem,5vw,4rem);letter-spacing:-.04em;line-height:1;margin-bottom:24px}
-  .buy .acct span{color:var(--teal)}
-  .buy .was{font-family:var(--fm);font-size:15px;color:var(--faint);text-decoration:line-through;display:block;margin-bottom:2px}
-  .buy .now{font-family:var(--fd);font-weight:700;font-size:clamp(2.4rem,4.5vw,3.4rem);letter-spacing:-.03em;line-height:1}
-  .buy .now small{font-size:1rem;color:var(--dim);font-weight:600}
-  .buy .refund{font-family:var(--fm);font-size:12.5px;color:var(--green);margin:14px 0 28px;display:flex;align-items:center;gap:8px}
-  .buy .btn{width:100%;justify-content:center}
+    .scrim.v {
+      background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 20%, transparent) 0%, transparent 16%, transparent 72%, color-mix(in srgb, var(--bg) 60%, transparent) 100%)
+    }
 
-  .stack{display:flex;flex-direction:column;gap:30px}
-  .stack-card{position:sticky;border:1px solid var(--line);border-radius:24px;background:linear-gradient(160deg,var(--surface-2),color-mix(in srgb,var(--bg) 95%,transparent));backdrop-filter:blur(12px);padding:48px;display:grid;grid-template-columns:auto 1fr auto;gap:34px;align-items:center;box-shadow:0 -10px 60px -40px rgba(0,0,0,.6)}
-  .stack-card .n{font-family:var(--fd);font-weight:700;font-size:64px;background:var(--grad-text);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:.8;letter-spacing:-.04em}
-  .stack-card h3{font-family:var(--fd);font-weight:600;font-size:28px;margin-bottom:8px;letter-spacing:-.01em}
-  .stack-card p{font-size:16px;color:var(--dim);max-width:52ch;line-height:1.55}
-  .stack-card .glyph{width:80px;height:80px;border-radius:20px;background:var(--soft);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex:none}
-  .stack-card .glyph svg{width:34px;height:34px;stroke:var(--teal);fill:none;stroke-width:1.6}
+    #spot {
+      position: fixed;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      z-index: 1;
+      pointer-events: none;
+      left: 0;
+      top: 0;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, var(--spot), transparent 65%);
+      opacity: 0;
+      transition: opacity .4s
+    }
 
-  /* payout cycles */
-  .cycles{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-  .cyc{border:1px solid var(--line);border-radius:22px;padding:30px 26px;background:var(--surface);backdrop-filter:blur(12px);position:relative;transition:transform .25s,border-color .25s;display:flex;flex-direction:column}
-  .cyc:hover{transform:translateY(-5px);border-color:var(--teal)}
-  .cyc.best{border-color:var(--teal);background:linear-gradient(160deg,var(--soft),var(--surface))}
-  .cyc .badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-family:var(--fm);font-size:10.5px;font-weight:700;letter-spacing:.06em;color:var(--btn-ink);background:var(--grad);padding:5px 12px;border-radius:7px;white-space:nowrap}
-  .cyc .cn{font-family:var(--fm);font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
-  .cyc .split{font-family:var(--fd);font-weight:700;font-size:clamp(2.6rem,5vw,3.6rem);letter-spacing:-.04em;line-height:1}
-  .cyc .split span{color:var(--teal)}
-  .cyc .spl-l{font-family:var(--fm);font-size:11px;color:var(--dim);margin-top:4px;text-transform:uppercase;letter-spacing:.08em}
-  .cyc ul{list-style:none;display:flex;flex-direction:column;gap:12px;margin:24px 0 0;border-top:1px solid var(--line-2);padding-top:22px}
-  .cyc li{font-size:14px;color:var(--dim);display:flex;gap:10px;align-items:flex-start}
-  .cyc li svg{width:15px;height:15px;flex:none;margin-top:3px;stroke:var(--teal);fill:none;stroke-width:2.4}
-  .cyc li b{color:var(--text);font-weight:600}
+    .wrap {
+      max-width: var(--w);
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 3
+    }
 
-  .megastats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--soft),transparent)}
-  .megastats .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
-  .megastats .m{padding:70px 0;border-right:1px solid var(--line)}
-  .megastats .m:last-child{border-right:none}
-  .megastats .num{font-family:var(--fd);font-weight:700;font-size:clamp(2.6rem,5.5vw,4.4rem);letter-spacing:-.04em;line-height:1}
-  .megastats .num .u{color:var(--teal)}
-  .megastats .lbl{font-family:var(--fm);font-size:13px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-top:14px}
+    a {
+      color: inherit;
+      text-decoration: none
+    }
 
-  .calc-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
-  .calc{border:1px solid var(--line);border-radius:26px;padding:38px;background:var(--surface);backdrop-filter:blur(14px);box-shadow:0 50px 110px -55px rgba(0,0,0,.6)}
-  .crow{margin-bottom:28px}
-  .crow .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
-  .crow .top .lbl{font-family:var(--fm);font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
-  .crow .top .out{font-family:var(--fd);font-weight:700;font-size:24px;color:var(--teal)}
-  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;background:var(--surface-2);outline:none;cursor:pointer}
-  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--teal);box-shadow:0 0 16px var(--glow);cursor:pointer;border:4px solid var(--bg)}
-  input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--teal);border:4px solid var(--bg);cursor:pointer}
-  .cres{margin-top:32px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-end}
-  .cres .lbl{font-family:var(--fm);font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:.1em}
-  .cres .lbl span{display:block;color:var(--dim);margin-top:6px;text-transform:none;letter-spacing:0;font-size:13px}
-  .cres .payout{font-family:var(--fd);font-weight:700;font-size:clamp(2.6rem,5.5vw,3.8rem);letter-spacing:-.04em;color:var(--teal);line-height:1}
-  .cfeat{display:flex;flex-direction:column;gap:22px;margin-top:38px}
-  .cfeat .f{display:flex;gap:16px}
-  .cfeat .f .ic{width:46px;height:46px;flex:none;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:flex;align-items:center;justify-content:center}
-  .cfeat .f .ic svg{width:21px;height:21px;stroke:var(--teal);fill:none;stroke-width:1.8}
-  .cfeat .f h4{font-family:var(--fd);font-weight:600;font-size:17px;margin-bottom:3px}
-  .cfeat .f p{font-size:14.5px;color:var(--dim);line-height:1.5}
+    .mono {
+      font-family: var(--fm)
+    }
 
-  /* scaling ladder */
-  .ladder{display:flex;align-items:flex-end;gap:14px;margin-top:10px}
-  .rung{flex:1;border:1px solid var(--line);border-radius:16px 16px 14px 14px;background:var(--surface);backdrop-filter:blur(10px);padding:24px 18px;text-align:center;transition:transform .25s,border-color .25s;position:relative}
-  .rung:hover{transform:translateY(-6px);border-color:var(--teal)}
-  .rung .lv{font-family:var(--fm);font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
-  .rung .amt{font-family:var(--fd);font-weight:700;font-size:clamp(1.4rem,2.4vw,2rem);letter-spacing:-.03em}
-  .rung .amt span{color:var(--teal)}
-  .rung.peak{background:linear-gradient(160deg,var(--soft),var(--surface));border-color:var(--teal)}
-  .rung.peak .amt{background:var(--grad-text);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  .ladder-note{font-family:var(--fm);font-size:13px;color:var(--faint);margin-top:24px;text-align:center}
+    .gt {
+      background: var(--grad-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent
+    }
 
-  .plat-bento{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;grid-auto-rows:minmax(150px,auto)}
-  .ptile{border:1px solid var(--line);border-radius:22px;padding:30px;background:var(--surface);backdrop-filter:blur(10px);transition:transform .25s,border-color .25s;display:flex;flex-direction:column;justify-content:space-between;transform-style:preserve-3d}
-  .ptile:hover{border-color:var(--teal)}
-  .ptile .badge{font-family:var(--fm);font-weight:700;color:var(--teal);font-size:13px;letter-spacing:.05em}
-  .ptile h4{font-family:var(--fd);font-weight:600;font-size:20px;margin:auto 0 6px}
-  .ptile p{font-size:14px;color:var(--dim)}
-  .ptile.a{grid-column:span 5}.ptile.b{grid-column:span 4}.ptile.c{grid-column:span 3}
-  .ptile.d{grid-column:span 4}.ptile.e{grid-column:span 4}.ptile.f{grid-column:span 4}
+    .promo {
+      background: var(--grad);
+      color: var(--btn-ink);
+      font-family: var(--fm);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      overflow: hidden;
+      position: relative;
+      z-index: 70;
+      padding: 9px 0
+    }
 
-  .hscroll{display:flex;gap:18px;overflow-x:auto;padding:6px 40px 22px;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -40px}
-  .hscroll::-webkit-scrollbar{display:none}
-  .hcard{flex:0 0 300px;scroll-snap-align:start;border:1px solid var(--line);border-radius:22px;padding:28px;background:var(--surface);backdrop-filter:blur(10px);transition:transform .25s,border-color .25s}
-  .hcard:hover{border-color:var(--teal);transform:translateY(-4px)}
-  .hcard.champ .rank{font-family:var(--fm);font-size:13px;color:var(--teal)}
-  .hcard.champ .flag{font-size:34px;margin:16px 0}
-  .hcard.champ .name{font-family:var(--fd);font-weight:600;font-size:18px}
-  .hcard.champ .role{font-family:var(--fm);font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
-  .hcard.champ .amt{font-family:var(--fd);font-weight:700;font-size:30px;color:var(--green);letter-spacing:-.03em;margin-top:20px}
-  .hcard.champ .amt-l{font-family:var(--fm);font-size:11px;color:var(--faint);margin-top:4px}
-  .hcard.rev .stars{color:var(--teal);font-size:14px;letter-spacing:2px;margin-bottom:16px}
-  .hcard.rev p{font-size:15px;line-height:1.6;margin-bottom:22px}
-  .hcard.rev .who{display:flex;align-items:center;gap:12px}
-  .hcard.rev .who .av{width:40px;height:40px;border-radius:50%;background:var(--grad);flex:none}
-  .hcard.rev .who .nm{font-family:var(--fd);font-weight:600;font-size:14.5px}
-  .hcard.rev .who .l{font-family:var(--fm);font-size:11px;color:var(--faint)}
-  .hcard.rev .who .pay{margin-left:auto;font-family:var(--fm);font-size:13px;font-weight:700;color:var(--green)}
+    .promo .row {
+      display: flex;
+      gap: 60px;
+      white-space: nowrap;
+      animation: slide 26s linear infinite;
+      width: max-content
+    }
 
-  /* community + support */
-  .commgrid{display:grid;grid-template-columns:1.3fr .7fr;gap:16px}
-  .comm{border:1px solid var(--line);border-radius:26px;padding:48px;background:linear-gradient(150deg,var(--soft),var(--surface));backdrop-filter:blur(14px);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
-  .comm .dlogo{width:60px;height:60px;border-radius:16px;background:#5865F2;display:flex;align-items:center;justify-content:center;margin-bottom:24px}
-  .comm .dlogo svg{width:32px;height:32px;fill:#fff}
-  .comm h3{font-family:var(--fd);font-weight:700;font-size:clamp(1.8rem,3vw,2.4rem);letter-spacing:-.02em;margin-bottom:12px;max-width:18ch}
-  .comm p{color:var(--dim);font-size:16px;max-width:46ch;margin-bottom:28px}
-  .comm .btn{align-self:flex-start}
-  .support{border:1px solid var(--line);border-radius:26px;padding:40px;background:var(--surface);backdrop-filter:blur(12px);display:flex;flex-direction:column;justify-content:center}
-  .support .ic{width:54px;height:54px;border-radius:14px;background:var(--soft);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:22px}
-  .support .ic svg{width:26px;height:26px;stroke:var(--teal);fill:none;stroke-width:1.7}
-  .support h3{font-family:var(--fd);font-weight:700;font-size:24px;letter-spacing:-.02em;margin-bottom:10px}
-  .support p{color:var(--dim);font-size:15px;line-height:1.55}
-  .support .langs{font-family:var(--fm);font-size:12px;color:var(--faint);margin-top:18px}
+    @keyframes slide {
+      to {
+        transform: translateX(-50%)
+      }
+    }
 
-  .aff{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
-  .aff-card{border:1px solid var(--line);border-radius:26px;padding:44px;background:linear-gradient(150deg,var(--soft),var(--surface));backdrop-filter:blur(14px);position:relative;overflow:hidden}
-  .aff-card .pct{font-family:var(--fd);font-weight:700;font-size:clamp(4rem,9vw,7rem);line-height:.85;background:var(--grad-text);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.04em}
-  .aff-card .pl{font-family:var(--fm);font-size:13px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-top:10px}
-  .aff-card .arow{display:flex;gap:30px;margin-top:34px;padding-top:30px;border-top:1px solid var(--line)}
-  .aff-card .arow .v{font-family:var(--fd);font-weight:700;font-size:24px}
-  .aff-card .arow .k{font-family:var(--fm);font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-top:5px}
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 60
+    }
 
-  .faq-grid{display:grid;grid-template-columns:.55fr 1fr;gap:64px;align-items:start}
-  .faq-list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
-  .faq-item{border-bottom:1px solid var(--line)}
-  .faq-q{width:100%;background:none;border:none;color:var(--text);font-family:var(--fd);font-size:20px;font-weight:600;text-align:left;padding:28px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;letter-spacing:-.01em}
-  .faq-q .pm{font-family:var(--fm);color:var(--teal);font-size:24px;flex:none;transition:transform .3s}
-  .faq-item.open .pm{transform:rotate(45deg)}
-  .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;color:var(--dim);font-size:16px;line-height:1.6}
-  .faq-a div{padding:0 0 28px;max-width:70ch}
+    .bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 74px;
+      transition: .3s;
+      border-bottom: 1px solid transparent
+    }
 
-  .final{padding:160px 0;position:relative;overflow:hidden}
-  .final::before{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:600px;background:radial-gradient(ellipse,var(--soft),transparent 65%)}
-  .final .wrap{text-align:center;position:relative}
-  .final h2{font-family:var(--fd);font-weight:700;font-size:clamp(2.8rem,7vw,5.4rem);letter-spacing:-.04em;line-height:.96;margin-bottom:24px}
-  .final p{color:var(--dim);font-size:19px;max-width:520px;margin:0 auto 38px}
-  .final-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    header.scrolled .bar {
+      background: color-mix(in srgb, var(--bg) 78%, transparent);
+      backdrop-filter: blur(18px) saturate(160%);
+      border-color: var(--line)
+    }
 
-  footer{border-top:1px solid var(--line);padding:72px 0 40px;background:var(--footer-bg);backdrop-filter:blur(10px);position:relative;z-index:3}
-  .news{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;padding:36px;border:1px solid var(--line);border-radius:22px;background:var(--surface);margin-bottom:54px}
-  .news h4{font-family:var(--fd);font-weight:700;font-size:22px;margin-bottom:6px}
-  .news p{color:var(--dim);font-size:15px}
-  .news .form{display:flex;gap:10px}
-  .news input{font-family:var(--fb);font-size:15px;padding:13px 18px;border-radius:12px;border:1px solid var(--line);background:var(--bg-2);color:var(--text);width:280px;max-width:60vw}
-  .news input:focus{outline:none;border-color:var(--teal)}
-  .foot-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr;gap:44px;margin-bottom:52px}
-  .foot-brand .logo{margin-bottom:18px}
-  .foot-brand p{color:var(--dim);font-size:14.5px;max-width:300px;line-height:1.6}
-  .foot-col h5{font-family:var(--fm);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:18px}
-  .foot-col a{display:block;color:var(--dim);font-size:14.5px;margin-bottom:12px;transition:.2s}
-  .foot-col a:hover{color:var(--teal)}
-  .disclaimer{border-top:1px solid var(--line);padding-top:28px;font-family:var(--fm);font-size:12px;color:var(--faint);line-height:1.7;max-width:920px}
-  .foot-bot{display:flex;justify-content:space-between;align-items:center;margin-top:26px;flex-wrap:wrap;gap:14px;font-family:var(--fm);font-size:12.5px;color:var(--faint)}
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-family: var(--fd);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      font-size: 21px
+    }
 
-  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
-  .reveal.in{opacity:1;transform:none}
+    .logo .mark {
+      width: 32px;
+      height: 32px;
+      flex: none
+    }
 
-  @media(max-width:1040px){
-    .config,.calc-grid,.faq-grid,.aff,.commgrid{grid-template-columns:1fr;gap:48px}
-    .buy{position:static}
-    .tile.big,.tile.med,.tile.sm{grid-column:span 6}
-    .ptile.a,.ptile.b,.ptile.c,.ptile.d,.ptile.e,.ptile.f{grid-column:span 6}
-    .cycles{grid-template-columns:repeat(2,1fr)}
-    .stack-card{grid-template-columns:auto 1fr;padding:36px}.stack-card .glyph{display:none}
-    .ladder{flex-wrap:wrap}.rung{flex:1 1 30%}
-    .nav-links,.lang{display:none}.menu-btn{display:block}
-    #globe{opacity:.6}#spot{display:none}
-    .news{grid-template-columns:1fr}
-  }
-  @media(max-width:620px){
-    body{font-size:16px}.wrap{padding:0 22px}
-    .hscroll{margin:0 -22px;padding:6px 22px 22px}
-    .tile.big,.tile.med,.tile.sm,.ptile{grid-column:span 12 !important}
-    .bento,.plat-bento{grid-template-columns:repeat(6,1fr)}
-    .trust .wrap,.megastats .wrap{grid-template-columns:repeat(2,1fr)}
-    .trust .st:nth-child(2),.megastats .m:nth-child(2){border-right:none}
-    .trust .st,.megastats .m{border-bottom:1px solid var(--line)}
-    .cycles{grid-template-columns:1fr}.ladder .rung{flex:1 1 45%}
-    .spec-list{grid-template-columns:1fr}
-    .stack-card{grid-template-columns:1fr;gap:18px;padding:30px}.stack-card .n{font-size:48px}
-    .news input{width:100%}.news .form{flex-direction:column}
-    .foot-grid{grid-template-columns:1fr 1fr}.sec{padding:90px 0}
-  }
-</style>
+    .logo .mark .lkp {
+      stroke: var(--teal)
+    }
+
+    .logo b {
+      color: var(--teal);
+      font-weight: 700
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center
+    }
+
+    .nav-links a {
+      font-size: 14.5px;
+      color: var(--dim);
+      font-weight: 500;
+      transition: .2s;
+      position: relative
+    }
+
+    .nav-links a.on,
+    .nav-links a:hover {
+      color: var(--text)
+    }
+
+    .nav-links a.on::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -26px;
+      height: 2px;
+      background: var(--teal);
+      box-shadow: 0 0 10px var(--glow)
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .lang {
+      font-family: var(--fm);
+      font-size: 13px;
+      color: var(--dim);
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .theme-tg {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: .2s
+    }
+
+    .theme-tg:hover {
+      border-color: var(--teal)
+    }
+
+    .theme-tg svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--teal);
+      fill: none;
+      stroke-width: 2
+    }
+
+    .theme-tg .moon {
+      display: none
+    }
+
+    body.light .theme-tg .sun {
+      display: none
+    }
+
+    body.light .theme-tg .moon {
+      display: block
+    }
+
+    .btn {
+      font-family: var(--fb);
+      font-weight: 600;
+      font-size: 14.5px;
+      padding: 11px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      transition: .22s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap
+    }
+
+    .btn:hover {
+      border-color: var(--teal);
+      background: var(--soft)
+    }
+
+    .btn-p {
+      background: var(--grad);
+      color: var(--btn-ink);
+      border-color: transparent;
+      font-weight: 700;
+      box-shadow: 0 6px 24px -10px var(--glow)
+    }
+
+    .btn-p:hover {
+      box-shadow: 0 12px 38px -8px var(--glow);
+      transform: translateY(-1px)
+    }
+
+    .btn-lg {
+      padding: 16px 30px;
+      font-size: 16px;
+      border-radius: 14px;
+      letter-spacing: .02em
+    }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--text);
+      padding: 9px 11px;
+      cursor: pointer
+    }
+
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      padding: 90px 0 70px;
+      position: relative
+    }
+
+    .hero .wrap {
+      width: 100%
+    }
+
+    .eyebrow {
+      font-family: var(--fm);
+      font-size: 12px;
+      letter-spacing: .18em;
+      color: var(--teal);
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+      padding: 8px 15px;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      background: var(--surface);
+      backdrop-filter: blur(8px)
+    }
+
+    .eyebrow .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 10px var(--teal);
+      animation: blink 2s infinite
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .3
+      }
+    }
+
+    h1 {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: clamp(3rem, 8vw, 7.2rem);
+      line-height: .94;
+      letter-spacing: -.03em;
+      margin-bottom: 30px;
+      max-width: 13ch
+    }
+
+    .hero-sub {
+      font-size: clamp(18px, 2vw, 21px);
+      color: var(--dim);
+      max-width: 520px;
+      margin-bottom: 40px;
+      line-height: 1.55
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center
+    }
+
+    .trustline {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 14px;
+      color: var(--dim);
+      font-family: var(--fm)
+    }
+
+    .trustline .av {
+      display: flex
+    }
+
+    .trustline .av span {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      margin-left: -10px;
+      background: var(--grad)
+    }
+
+    .trustline .av span:first-child {
+      margin-left: 0
+    }
+
+    /* trust band */
+    .trust {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--bg-2) 55%, transparent);
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 3
+    }
+
+    .trust .wrap {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr)
+    }
+
+    .trust .st {
+      padding: 34px 24px;
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 6px
+    }
+
+    .trust .st:last-child {
+      border-right: none
+    }
+
+    .trust .st .v {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: clamp(1.9rem, 3.2vw, 2.7rem);
+      letter-spacing: -.03em;
+      line-height: 1
+    }
+
+    .trust .st .v b {
+      color: var(--teal)
+    }
+
+    .trust .st .k {
+      font-family: var(--fm);
+      font-size: 12px;
+      color: var(--faint);
+      text-transform: uppercase;
+      letter-spacing: .09em
+    }
+
+    .trust .st .tp {
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .trust .st .tp .stars {
+      color: #00B67A;
+      font-size: 15px;
+      letter-spacing: 1px
+    }
+
+    .trust .st .tp .tx {
+      font-family: var(--fm);
+      font-size: 12px;
+      color: var(--dim)
+    }
+
+    .ticker {
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--bg) 50%, transparent);
+      position: relative;
+      z-index: 3;
+      padding: 16px 0
+    }
+
+    .ticker .lbl {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 0 24px;
+      background: linear-gradient(90deg, var(--bg) 70%, transparent);
+      font-family: var(--fm);
+      font-size: 11px;
+      color: var(--faint);
+      text-transform: uppercase;
+      letter-spacing: .1em
+    }
+
+    .ticker .lbl .p {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+      animation: blink 1.4s infinite
+    }
+
+    .chips {
+      display: flex;
+      gap: 12px;
+      white-space: nowrap;
+      animation: slide 40s linear infinite;
+      width: max-content
+    }
+
+    .ticker:hover .chips {
+      animation-play-state: paused
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      background: var(--surface);
+      font-size: 13.5px
+    }
+
+    .chip .f {
+      font-size: 15px
+    }
+
+    .chip .n {
+      color: var(--dim)
+    }
+
+    .chip .a {
+      font-family: var(--fm);
+      font-weight: 700;
+      color: var(--green)
+    }
+
+    section {
+      position: relative;
+      z-index: 3
+    }
+
+    .band {
+      background: linear-gradient(180deg, color-mix(in srgb, var(--bg-2) 90%, transparent), color-mix(in srgb, var(--bg) 93%, transparent));
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .sec {
+      padding: 128px 0
+    }
+
+    .shead {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 60px;
+      flex-wrap: wrap
+    }
+
+    .shead.center {
+      justify-content: center;
+      text-align: center;
+      flex-direction: column;
+      align-items: center
+    }
+
+    .idx {
+      font-family: var(--fm);
+      font-size: 13px;
+      color: var(--teal);
+      letter-spacing: .1em;
+      display: block;
+      margin-bottom: 18px
+    }
+
+    .shead h2,
+    .h2 {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      letter-spacing: -.03em;
+      line-height: 1;
+      max-width: 18ch
+    }
+
+    .shead p {
+      color: var(--dim);
+      font-size: 18px;
+      max-width: 380px;
+      line-height: 1.55
+    }
+
+    .shead.center p {
+      max-width: 560px
+    }
+
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: minmax(180px, auto);
+      gap: 16px
+    }
+
+    .tile {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 32px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s, border-color .25s;
+      display: flex;
+      flex-direction: column;
+      transform-style: preserve-3d
+    }
+
+    .tile::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 0%, var(--soft), transparent 60%);
+      opacity: 0;
+      transition: .3s
+    }
+
+    .tile:hover {
+      border-color: var(--teal)
+    }
+
+    .tile:hover::before {
+      opacity: 1
+    }
+
+    .tile .ic {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: auto
+    }
+
+    .tile .ic svg {
+      width: 25px;
+      height: 25px;
+      stroke: var(--teal);
+      fill: none;
+      stroke-width: 1.7
+    }
+
+    .tile h3 {
+      font-family: var(--fd);
+      font-weight: 600;
+      font-size: 22px;
+      margin: 26px 0 8px;
+      letter-spacing: -.01em
+    }
+
+    .tile p {
+      font-size: 14.5px;
+      color: var(--dim);
+      line-height: 1.55
+    }
+
+    .tile.big {
+      grid-column: span 6;
+      grid-row: span 2
+    }
+
+    .tile.med {
+      grid-column: span 6
+    }
+
+    .tile.sm {
+      grid-column: span 4
+    }
+
+    .tile.feature {
+      background: linear-gradient(150deg, var(--soft), var(--surface));
+      border-color: var(--teal)
+    }
+
+    .tile.feature .big-num {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: clamp(4rem, 9vw, 7rem);
+      letter-spacing: -.04em;
+      line-height: 1;
+      margin-bottom: 8px
+    }
+
+    .tile.feature h3 {
+      font-size: 26px
+    }
+
+    .config {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 56px;
+      align-items: start
+    }
+
+    .seg {
+      display: inline-flex;
+      gap: 6px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      backdrop-filter: blur(8px);
+      margin-bottom: 28px
+    }
+
+    .seg button {
+      font-family: var(--fb);
+      font-weight: 600;
+      font-size: 14.5px;
+      padding: 10px 20px;
+      border-radius: 9px;
+      border: none;
+      background: transparent;
+      color: var(--dim);
+      cursor: pointer;
+      transition: .22s
+    }
+
+    .seg button:hover {
+      color: var(--text)
+    }
+
+    .seg button.active {
+      background: var(--grad);
+      color: var(--btn-ink);
+      box-shadow: 0 6px 18px -8px var(--glow)
+    }
+
+    .seg-note {
+      font-family: var(--fm);
+      font-size: 13px;
+      color: var(--faint);
+      margin-bottom: 34px;
+      line-height: 1.6;
+      max-width: 46ch
+    }
+
+    .size-track {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 40px
+    }
+
+    .size-pill {
+      font-family: var(--fm);
+      font-size: 14px;
+      padding: 13px 22px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--dim);
+      cursor: pointer;
+      transition: .2s
+    }
+
+    .size-pill:hover {
+      color: var(--text);
+      border-color: var(--teal)
+    }
+
+    .size-pill.active {
+      border-color: var(--teal);
+      color: var(--text);
+      background: var(--soft);
+      box-shadow: 0 0 0 1px var(--teal) inset
+    }
+
+    .spec-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 40px;
+      border-top: 1px solid var(--line)
+    }
+
+    .spec-list .r {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 17px 0;
+      border-bottom: 1px solid var(--line-2);
+      font-size: 15px
+    }
+
+    .spec-list .r .k {
+      color: var(--dim);
+      font-family: var(--fm);
+      font-size: 13px
+    }
+
+    .spec-list .r .v {
+      font-weight: 600
+    }
+
+    .spec-list .r .v.ok {
+      color: var(--green)
+    }
+
+    .buy {
+      border: 1px solid var(--teal);
+      border-radius: 26px;
+      padding: 38px 34px;
+      background: linear-gradient(165deg, var(--soft), var(--surface));
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 110px
+    }
+
+    .buy .cap {
+      font-family: var(--fm);
+      font-size: 12px;
+      color: var(--faint);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 14px
+    }
+
+    .buy .acct {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: clamp(3rem, 5vw, 4rem);
+      letter-spacing: -.04em;
+      line-height: 1;
+      margin-bottom: 24px
+    }
+
+    .buy .acct span {
+      color: var(--teal)
+    }
+
+    .buy .was {
+      font-family: var(--fm);
+      font-size: 15px;
+      color: var(--faint);
+      text-decoration: line-through;
+      display: block;
+      margin-bottom: 2px
+    }
+
+    .buy .now {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+      letter-spacing: -.03em;
+      line-height: 1
+    }
+
+    .buy .now small {
+      font-size: 1rem;
+      color: var(--dim);
+      font-weight: 600
+    }
+
+    .buy .refund {
+      font-family: var(--fm);
+      font-size: 12.5px;
+      color: var(--green);
+      margin: 14px 0 28px;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .buy .btn {
+      width: 100%;
+      justify-content: center
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 30px
+    }
+
+    .stack-card {
+      position: sticky;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(160deg, var(--surface-2), color-mix(in srgb, var(--bg) 95%, transparent));
+      backdrop-filter: blur(12px);
+      padding: 48px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 34px;
+      align-items: center;
+      box-shadow: 0 -10px 60px -40px rgba(0, 0, 0, .6)
+    }
+
+    .stack-card .n {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 64px;
+      background: var(--grad-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: .8;
+      letter-spacing: -.04em
+    }
+
+    .stack-card h3 {
+      font-family: var(--fd);
+      font-weight: 600;
+      font-size: 28px;
+      margin-bottom: 8px;
+      letter-spacing: -.01em
+    }
+
+    .stack-card p {
+      font-size: 16px;
+      color: var(--dim);
+      max-width: 52ch;
+      line-height: 1.55
+    }
+
+    .stack-card .glyph {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: none
+    }
+
+    .stack-card .glyph svg {
+      width: 34px;
+      height: 34px;
+      stroke: var(--teal);
+      fill: none;
+      stroke-width: 1.6
+    }
+
+    /* payout cycles */
+    .cycles {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px
+    }
+
+    .cyc {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 30px 26px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      position: relative;
+      transition: transform .25s, border-color .25s;
+      display: flex;
+      flex-direction: column
+    }
+
+    .cyc:hover {
+      transform: translateY(-5px);
+      border-color: var(--teal)
+    }
+
+    .cyc.best {
+      border-color: var(--teal);
+      background: linear-gradient(160deg, var(--soft), var(--surface))
+    }
+
+    .cyc .badge {
+      position: absolute;
+      top: -11px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--fm);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: var(--btn-ink);
+      background: var(--grad);
+      padding: 5px 12px;
+      border-radius: 7px;
+      white-space: nowrap
+    }
+
+    .cyc .cn {
+      font-family: var(--fm);
+      font-size: 12px;
+      color: var(--faint);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 14px
+    }
+
+    .cyc .split {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: clamp(2.6rem, 5vw, 3.6rem);
+      letter-spacing: -.04em;
+      line-height: 1
+    }
+
+    .cyc .split span {
+      color: var(--teal)
+    }
+
+    .cyc .spl-l {
+      font-family: var(--fm);
+      font-size: 11px;
+      color: var(--dim);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: .08em
+    }
+
+    .cyc ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 24px 0 0;
+      border-top: 1px solid var(--line-2);
+      padding-top: 22px
+    }
+
+    .cyc li {
+      font-size: 14px;
+      color: var(--dim);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start
+    }
+
+    .cyc li svg {
+      width: 15px;
+      height: 15px;
+      flex: none;
+      margin-top: 3px;
+      stroke: var(--teal);
+      fill: none;
+      stroke-width: 2.4
+    }
+
+    .cyc li b {
+      color: var(--text);
+      font-weight: 600
+    }
+
+    .megastats {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--soft), transparent)
+    }
+
+    .megastats .wrap {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr)
+    }
+
+    .megastats .m {
+      padding: 70px 0;
+      border-right: 1px solid var(--line)
+    }
+
+    .megastats .m:last-child {
+      border-right: none
+    }
+
+    .megastats .num {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+      letter-spacing: -.04em;
+      line-height: 1
+    }
+
+    .megastats .num .u {
+      color: var(--teal)
+    }
+
+    .megastats .lbl {
+      font-family: var(--fm);
+      font-size: 13px;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-top: 14px
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 64px;
+      align-items: center
+    }
+
+    .calc {
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 38px;
+      background: var(--surface);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 50px 110px -55px rgba(0, 0, 0, .6)
+    }
+
+    .crow {
+      margin-bottom: 28px
+    }
+
+    .crow .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 14px
+    }
+
+    .crow .top .lbl {
+      font-family: var(--fm);
+      font-size: 12px;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: .08em
+    }
+
+    .crow .top .out {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 24px;
+      color: var(--teal)
+    }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 6px;
+      background: var(--surface-2);
+      outline: none;
+      cursor: pointer
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 16px var(--glow);
+      cursor: pointer;
+      border: 4px solid var(--bg)
+    }
+
+    input[type=range]::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--teal);
+      border: 4px solid var(--bg);
+      cursor: pointer
+    }
+
+    .cres {
+      margin-top: 32px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end
+    }
+
+    .cres .lbl {
+      font-family: var(--fm);
+      font-size: 12px;
+      color: var(--faint);
+      text-transform: uppercase;
+      letter-spacing: .1em
+    }
+
+    .cres .lbl span {
+      display: block;
+      color: var(--dim);
+      margin-top: 6px;
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 13px
+    }
+
+    .cres .payout {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+      letter-spacing: -.04em;
+      color: var(--teal);
+      line-height: 1
+    }
+
+    .cfeat {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      margin-top: 38px
+    }
+
+    .cfeat .f {
+      display: flex;
+      gap: 16px
+    }
+
+    .cfeat .f .ic {
+      width: 46px;
+      height: 46px;
+      flex: none;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .cfeat .f .ic svg {
+      width: 21px;
+      height: 21px;
+      stroke: var(--teal);
+      fill: none;
+      stroke-width: 1.8
+    }
+
+    .cfeat .f h4 {
+      font-family: var(--fd);
+      font-weight: 600;
+      font-size: 17px;
+      margin-bottom: 3px
+    }
+
+    .cfeat .f p {
+      font-size: 14.5px;
+      color: var(--dim);
+      line-height: 1.5
+    }
+
+    /* scaling ladder */
+    .ladder {
+      display: flex;
+      align-items: flex-end;
+      gap: 14px;
+      margin-top: 10px
+    }
+
+    .rung {
+      flex: 1;
+      border: 1px solid var(--line);
+      border-radius: 16px 16px 14px 14px;
+      background: var(--surface);
+      backdrop-filter: blur(10px);
+      padding: 24px 18px;
+      text-align: center;
+      transition: transform .25s, border-color .25s;
+      position: relative
+    }
+
+    .rung:hover {
+      transform: translateY(-6px);
+      border-color: var(--teal)
+    }
+
+    .rung .lv {
+      font-family: var(--fm);
+      font-size: 11px;
+      color: var(--faint);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 10px
+    }
+
+    .rung .amt {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+      letter-spacing: -.03em
+    }
+
+    .rung .amt span {
+      color: var(--teal)
+    }
+
+    .rung.peak {
+      background: linear-gradient(160deg, var(--soft), var(--surface));
+      border-color: var(--teal)
+    }
+
+    .rung.peak .amt {
+      background: var(--grad-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent
+    }
+
+    .ladder-note {
+      font-family: var(--fm);
+      font-size: 13px;
+      color: var(--faint);
+      margin-top: 24px;
+      text-align: center
+    }
+
+    .plat-bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+      grid-auto-rows: minmax(150px, auto)
+    }
+
+    .ptile {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 30px;
+      background: var(--surface);
+      backdrop-filter: blur(10px);
+      transition: transform .25s, border-color .25s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transform-style: preserve-3d
+    }
+
+    .ptile:hover {
+      border-color: var(--teal)
+    }
+
+    .ptile .badge {
+      font-family: var(--fm);
+      font-weight: 700;
+      color: var(--teal);
+      font-size: 13px;
+      letter-spacing: .05em
+    }
+
+    .ptile h4 {
+      font-family: var(--fd);
+      font-weight: 600;
+      font-size: 20px;
+      margin: auto 0 6px
+    }
+
+    .ptile p {
+      font-size: 14px;
+      color: var(--dim)
+    }
+
+    .ptile.a {
+      grid-column: span 5
+    }
+
+    .ptile.b {
+      grid-column: span 4
+    }
+
+    .ptile.c {
+      grid-column: span 3
+    }
+
+    .ptile.d {
+      grid-column: span 4
+    }
+
+    .ptile.e {
+      grid-column: span 4
+    }
+
+    .ptile.f {
+      grid-column: span 4
+    }
+
+    .hscroll {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      padding: 6px 40px 22px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      margin: 0 -40px
+    }
+
+    .hscroll::-webkit-scrollbar {
+      display: none
+    }
+
+    .hcard {
+      flex: 0 0 300px;
+      scroll-snap-align: start;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 28px;
+      background: var(--surface);
+      backdrop-filter: blur(10px);
+      transition: transform .25s, border-color .25s
+    }
+
+    .hcard:hover {
+      border-color: var(--teal);
+      transform: translateY(-4px)
+    }
+
+    .hcard.champ .rank {
+      font-family: var(--fm);
+      font-size: 13px;
+      color: var(--teal)
+    }
+
+    .hcard.champ .flag {
+      font-size: 34px;
+      margin: 16px 0
+    }
+
+    .hcard.champ .name {
+      font-family: var(--fd);
+      font-weight: 600;
+      font-size: 18px
+    }
+
+    .hcard.champ .role {
+      font-family: var(--fm);
+      font-size: 11px;
+      color: var(--faint);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-top: 3px
+    }
+
+    .hcard.champ .amt {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 30px;
+      color: var(--green);
+      letter-spacing: -.03em;
+      margin-top: 20px
+    }
+
+    .hcard.champ .amt-l {
+      font-family: var(--fm);
+      font-size: 11px;
+      color: var(--faint);
+      margin-top: 4px
+    }
+
+    .hcard.rev .stars {
+      color: var(--teal);
+      font-size: 14px;
+      letter-spacing: 2px;
+      margin-bottom: 16px
+    }
+
+    .hcard.rev p {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 22px
+    }
+
+    .hcard.rev .who {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .hcard.rev .who .av {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--grad);
+      flex: none
+    }
+
+    .hcard.rev .who .nm {
+      font-family: var(--fd);
+      font-weight: 600;
+      font-size: 14.5px
+    }
+
+    .hcard.rev .who .l {
+      font-family: var(--fm);
+      font-size: 11px;
+      color: var(--faint)
+    }
+
+    .hcard.rev .who .pay {
+      margin-left: auto;
+      font-family: var(--fm);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green)
+    }
+
+    /* community + support */
+    .commgrid {
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 16px
+    }
+
+    .comm {
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 48px;
+      background: linear-gradient(150deg, var(--soft), var(--surface));
+      backdrop-filter: blur(14px);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center
+    }
+
+    .comm .dlogo {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      background: #5865F2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px
+    }
+
+    .comm .dlogo svg {
+      width: 32px;
+      height: 32px;
+      fill: #fff
+    }
+
+    .comm h3 {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      letter-spacing: -.02em;
+      margin-bottom: 12px;
+      max-width: 18ch
+    }
+
+    .comm p {
+      color: var(--dim);
+      font-size: 16px;
+      max-width: 46ch;
+      margin-bottom: 28px
+    }
+
+    .comm .btn {
+      align-self: flex-start
+    }
+
+    .support {
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 40px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center
+    }
+
+    .support .ic {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px
+    }
+
+    .support .ic svg {
+      width: 26px;
+      height: 26px;
+      stroke: var(--teal);
+      fill: none;
+      stroke-width: 1.7
+    }
+
+    .support h3 {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 24px;
+      letter-spacing: -.02em;
+      margin-bottom: 10px
+    }
+
+    .support p {
+      color: var(--dim);
+      font-size: 15px;
+      line-height: 1.55
+    }
+
+    .support .langs {
+      font-family: var(--fm);
+      font-size: 12px;
+      color: var(--faint);
+      margin-top: 18px
+    }
+
+    .aff {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 64px;
+      align-items: center
+    }
+
+    .aff-card {
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 44px;
+      background: linear-gradient(150deg, var(--soft), var(--surface));
+      backdrop-filter: blur(14px);
+      position: relative;
+      overflow: hidden
+    }
+
+    .aff-card .pct {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: clamp(4rem, 9vw, 7rem);
+      line-height: .85;
+      background: var(--grad-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -.04em
+    }
+
+    .aff-card .pl {
+      font-family: var(--fm);
+      font-size: 13px;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-top: 10px
+    }
+
+    .aff-card .arow {
+      display: flex;
+      gap: 30px;
+      margin-top: 34px;
+      padding-top: 30px;
+      border-top: 1px solid var(--line)
+    }
+
+    .aff-card .arow .v {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 24px
+    }
+
+    .aff-card .arow .k {
+      font-family: var(--fm);
+      font-size: 11px;
+      color: var(--faint);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-top: 5px
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: .55fr 1fr;
+      gap: 64px;
+      align-items: start
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--line)
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--line)
+    }
+
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: var(--fd);
+      font-size: 20px;
+      font-weight: 600;
+      text-align: left;
+      padding: 28px 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      letter-spacing: -.01em
+    }
+
+    .faq-q .pm {
+      font-family: var(--fm);
+      color: var(--teal);
+      font-size: 24px;
+      flex: none;
+      transition: transform .3s
+    }
+
+    .faq-item.open .pm {
+      transform: rotate(45deg)
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease;
+      color: var(--dim);
+      font-size: 16px;
+      line-height: 1.6
+    }
+
+    .faq-a div {
+      padding: 0 0 28px;
+      max-width: 70ch
+    }
+
+    .final {
+      padding: 160px 0;
+      position: relative;
+      overflow: hidden
+    }
+
+    .final::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 900px;
+      height: 600px;
+      background: radial-gradient(ellipse, var(--soft), transparent 65%)
+    }
+
+    .final .wrap {
+      text-align: center;
+      position: relative
+    }
+
+    .final h2 {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: clamp(2.8rem, 7vw, 5.4rem);
+      letter-spacing: -.04em;
+      line-height: .96;
+      margin-bottom: 24px
+    }
+
+    .final p {
+      color: var(--dim);
+      font-size: 19px;
+      max-width: 520px;
+      margin: 0 auto 38px
+    }
+
+    .final-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 72px 0 40px;
+      background: var(--footer-bg);
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 3
+    }
+
+    .news {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: center;
+      padding: 36px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--surface);
+      margin-bottom: 54px
+    }
+
+    .news h4 {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 22px;
+      margin-bottom: 6px
+    }
+
+    .news p {
+      color: var(--dim);
+      font-size: 15px
+    }
+
+    .news .form {
+      display: flex;
+      gap: 10px
+    }
+
+    .news input {
+      font-family: var(--fb);
+      font-size: 15px;
+      padding: 13px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--bg-2);
+      color: var(--text);
+      width: 280px;
+      max-width: 60vw
+    }
+
+    .news input:focus {
+      outline: none;
+      border-color: var(--teal)
+    }
+
+    .foot-grid {
+      display: grid;
+      grid-template-columns: 1.7fr 1fr 1fr 1fr;
+      gap: 44px;
+      margin-bottom: 52px
+    }
+
+    .foot-brand .logo {
+      margin-bottom: 18px
+    }
+
+    .foot-brand p {
+      color: var(--dim);
+      font-size: 14.5px;
+      max-width: 300px;
+      line-height: 1.6
+    }
+
+    .foot-col h5 {
+      font-family: var(--fm);
+      font-size: 11.5px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 18px
+    }
+
+    .foot-col a {
+      display: block;
+      color: var(--dim);
+      font-size: 14.5px;
+      margin-bottom: 12px;
+      transition: .2s
+    }
+
+    .foot-col a:hover {
+      color: var(--teal)
+    }
+
+    .disclaimer {
+      border-top: 1px solid var(--line);
+      padding-top: 28px;
+      font-family: var(--fm);
+      font-size: 12px;
+      color: var(--faint);
+      line-height: 1.7;
+      max-width: 920px
+    }
+
+    .foot-bot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 26px;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-family: var(--fm);
+      font-size: 12.5px;
+      color: var(--faint)
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s cubic-bezier(.2, .7, .2, 1), transform .7s cubic-bezier(.2, .7, .2, 1)
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: none
+    }
+
+    @media(max-width:1040px) {
+
+      .config,
+      .calc-grid,
+      .faq-grid,
+      .aff,
+      .commgrid {
+        grid-template-columns: 1fr;
+        gap: 48px
+      }
+
+      .buy {
+        position: static
+      }
+
+      .tile.big,
+      .tile.med,
+      .tile.sm {
+        grid-column: span 6
+      }
+
+      .ptile.a,
+      .ptile.b,
+      .ptile.c,
+      .ptile.d,
+      .ptile.e,
+      .ptile.f {
+        grid-column: span 6
+      }
+
+      .cycles {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .stack-card {
+        grid-template-columns: auto 1fr;
+        padding: 36px
+      }
+
+      .stack-card .glyph {
+        display: none
+      }
+
+      .ladder {
+        flex-wrap: wrap
+      }
+
+      .rung {
+        flex: 1 1 30%
+      }
+
+      .nav-links,
+      .lang {
+        display: none
+      }
+
+      .menu-btn {
+        display: block
+      }
+
+      #globe {
+        opacity: .6
+      }
+
+      #spot {
+        display: none
+      }
+
+      .news {
+        grid-template-columns: 1fr
+      }
+    }
+
+    @media(max-width:620px) {
+      body {
+        font-size: 16px
+      }
+
+      .wrap {
+        padding: 0 22px
+      }
+
+      .hscroll {
+        margin: 0 -22px;
+        padding: 6px 22px 22px
+      }
+
+      .tile.big,
+      .tile.med,
+      .tile.sm,
+      .ptile {
+        grid-column: span 12 !important
+      }
+
+      .bento,
+      .plat-bento {
+        grid-template-columns: repeat(6, 1fr)
+      }
+
+      .trust .wrap,
+      .megastats .wrap {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .trust .st:nth-child(2),
+      .megastats .m:nth-child(2) {
+        border-right: none
+      }
+
+      .trust .st,
+      .megastats .m {
+        border-bottom: 1px solid var(--line)
+      }
+
+      .cycles {
+        grid-template-columns: 1fr
+      }
+
+      .ladder .rung {
+        flex: 1 1 45%
+      }
+
+      .spec-list {
+        grid-template-columns: 1fr
+      }
+
+      .stack-card {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 30px
+      }
+
+      .stack-card .n {
+        font-size: 48px
+      }
+
+      .news input {
+        width: 100%
+      }
+
+      .news .form {
+        flex-direction: column
+      }
+
+      .foot-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .sec {
+        padding: 90px 0
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div id="prog"></div>
-<canvas id="globe"></canvas>
-<div class="mesh"></div>
-<div class="scrim t"></div>
-<div class="scrim v"></div>
-<div id="spot"></div>
+  <div id="prog"></div>
+  <canvas id="globe"></canvas>
+  <div class="mesh"></div>
+  <div class="scrim t"></div>
+  <div class="scrim v"></div>
+  <div id="spot"></div>
 
-<!-- PROMO -->
-<div class="promo"><div class="row" id="promoRow">
-  <span>May 1 · Buy 1 Get 1 — enter code MOGO at checkout&nbsp;&nbsp;◆&nbsp;&nbsp;Up to 100% profit split&nbsp;&nbsp;◆&nbsp;&nbsp;Payouts from 1 business day&nbsp;&nbsp;◆&nbsp;&nbsp;</span>
-  <span>May 1 · Buy 1 Get 1 — enter code MOGO at checkout&nbsp;&nbsp;◆&nbsp;&nbsp;Up to 100% profit split&nbsp;&nbsp;◆&nbsp;&nbsp;Payouts from 1 business day&nbsp;&nbsp;◆&nbsp;&nbsp;</span>
-</div></div>
-
-<!-- NAV -->
-<header id="hdr"><div class="wrap"><div class="bar">
-  <a href="#" class="logo">
-    <svg class="mark" viewBox="0 0 40 40" fill="none"><path class="lkp" d="M14 20a6 6 0 016-6h0a6 6 0 016 6m0 0a6 6 0 01-6 6h0a6 6 0 01-6-6" stroke-width="3" stroke-linecap="round" fill="none"/><circle class="lkp" cx="20" cy="20" r="17" stroke-width="2.4" stroke-dasharray="4 5" opacity=".5" fill="none"/></svg>
-    Capital<b>Chain</b>
-  </a>
-  <div class="nav-links">
-    <a href="#" class="on">Home</a><a href="#affiliate">Affiliate Program</a><a href="#why">About Us</a><a href="#community">Contact Us</a><a href="#">Terms of Use</a><a href="#faq">FAQ</a>
-  </div>
-  <div class="nav-cta">
-    <button class="theme-tg" id="themeTg" aria-label="Toggle theme">
-      <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-      <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
-    </button>
-    <span class="lang">🇬🇧 EN</span>
-    <a href="#" class="btn">Login / Signup</a>
-    <a href="#programs" class="btn btn-p" data-magnetic>Buy Evaluation →</a>
-  </div>
-  <button class="menu-btn">☰</button>
-</div></div></header>
-
-<!-- HERO -->
-<section class="hero"><div class="wrap">
-  <span class="eyebrow reveal"><span class="dot"></span>PROPRIETARY TRADING · 160+ COUNTRIES</span>
-  <h1 class="reveal">The Prop Trading <span class="gt">Firm With</span> No <span class="gt">Payout Denial.</span></h1>
-  <p class="hero-sub reveal">Capital Chain is the bridge between your forex trading skills and real earnings — built on transparency, fast payouts and leading technology. Trade up to $400K and keep up to 100%.</p>
-  <div class="hero-actions reveal">
-    <a href="#programs" class="btn btn-p btn-lg" data-magnetic>Buy Evaluation →</a>
-    <span class="trustline"><span class="av"><span></span><span></span><span></span></span>Traders connected across 160+ countries</span>
-  </div>
-</div></section>
-
-<!-- TRUST BAND  (TODO: replace with real verified figures) -->
-<div class="trust"><div class="wrap">
-  <div class="st reveal"><div class="v"><span class="u">$</span><span data-count="0" data-suffix="M+">0</span></div><div class="k">Paid to traders</div></div>
-  <div class="st reveal"><div class="v"><span data-count="0" data-suffix="K+">0</span></div><div class="k">Funded accounts</div></div>
-  <div class="st reveal"><div class="v"><span data-count="0" data-suffix="+">0</span></div><div class="k">Countries served</div></div>
-  <div class="st reveal"><div class="v">0.0</div><div class="tp"><span class="stars">★★★★★</span><span class="tx">Trustpilot</span></div><div class="k">Verified reviews</div></div>
-</div></div>
-
-<!-- TICKER -->
-<div class="ticker"><span class="lbl"><span class="p"></span>LIVE</span><div class="chips" id="chips"></div></div>
-
-<!-- WHY -->
-<section class="sec" id="why"><div class="wrap">
-  <div class="shead reveal"><div><span class="idx">[ 01 — WHY CAPITAL CHAIN ]</span><h2 class="h2">A real desk. <span class="gt">Not a funnel.</span></h2></div><p>Every rule published upfront. Every payout programmatic. The numbers never move after you pass.</p></div>
-  <div class="bento">
-    <div class="tile feature big reveal" data-tilt><div class="big-num gt">100%</div><h3>Keep what you earn</h3><p>Choose your cadence and keep up to 100% of profit. Faster payouts trade a little split for speed — your call, every cycle.</p></div>
-    <div class="tile sm reveal" data-tilt><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 6v6l4 2"/></svg></div><h3>24/7 support</h3><p>Real humans, any timezone. First reply under an hour.</p></div>
-    <div class="tile sm reveal" data-tilt><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 11-6.2-8.6M22 4l-9 9-3-3"/></svg></div><h3>Flexible payouts</h3><p>Daily, Friday, bi-weekly or monthly — pick what fits.</p></div>
-    <div class="tile med reveal" data-tilt><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg></div><h3>Raw spreads, real execution</h3><p>Sub-30ms fills on deep liquidity. News trading, weekend holds and EAs all allowed — a real desk, not a sandbox with training wheels.</p></div>
-  </div>
-</div></section>
-
-<!-- PROGRAMS -->
-<section class="sec band" id="programs"><div class="wrap">
-  <div class="shead reveal"><div><span class="idx">[ 02 — PROGRAMS ]</span><h2 class="h2">Configure your <span class="gt">funded account.</span></h2></div><p>Pick a path and a size. The evaluation fee is refunded with your first payout.</p></div>
-  <div class="config">
-    <div class="reveal">
-      <div class="seg"><button class="active" data-tab="1step">1-Step</button><button data-tab="2step">2-Step</button><button data-tab="instant">Instant</button></div>
-      <div class="seg-note" id="segNote">One profit target. Hit it within the drawdown limits — no minimum days, no deadline.</div>
-      <div class="size-track" id="sizeRow"></div>
-      <div class="spec-list" id="specList"></div>
-    </div>
-    <div class="buy reveal">
-      <div class="cap">Account balance</div>
-      <div class="acct" id="buyAcct">$100<span>K</span></div>
-      <div><span class="was" id="buyWas">$540</span><div class="now" id="buyNow"><span class="gt">$489</span><small> one-time</small></div></div>
-      <div class="refund">↻ Fully refundable with first payout</div>
-      <a href="#" class="btn btn-p btn-lg" data-magnetic>Buy Evaluation →</a>
+  <!-- PROMO -->
+  <div class="promo">
+    <div class="row" id="promoRow">
+      <span>May 1 · Buy 1 Get 1 — enter code MOGO at checkout&nbsp;&nbsp;◆&nbsp;&nbsp;Up to 100% profit
+        split&nbsp;&nbsp;◆&nbsp;&nbsp;Payouts from 1 business day&nbsp;&nbsp;◆&nbsp;&nbsp;</span>
+      <span>May 1 · Buy 1 Get 1 — enter code MOGO at checkout&nbsp;&nbsp;◆&nbsp;&nbsp;Up to 100% profit
+        split&nbsp;&nbsp;◆&nbsp;&nbsp;Payouts from 1 business day&nbsp;&nbsp;◆&nbsp;&nbsp;</span>
     </div>
   </div>
-</div></section>
 
-<!-- HOW -->
-<section class="sec" id="how"><div class="wrap">
-  <div class="shead reveal"><div><span class="idx">[ 03 — THE CHAIN ]</span><h2 class="h2">Four links to a <span class="gt">funded desk.</span></h2></div><p>A measurable path from evaluation to live allocation — built to reward consistency, not luck.</p></div>
-  <div class="stack" id="stack">
-    <div class="stack-card" style="top:120px"><div class="n">01</div><div><h3>Pick your program</h3><p>Choose a balance from $5K to $500K with one refundable fee. No recurring charges, no surprises.</p></div><div class="glyph"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg></div></div>
-    <div class="stack-card" style="top:150px"><div class="n">02</div><div><h3>Prove your edge</h3><p>Reach the profit target inside the drawdown limits. No minimum trading days, no time pressure.</p></div><div class="glyph"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg></div></div>
-    <div class="stack-card" style="top:180px"><div class="n">03</div><div><h3>Get funded</h3><p>Receive a funded account with real risk capital. Trade your strategy, on your own schedule.</p></div><div class="glyph"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 3 3 5-6"/></svg></div></div>
-    <div class="stack-card" style="top:210px"><div class="n">04</div><div><h3>Scale &amp; cash out</h3><p>Pick your payout cycle and keep up to 100%. Stay consistent and your allocation grows to $2M.</p></div><div class="glyph"><svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg></div></div>
-  </div>
-</div></section>
-
-<!-- PAYOUT CYCLES -->
-<section class="sec band" id="payouts"><div class="wrap">
-  <div class="shead center reveal"><span class="idx">[ 04 — PAYOUTS ]</span><h2 class="h2">Your profit. <span class="gt">Your schedule.</span></h2><p>Four payout cycles. Want it fast? Take it daily. Want all of it? Wait for monthly. The choice is yours, every single time.</p></div>
-  <div class="cycles">
-    <div class="cyc reveal" data-tilt><div class="cn">Daily reward</div><div class="split"><span>60%</span></div><div class="spl-l">profit split</div><ul><li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Paid in <b>1 business day</b></li><li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Up to <b>25% of balance</b> per request</li><li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Cash flow when you need it</li></ul></div>
-    <div class="cyc reveal" data-tilt><div class="cn">Pay Friday</div><div class="split"><span>70%</span></div><div class="spl-l">profit split</div><ul><li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Paid <b>every Friday</b></li><li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>No extra cost</li><li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Weekly rhythm</li></ul></div>
-    <div class="cyc reveal" data-tilt><div class="cn">Bi-weekly</div><div class="split"><span>80%</span></div><div class="spl-l">profit split</div><ul><li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Every <b>10 business days</b></li><li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>No extra cost</li><li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Higher split, steady pace</li></ul></div>
-    <div class="cyc best reveal" data-tilt><div class="badge">MAX SPLIT</div><div class="cn">Monthly</div><div class="split"><span>100%</span></div><div class="spl-l">profit split</div><ul><li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Every <b>21 business days</b></li><li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Keep <b>every dollar</b></li><li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>For the patient trader</li></ul></div>
-  </div>
-</div></section>
-
-<!-- CALCULATOR -->
-<section class="sec"><div class="wrap">
-  <div class="calc-grid">
-    <div class="reveal">
-      <span class="idx">[ 05 — CALCULATOR ]</span>
-      <h2 class="h2" style="margin-bottom:18px">See your payout <span class="gt">before you trade.</span></h2>
-      <p style="color:var(--dim);font-size:18px;max-width:42ch">Drag the sliders — account size, monthly return and which payout cycle you'd pick. We do the math.</p>
-      <div class="cfeat">
-        <div class="f"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 6v6l4 2"/></svg></div><div><h4>From 1 business day</h4><p>Bank, card or stablecoin — fastest cycle settles next day.</p></div></div>
-        <div class="f"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><h4>Scaling to $2M</h4><p>Consistency steps your allocation up automatically.</p></div></div>
+  <!-- NAV -->
+  <header id="hdr">
+    <div class="wrap">
+      <div class="bar">
+        <a href="#" class="logo">
+          <svg class="mark" viewBox="0 0 40 40" fill="none">
+            <path class="lkp" d="M14 20a6 6 0 016-6h0a6 6 0 016 6m0 0a6 6 0 01-6 6h0a6 6 0 01-6-6" stroke-width="3"
+              stroke-linecap="round" fill="none" />
+            <circle class="lkp" cx="20" cy="20" r="17" stroke-width="2.4" stroke-dasharray="4 5" opacity=".5"
+              fill="none" />
+          </svg>
+          Capital<b>Chain</b>
+        </a>
+        <div class="nav-links">
+          <a href="#" class="on">Home</a><a href="#affiliate">Affiliate Program</a><a href="#why">About Us</a><a
+            href="#community">Contact Us</a><a href="#">Terms of Use</a><a href="#faq">FAQ</a>
+        </div>
+        <div class="nav-cta">
+          <button class="theme-tg" id="themeTg" aria-label="Toggle theme">
+            <svg class="sun" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+            </svg>
+            <svg class="moon" viewBox="0 0 24 24">
+              <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+            </svg>
+          </button>
+          <span class="lang">🇬🇧 EN</span>
+          <a href="#" class="btn">Login / Signup</a>
+          <a href="#programs" class="btn btn-p" data-magnetic>Buy Evaluation →</a>
+        </div>
+        <button class="menu-btn">☰</button>
       </div>
     </div>
-    <div class="calc reveal">
-      <div class="crow"><div class="top"><span class="lbl">Account size</span><span class="out" id="accOut">$100,000</span></div><input type="range" id="accSlider" min="0" max="4" step="1" value="2"></div>
-      <div class="crow"><div class="top"><span class="lbl">Monthly return</span><span class="out" id="retOut">8%</span></div><input type="range" id="retSlider" min="2" max="20" step="1" value="8"></div>
-      <div class="crow"><div class="top"><span class="lbl">Payout cycle</span><span class="out" id="splitOut">Monthly · 100%</span></div><input type="range" id="splitSlider" min="0" max="3" step="1" value="3"></div>
-      <div class="cres"><div class="lbl">Your payout<span>Gross profit × split for the chosen cycle</span></div><div class="payout" id="payoutOut">$8,000</div></div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow reveal"><span class="dot"></span>PROPRIETARY TRADING · 160+ COUNTRIES</span>
+      <h1 class="reveal">The Prop Trading <span class="gt">Firm With</span> No <span class="gt">Payout Denial.</span>
+      </h1>
+      <p class="hero-sub reveal">Capital Chain is the bridge between your forex trading skills and real earnings — built
+        on transparency, fast payouts and leading technology. Trade up to $400K and keep up to 100%.</p>
+      <div class="hero-actions reveal">
+        <a href="#programs" class="btn btn-p btn-lg" data-magnetic>Buy Evaluation →</a>
+        <span class="trustline"><span class="av"><span></span><span></span><span></span></span>Traders connected across
+          160+ countries</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAND  (TODO: replace with real verified figures) -->
+  <div class="trust">
+    <div class="wrap">
+      <div class="st reveal">
+        <div class="v"><span class="u">$</span><span data-count="0" data-suffix="M+">0</span></div>
+        <div class="k">Paid to traders</div>
+      </div>
+      <div class="st reveal">
+        <div class="v"><span data-count="0" data-suffix="K+">0</span></div>
+        <div class="k">Funded accounts</div>
+      </div>
+      <div class="st reveal">
+        <div class="v"><span data-count="0" data-suffix="+">0</span></div>
+        <div class="k">Countries served</div>
+      </div>
+      <div class="st reveal">
+        <div class="v">0.0</div>
+        <div class="tp"><span class="stars">★★★★★</span><span class="tx">Trustpilot</span></div>
+        <div class="k">Verified reviews</div>
+      </div>
     </div>
   </div>
-</div></section>
 
-<!-- SCALING LADDER -->
-<section class="sec band" id="scaling"><div class="wrap">
-  <div class="shead reveal"><div><span class="idx">[ 06 — SCALING PLAN ]</span><h2 class="h2">Stay consistent. <span class="gt">Grow to $2M.</span></h2></div><p>Hit your targets and your allocation steps up automatically. No new fee, no re-evaluation.</p></div>
-  <div class="ladder">
-    <div class="rung reveal"><div class="lv">Start</div><div class="amt">$100<span>K</span></div></div>
-    <div class="rung reveal"><div class="lv">Step 1</div><div class="amt">$200<span>K</span></div></div>
-    <div class="rung reveal"><div class="lv">Step 2</div><div class="amt">$400<span>K</span></div></div>
-    <div class="rung reveal"><div class="lv">Step 3</div><div class="amt">$1<span>M</span></div></div>
-    <div class="rung peak reveal"><div class="lv">Max</div><div class="amt">$2M</div></div>
+  <!-- TICKER -->
+  <div class="ticker"><span class="lbl"><span class="p"></span>LIVE</span>
+    <div class="chips" id="chips"></div>
   </div>
-  <div class="ladder-note">Allocation increases after consistent, profitable payout cycles. <span style="color:var(--dim)">/* TODO: confirm exact scaling rule & % uplift */</span></div>
-</div></section>
 
-<!-- PLATFORMS -->
-<section class="sec" id="platforms"><div class="wrap">
-  <div class="shead reveal"><div><span class="idx">[ 07 — EXECUTION ]</span><h2 class="h2">Trade where you're <span class="gt">already sharp.</span></h2></div><p>Institutional infrastructure, retail access. Plug into the terminals you already know.</p></div>
-  <div class="plat-bento">
-    <div class="ptile a reveal" data-tilt><span class="badge">MT5 / MT4</span><h4>MetaTrader</h4><p>Full multi-asset terminals. EAs and custom indicators fully supported.</p></div>
-    <div class="ptile b reveal" data-tilt><span class="badge">cTRADER</span><h4>cTrader</h4><p>Depth-of-market execution and clean charting.</p></div>
-    <div class="ptile c reveal" data-tilt><span class="badge">API</span><h4>FIX / REST</h4><p>For systematic traders.</p></div>
-    <div class="ptile d reveal" data-tilt><span class="badge">⚡ SPEED</span><h4>&lt;30ms fills</h4><p>Market execution on deep liquidity. No requotes, no artificial slippage.</p></div>
-    <div class="ptile e reveal" data-tilt><span class="badge">📈 LEVERAGE</span><h4>1:100</h4><p>FX, indices, metals and crypto with professional leverage.</p></div>
-    <div class="ptile f reveal" data-tilt><span class="badge">✓ FREEDOM</span><h4>Trade everything</h4><p>News, weekend holds, hedging and EAs — all allowed.</p></div>
-  </div>
-</div></section>
-
-<!-- CHAMPIONS -->
-<section class="sec band" id="champions">
-  <div class="wrap"><div class="shead reveal"><div><span class="idx">[ 08 — LEADERBOARD ]</span><h2 class="h2">This month's <span class="gt">champions.</span></h2></div><p>Top funded traders across the chain. Scroll →</p></div></div>
-  <div class="wrap"><div class="hscroll">
-    <div class="hcard champ reveal"><span class="rank">#01</span><div class="flag">🇦🇪</div><div class="name">A. Rahman</div><div class="role">$200K · Operator</div><div class="amt">$96,316</div><div class="amt-l">paid this cycle</div></div>
-    <div class="hcard champ reveal"><span class="rank">#02</span><div class="flag">🇩🇪</div><div class="name">B. Schneider</div><div class="role">$200K · Operator</div><div class="amt">$80,517</div><div class="amt-l">paid this cycle</div></div>
-    <div class="hcard champ reveal"><span class="rank">#03</span><div class="flag">🇵🇰</div><div class="name">U. Bin Hannan</div><div class="role">$100K · Operator</div><div class="amt">$80,369</div><div class="amt-l">paid this cycle</div></div>
-    <div class="hcard champ reveal"><span class="rank">#04</span><div class="flag">🇬🇧</div><div class="name">O. Trish</div><div class="role">$100K · Operator</div><div class="amt">$66,028</div><div class="amt-l">paid this cycle</div></div>
-    <div class="hcard champ reveal"><span class="rank">#05</span><div class="flag">🇸🇬</div><div class="name">M. Chen</div><div class="role">$100K · Operator</div><div class="amt">$58,940</div><div class="amt-l">paid this cycle</div></div>
-  </div></div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="sec" id="reviews">
-  <div class="wrap"><div class="shead reveal"><div><span class="idx">[ 09 — TRADER STORIES ]</span><h2 class="h2">What funded traders <span class="gt">actually say.</span></h2></div><p>Verified payouts from Capital Chain traders. Scroll →</p></div></div>
-  <div class="wrap"><div class="hscroll">
-    <div class="hcard rev reveal"><div class="stars">★★★★★</div><p>Took the daily cycle for a week to cover rent, switched to monthly after. Having the choice is the whole point.</p><div class="who"><span class="av"></span><div><div class="nm">Evgeny M.</div><div class="l">$100K · Funded</div></div><span class="pay">$36,393</span></div></div>
-    <div class="hcard rev reveal"><div class="stars">★★★★★</div><p>The dashboard shows my exact drawdown buffer at all times. I never have to guess where I stand on the rules.</p><div class="who"><span class="av"></span><div><div class="nm">Mac Ting</div><div class="l">$200K · Funded</div></div><span class="pay">$50,400</span></div></div>
-    <div class="hcard rev reveal"><div class="stars">★★★★★</div><p>Support actually answers. Got a payout question resolved on chat in fifteen minutes at 2am my time.</p><div class="who"><span class="av"></span><div><div class="nm">Nipong</div><div class="l">$50K · Funded</div></div><span class="pay">$12,656</span></div></div>
-    <div class="hcard rev reveal"><div class="stars">★★★★★</div><p>Came from a firm that moved the target after I passed. Capital Chain published every rule. Refreshing.</p><div class="who"><span class="av"></span><div><div class="nm">Aisha N.</div><div class="l">$100K · Funded</div></div><span class="pay">$41,210</span></div></div>
-  </div></div>
-</section>
-
-<!-- COMMUNITY + SUPPORT -->
-<section class="sec band" id="community"><div class="wrap">
-  <div class="shead reveal"><div><span class="idx">[ 10 — COMMUNITY ]</span><h2 class="h2">You're not trading <span class="gt">alone.</span></h2></div><p>Thousands of traders, live market chat, and humans on support around the clock.</p></div>
-  <div class="commgrid">
-    <div class="comm reveal">
-      <div class="dlogo"><svg viewBox="0 0 24 24"><path d="M20.3 4.4A19.8 19.8 0 0015.4 3l-.3.5a14.6 14.6 0 014.4 1.4 12.6 12.6 0 00-15 0A14.6 14.6 0 018.9 3.5L8.6 3a19.8 19.8 0 00-4.9 1.4C.6 9 0 13.5.3 17.9a19.9 19.9 0 006 3l.5-1.3a13 13 0 01-1.9-.9l.4-.3a14.2 14.2 0 0012.4 0l.4.3a13 13 0 01-1.9.9l.5 1.3a19.9 19.9 0 006-3c.4-5.1-.7-9.6-2.8-13.5zM8.3 15.3c-1.2 0-2.1-1.1-2.1-2.4S7.1 10.5 8.3 10.5s2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4zm7.4 0c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4z"/></svg></div>
-      <h3>Join the Capital Chain Discord</h3>
-      <p>Live market talk, payout drops, challenge tips and direct access to the team. Where funded traders actually hang out.</p>
-      <a href="#" class="btn btn-p btn-lg" data-magnetic data-discord>Join Discord →</a>
+  <!-- WHY -->
+  <section class="sec" id="why">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div><span class="idx">[ 01 — WHY CAPITAL CHAIN ]</span>
+          <h2 class="h2">A real desk. <span class="gt">Not a funnel.</span></h2>
+        </div>
+        <p>Every rule published upfront. Every payout programmatic. The numbers never move after you pass.</p>
+      </div>
+      <div class="bento">
+        <div class="tile feature big reveal" data-tilt>
+          <div class="big-num gt">100%</div>
+          <h3>Keep what you earn</h3>
+          <p>Choose your cadence and keep up to 100% of profit. Faster payouts trade a little split for speed — your
+            call, every cycle.</p>
+        </div>
+        <div class="tile sm reveal" data-tilt>
+          <div class="ic"><svg viewBox="0 0 24 24">
+              <path d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 6v6l4 2" />
+            </svg></div>
+          <h3>24/7 support</h3>
+          <p>Real humans, any timezone. First reply under an hour.</p>
+        </div>
+        <div class="tile sm reveal" data-tilt>
+          <div class="ic"><svg viewBox="0 0 24 24">
+              <path d="M21 12a9 9 0 11-6.2-8.6M22 4l-9 9-3-3" />
+            </svg></div>
+          <h3>Flexible payouts</h3>
+          <p>Daily, Friday, bi-weekly or monthly — pick what fits.</p>
+        </div>
+        <div class="tile med reveal" data-tilt>
+          <div class="ic"><svg viewBox="0 0 24 24">
+              <path d="M3 12h4l3-9 4 18 3-9h4" />
+            </svg></div>
+          <h3>Raw spreads, real execution</h3>
+          <p>Sub-30ms fills on deep liquidity. News trading, weekend holds and EAs all allowed — a real desk, not a
+            sandbox with training wheels.</p>
+        </div>
+      </div>
     </div>
-    <div class="support reveal">
-      <div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
-      <h3>24/7 support</h3>
-      <p>Real humans on live chat and email, every hour of every day. Average first reply under an hour.</p>
-      <div class="langs">Multilingual · EN · AR · UR · ES · HI</div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section class="sec band" id="programs">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div><span class="idx">[ 02 — PROGRAMS ]</span>
+          <h2 class="h2">Configure your <span class="gt">funded account.</span></h2>
+        </div>
+        <p>Pick a path and a size. The evaluation fee is refunded with your first payout.</p>
+      </div>
+      <div class="config">
+        <div class="reveal">
+          <div class="seg"><button class="active" data-tab="1step">1-Step</button><button
+              data-tab="2step">2-Step</button><button data-tab="instant">Instant</button></div>
+          <div class="seg-note" id="segNote">One profit target. Hit it within the drawdown limits — no minimum days, no
+            deadline.</div>
+          <div class="size-track" id="sizeRow"></div>
+          <div class="spec-list" id="specList"></div>
+        </div>
+        <div class="buy reveal">
+          <div class="cap">Account balance</div>
+          <div class="acct" id="buyAcct">$100<span>K</span></div>
+          <div><span class="was" id="buyWas">$540</span>
+            <div class="now" id="buyNow"><span class="gt">$489</span><small> one-time</small></div>
+          </div>
+          <div class="refund">↻ Fully refundable with first payout</div>
+          <a href="#" class="btn btn-p btn-lg" data-magnetic>Buy Evaluation →</a>
+        </div>
+      </div>
     </div>
-  </div>
-</div></section>
+  </section>
 
-<!-- AFFILIATE -->
-<section class="sec" id="affiliate"><div class="wrap">
-  <div class="aff">
-    <div class="reveal">
-      <span class="idx">[ 11 — AFFILIATE PROGRAM ]</span>
-      <h2 class="h2" style="margin-bottom:18px">Earn while your <span class="gt">network trades.</span></h2>
-      <p style="color:var(--dim);font-size:18px;max-width:44ch;margin-bottom:30px">Refer traders to Capital Chain and earn lifetime commission on every evaluation they buy. Real-time tracking, monthly payouts, no caps.</p>
-      <a href="#" class="btn btn-p btn-lg" data-magnetic>Become an affiliate →</a>
+  <!-- HOW -->
+  <section class="sec" id="how">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div><span class="idx">[ 03 — THE CHAIN ]</span>
+          <h2 class="h2">From Evaluation to <span class="gt">funded.</span></h2>
+        </div>
+        <p>A measurable path from evaluation to live allocation — built to reward consistency, not luck.</p>
+      </div>
+      <div class="stack" id="stack">
+        <div class="stack-card" style="top:120px">
+          <div class="n">01</div>
+          <div>
+            <h3>Pick your program</h3>
+            <p>Choose a balance from $5K to $500K with one refundable fee. No recurring charges, no surprises.</p>
+          </div>
+          <div class="glyph"><svg viewBox="0 0 24 24">
+              <path d="M12 2v20M2 12h20" />
+            </svg></div>
+        </div>
+        <div class="stack-card" style="top:150px">
+          <div class="n">02</div>
+          <div>
+            <h3>Prove your edge</h3>
+            <p>Reach the profit target inside the drawdown limits. No minimum trading days, no time pressure.</p>
+          </div>
+          <div class="glyph"><svg viewBox="0 0 24 24">
+              <path d="M3 12h4l3-9 4 18 3-9h4" />
+            </svg></div>
+        </div>
+        <div class="stack-card" style="top:180px">
+          <div class="n">03</div>
+          <div>
+            <h3>Get funded</h3>
+            <p>Receive a funded account with real risk capital. Trade your strategy, on your own schedule.</p>
+          </div>
+          <div class="glyph"><svg viewBox="0 0 24 24">
+              <path d="M3 3v18h18M7 14l4-4 3 3 5-6" />
+            </svg></div>
+        </div>
+        <div class="stack-card" style="top:210px">
+          <div class="n">04</div>
+          <div>
+            <h3>Scale &amp; cash out</h3>
+            <p>Pick your payout cycle and keep up to 100%. Stay consistent and your allocation grows to $2M.</p>
+          </div>
+          <div class="glyph"><svg viewBox="0 0 24 24">
+              <path d="M12 1v22M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6" />
+            </svg></div>
+        </div>
+      </div>
     </div>
-    <div class="aff-card reveal" data-tilt>
-      <div class="pct">15%</div><div class="pl">Lifetime commission</div>
-      <div class="arow"><div><div class="v gt">Monthly</div><div class="k">Payouts</div></div><div><div class="v gt">Real-time</div><div class="k">Dashboard</div></div><div><div class="v gt">No cap</div><div class="k">Earnings</div></div></div>
+  </section>
+
+  <!-- PAYOUT CYCLES -->
+  <section class="sec band" id="payouts">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="idx">[ 04 — PAYOUTS ]</span>
+        <h2 class="h2">Your profit. <span class="gt">Your schedule.</span></h2>
+        <p>Four payout cycles. Want it fast? Take it daily. Want all of it? Wait for monthly. The choice is yours, every
+          single time.</p>
+      </div>
+      <div class="cycles">
+        <div class="cyc reveal" data-tilt>
+          <div class="cn">Daily reward</div>
+          <div class="split"><span>60%</span></div>
+          <div class="spl-l">profit split</div>
+          <ul>
+            <li><svg viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>Paid in <b>1 business day</b></li>
+            <li><svg viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>Up to <b>25% of balance</b> per request</li>
+            <li><svg viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>Cash flow when you need it</li>
+          </ul>
+        </div>
+        <div class="cyc reveal" data-tilt>
+          <div class="cn">Pay Friday</div>
+          <div class="split"><span>70%</span></div>
+          <div class="spl-l">profit split</div>
+          <ul>
+            <li><svg viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>Paid <b>every Friday</b></li>
+            <li><svg viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>No extra cost</li>
+            <li><svg viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>Weekly rhythm</li>
+          </ul>
+        </div>
+        <div class="cyc reveal" data-tilt>
+          <div class="cn">Bi-weekly</div>
+          <div class="split"><span>80%</span></div>
+          <div class="spl-l">profit split</div>
+          <ul>
+            <li><svg viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>Every <b>10 business days</b></li>
+            <li><svg viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>No extra cost</li>
+            <li><svg viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>Higher split, steady pace</li>
+          </ul>
+        </div>
+        <div class="cyc best reveal" data-tilt>
+          <div class="badge">MAX SPLIT</div>
+          <div class="cn">Monthly</div>
+          <div class="split"><span>100%</span></div>
+          <div class="spl-l">profit split</div>
+          <ul>
+            <li><svg viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>Every <b>21 business days</b></li>
+            <li><svg viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>Keep <b>every dollar</b></li>
+            <li><svg viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>For the patient trader</li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
-</div></section>
+  </section>
 
-<!-- FAQ -->
-<section class="sec band" id="faq"><div class="wrap">
-  <div class="faq-grid">
-    <div class="reveal"><span class="idx">[ 12 — FAQ ]</span><h2 class="h2">Straight <span class="gt">answers.</span></h2><p style="color:var(--dim);margin-top:14px">If it isn't here, our team replies in under an hour.</p></div>
-    <div class="faq-list reveal">
-      <div class="faq-item"><button class="faq-q">What is a prop firm? <span class="pm">+</span></button><div class="faq-a"><div>A proprietary trading firm supplies its own capital to skilled traders. You prove your edge in an evaluation, then trade the firm's capital and share the profit — without risking a large balance of your own.</div></div></div>
-      <div class="faq-item"><button class="faq-q">How do the payout cycles work? <span class="pm">+</span></button><div class="faq-a"><div>You choose: Daily (60% split, paid in one business day, up to 25% of balance per request), Pay Friday (70%, every Friday), Bi-weekly (80%, every 10 business days), or Monthly (100%, every 21 business days). Faster access trades a little split for speed.</div></div></div>
-      <div class="faq-item"><button class="faq-q">What exactly am I trading? <span class="pm">+</span></button><div class="faq-a"><div>Evaluation accounts run in a simulated environment that mirrors live market data. Once funded, your performance is allocated against Capital Chain's risk capital under full market conditions.</div></div></div>
-      <div class="faq-item"><button class="faq-q">Is the fee really refundable? <span class="pm">+</span></button><div class="faq-a"><div>Yes. The one-time fee is returned with your first payout after you become funded and complete a withdrawal. It's a deposit on your discipline, not a subscription.</div></div></div>
-      <div class="faq-item"><button class="faq-q">How does scaling to $2M work? <span class="pm">+</span></button><div class="faq-a"><div>Stay consistent and profitable across payout cycles and your allocation steps up automatically — no new fee and no re-evaluation — up to $2M.</div></div></div>
+  <!-- CALCULATOR -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="calc-grid">
+        <div class="reveal">
+          <span class="idx">[ 05 — CALCULATOR ]</span>
+          <h2 class="h2" style="margin-bottom:18px">See your payout <span class="gt">before you trade.</span></h2>
+          <p style="color:var(--dim);font-size:18px;max-width:42ch">Drag the sliders — account size, monthly return and
+            which payout cycle you'd pick. We do the math.</p>
+          <div class="cfeat">
+            <div class="f">
+              <div class="ic"><svg viewBox="0 0 24 24">
+                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 6v6l4 2" />
+                </svg></div>
+              <div>
+                <h4>From 1 business day</h4>
+                <p>Bank, card or stablecoin — fastest cycle settles next day.</p>
+              </div>
+            </div>
+            <div class="f">
+              <div class="ic"><svg viewBox="0 0 24 24">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg></div>
+              <div>
+                <h4>Scaling to $2M</h4>
+                <p>Consistency steps your allocation up automatically.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="calc reveal">
+          <div class="crow">
+            <div class="top"><span class="lbl">Account size</span><span class="out" id="accOut">$100,000</span></div>
+            <input type="range" id="accSlider" min="0" max="4" step="1" value="2">
+          </div>
+          <div class="crow">
+            <div class="top"><span class="lbl">Monthly return</span><span class="out" id="retOut">8%</span></div><input
+              type="range" id="retSlider" min="2" max="20" step="1" value="8">
+          </div>
+          <div class="crow">
+            <div class="top"><span class="lbl">Payout cycle</span><span class="out" id="splitOut">Monthly · 100%</span>
+            </div><input type="range" id="splitSlider" min="0" max="3" step="1" value="3">
+          </div>
+          <div class="cres">
+            <div class="lbl">Your payout<span>Gross profit × split for the chosen cycle</span></div>
+            <div class="payout" id="payoutOut">$8,000</div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div></section>
+  </section>
 
-<!-- FINAL -->
-<section class="final"><div class="wrap">
-  <h2>The capital was<br>never the <span class="gt">problem.</span></h2>
-  <p>Prove your edge once and trade size that matches your skill. Start today.</p>
-  <div class="final-actions"><a href="#programs" class="btn btn-p btn-lg" data-magnetic>Buy Evaluation →</a><a href="#how" class="btn btn-lg">See how it works</a></div>
-</div></section>
-
-<!-- FOOTER -->
-<footer><div class="wrap">
-  <div class="news reveal">
-    <div><h4>Stay ahead of the markets.</h4><p>Payout drops, challenge updates and trading insights. No spam.</p></div>
-    <div class="form"><input type="email" placeholder="you@email.com" aria-label="email"><a href="#" class="btn btn-p" data-magnetic>Subscribe</a></div>
-  </div>
-  <div class="foot-grid">
-    <div class="foot-brand">
-      <a href="#" class="logo"><svg class="mark" viewBox="0 0 40 40" fill="none"><path class="lkp" d="M14 20a6 6 0 016-6h0a6 6 0 016 6m0 0a6 6 0 01-6 6h0a6 6 0 01-6-6" stroke-width="3" stroke-linecap="round" fill="none"/><circle class="lkp" cx="20" cy="20" r="17" stroke-width="2.4" stroke-dasharray="4 5" opacity=".5" fill="none"/></svg>Capital<b>Chain</b></a>
-      <p>The bridge between your trading skills and real earnings — built on transparency and leading technology.</p>
+  <!-- SCALING LADDER -->
+  <section class="sec band" id="scaling">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div><span class="idx">[ 06 — SCALING PLAN ]</span>
+          <h2 class="h2">Stay consistent. <span class="gt">Grow to $2M.</span></h2>
+        </div>
+        <p>Hit your targets and your allocation steps up automatically. No new fee, no re-evaluation.</p>
+      </div>
+      <div class="ladder">
+        <div class="rung reveal">
+          <div class="lv">Start</div>
+          <div class="amt">$100<span>K</span></div>
+        </div>
+        <div class="rung reveal">
+          <div class="lv">Step 1</div>
+          <div class="amt">$200<span>K</span></div>
+        </div>
+        <div class="rung reveal">
+          <div class="lv">Step 2</div>
+          <div class="amt">$400<span>K</span></div>
+        </div>
+        <div class="rung reveal">
+          <div class="lv">Step 3</div>
+          <div class="amt">$1<span>M</span></div>
+        </div>
+        <div class="rung peak reveal">
+          <div class="lv">Max</div>
+          <div class="amt">$2M</div>
+        </div>
+      </div>
+      <div class="ladder-note">Allocation increases after consistent, profitable payout cycles. <span
+          style="color:var(--dim)">/* TODO: confirm exact scaling rule & % uplift */</span></div>
     </div>
-    <div class="foot-col"><h5>Platform</h5><a href="#programs">Programs</a><a href="#payouts">Payouts</a><a href="#scaling">Scaling Plan</a><a href="#platforms">Platforms</a></div>
-    <div class="foot-col"><h5>Company</h5><a href="#why">About Us</a><a href="#affiliate">Affiliate</a><a href="#community">Community</a><a href="#community">Contact Us</a></div>
-    <div class="foot-col"><h5>Legal</h5><a href="#">Terms of Use</a><a href="#">Privacy</a><a href="#">Risk disclosure</a><a href="#">Refund policy</a></div>
-  </div>
-  <div class="disclaimer"><strong style="color:var(--dim)">Risk disclosure.</strong> Trading leveraged instruments carries a substantial risk of loss and is not suitable for everyone. Capital Chain provides evaluation and funded-trader programs in a simulated environment; participation in an evaluation is not an offer of employment or investment, and nothing on this site constitutes financial, investment or trading advice. Stats, payout figures, leaderboard names and testimonials shown here are illustrative placeholders and do not guarantee or imply future results. Profit splits, payouts and program terms are subject to the full Terms of Service and account agreement.</div>
-  <div class="foot-bot"><span>© 2026 CapitalChain.co — All rights reserved.</span><span>capitalchain.co</span></div>
-</div></footer>
+  </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-let setGlobeTheme=function(){};
-(function(){
-  if(!window.THREE)return;
-  const canvas=document.getElementById('globe');
-  const scene=new THREE.Scene();
-  const camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,1,2000);camera.position.z=420;
-  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);
-  const group=new THREE.Group();scene.add(group);
-  const R=140,N=1400;
-  const c=document.createElement('canvas');c.width=c.height=64;const cx=c.getContext('2d');
-  const g=cx.createRadialGradient(32,32,0,32,32,32);
-  g.addColorStop(0,'rgba(160,255,248,1)');g.addColorStop(.4,'rgba(40,230,214,.9)');g.addColorStop(1,'rgba(40,230,214,0)');
-  cx.fillStyle=g;cx.beginPath();cx.arc(32,32,32,0,Math.PI*2);cx.fill();
-  const tex=new THREE.CanvasTexture(c);
-  const arr=[],pts=[];
-  for(let i=0;i<N;i++){const phi=Math.acos(1-2*(i+0.5)/N),th=Math.PI*(1+Math.sqrt(5))*i;
-    const x=Math.sin(phi)*Math.cos(th),y=Math.sin(phi)*Math.sin(th),z=Math.cos(phi);
-    arr.push(x*R,y*R,z*R);pts.push(new THREE.Vector3(x*R,y*R,z*R));}
-  const pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.Float32BufferAttribute(arr,3));
-  const ptsMat=new THREE.PointsMaterial({size:3.6,map:tex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,color:0x35e8da,opacity:.8,sizeAttenuation:true});
-  group.add(new THREE.Points(pg,ptsMat));
-  const wireMat=new THREE.MeshBasicMaterial({color:0x0f6b66,wireframe:true,transparent:true,opacity:.1});
-  group.add(new THREE.Mesh(new THREE.SphereGeometry(R*0.985,36,36),wireMat));
-  const ringGroup=new THREE.Group();group.add(ringGroup);
-  const octMat=new THREE.MeshBasicMaterial({color:0x19e6d6,transparent:true,opacity:.85,blending:THREE.AdditiveBlending});
-  const octGlowMat=new THREE.MeshBasicMaterial({color:0x19e6d6,transparent:true,opacity:.12,blending:THREE.AdditiveBlending});
-  ringGroup.add(new THREE.Mesh(new THREE.TorusGeometry(R*1.55,9,18,8),octMat));
-  ringGroup.add(new THREE.Mesh(new THREE.TorusGeometry(R*1.55,20,16,8),octGlowMat));
-  ringGroup.rotation.set(0.5,0.3,0.2);
-  const haloMat=new THREE.SpriteMaterial({map:tex,color:0x19e6d6,transparent:true,opacity:.45,blending:THREE.AdditiveBlending,depthWrite:false});
-  const halo=new THREE.Sprite(haloMat);halo.scale.set(R*5,R*5,1);scene.add(halo);
-  const trav=[],lineMats=[],travMats=[];
-  function arc(a,b){const s=pts[a].clone(),e=pts[b].clone(),m=s.clone().add(e).multiplyScalar(.5);
-    m.normalize().multiplyScalar(R+s.distanceTo(e)*.45);
-    const cu=new THREE.QuadraticBezierCurve3(s,m,e);
-    const lm=new THREE.LineBasicMaterial({color:0x19e6d6,transparent:true,opacity:.22});lineMats.push(lm);
-    group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(cu.getPoints(46)),lm));
-    const dm=new THREE.SpriteMaterial({map:tex,color:0x6dffc0,transparent:true,opacity:1,blending:THREE.AdditiveBlending,depthWrite:false});travMats.push(dm);
-    const d=new THREE.Sprite(dm);d.scale.set(13,13,1);group.add(d);trav.push({cu,d,t:Math.random(),sp:.0016+Math.random()*.0022});}
-  for(let i=0;i<13;i++)arc((Math.random()*N)|0,(Math.random()*N)|0);
+  <!-- PLATFORMS -->
+  <section class="sec" id="platforms">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div><span class="idx">[ 07 — EXECUTION ]</span>
+          <h2 class="h2">Trade where you're <span class="gt">already sharp.</span></h2>
+        </div>
+        <p>Institutional infrastructure, retail access. Plug into the terminals you already know.</p>
+      </div>
+      <div class="plat-bento">
+        <div class="ptile a reveal" data-tilt><span class="badge">MT5 / MT4</span>
+          <h4>MetaTrader</h4>
+          <p>Full multi-asset terminals. EAs and custom indicators fully supported.</p>
+        </div>
+        <div class="ptile b reveal" data-tilt><span class="badge">cTRADER</span>
+          <h4>cTrader</h4>
+          <p>Depth-of-market execution and clean charting.</p>
+        </div>
+        <div class="ptile c reveal" data-tilt><span class="badge">API</span>
+          <h4>FIX / REST</h4>
+          <p>For systematic traders.</p>
+        </div>
+        <div class="ptile d reveal" data-tilt><span class="badge">⚡ SPEED</span>
+          <h4>&lt;30ms fills</h4>
+          <p>Market execution on deep liquidity. No requotes, no artificial slippage.</p>
+        </div>
+        <div class="ptile e reveal" data-tilt><span class="badge">📈 LEVERAGE</span>
+          <h4>1:100</h4>
+          <p>FX, indices, metals and crypto with professional leverage.</p>
+        </div>
+        <div class="ptile f reveal" data-tilt><span class="badge">✓ FREEDOM</span>
+          <h4>Trade everything</h4>
+          <p>News, weekend holds, hedging and EAs — all allowed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  setGlobeTheme=function(light){
-    if(light){
-      ptsMat.color.setHex(0x0fa89c);ptsMat.blending=THREE.NormalBlending;ptsMat.opacity=.55;ptsMat.needsUpdate=true;
-      wireMat.color.setHex(0x9fd6d0);wireMat.opacity=.18;
-      octMat.color.setHex(0x0fa89c);octMat.blending=THREE.NormalBlending;octMat.opacity=.9;octMat.needsUpdate=true;
-      octGlowMat.opacity=.06;
-      haloMat.opacity=.12;
-      lineMats.forEach(m=>{m.color.setHex(0x0fa89c);m.opacity=.3;});
-      travMats.forEach(m=>{m.color.setHex(0x12b07e);m.blending=THREE.NormalBlending;m.needsUpdate=true;});
-    }else{
-      ptsMat.color.setHex(0x35e8da);ptsMat.blending=THREE.AdditiveBlending;ptsMat.opacity=.8;ptsMat.needsUpdate=true;
-      wireMat.color.setHex(0x0f6b66);wireMat.opacity=.1;
-      octMat.color.setHex(0x19e6d6);octMat.blending=THREE.AdditiveBlending;octMat.opacity=.85;octMat.needsUpdate=true;
-      octGlowMat.opacity=.12;
-      haloMat.opacity=.45;
-      lineMats.forEach(m=>{m.color.setHex(0x19e6d6);m.opacity=.22;});
-      travMats.forEach(m=>{m.color.setHex(0x6dffc0);m.blending=THREE.AdditiveBlending;m.needsUpdate=true;});
+  <!-- CHAMPIONS -->
+  <section class="sec band" id="champions">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div><span class="idx">[ 08 — LEADERBOARD ]</span>
+          <h2 class="h2">This month's <span class="gt">champions.</span></h2>
+        </div>
+        <p>Top funded traders across the chain. Scroll →</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="hscroll">
+        <div class="hcard champ reveal"><span class="rank">#01</span>
+          <div class="flag">🇦🇪</div>
+          <div class="name">A. Rahman</div>
+          <div class="role">$200K · Operator</div>
+          <div class="amt">$96,316</div>
+          <div class="amt-l">paid this cycle</div>
+        </div>
+        <div class="hcard champ reveal"><span class="rank">#02</span>
+          <div class="flag">🇩🇪</div>
+          <div class="name">B. Schneider</div>
+          <div class="role">$200K · Operator</div>
+          <div class="amt">$80,517</div>
+          <div class="amt-l">paid this cycle</div>
+        </div>
+        <div class="hcard champ reveal"><span class="rank">#03</span>
+          <div class="flag">🇵🇰</div>
+          <div class="name">U. Bin Hannan</div>
+          <div class="role">$100K · Operator</div>
+          <div class="amt">$80,369</div>
+          <div class="amt-l">paid this cycle</div>
+        </div>
+        <div class="hcard champ reveal"><span class="rank">#04</span>
+          <div class="flag">🇬🇧</div>
+          <div class="name">O. Trish</div>
+          <div class="role">$100K · Operator</div>
+          <div class="amt">$66,028</div>
+          <div class="amt-l">paid this cycle</div>
+        </div>
+        <div class="hcard champ reveal"><span class="rank">#05</span>
+          <div class="flag">🇸🇬</div>
+          <div class="name">M. Chen</div>
+          <div class="role">$100K · Operator</div>
+          <div class="amt">$58,940</div>
+          <div class="amt-l">paid this cycle</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="sec" id="reviews">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div><span class="idx">[ 09 — TRADER STORIES ]</span>
+          <h2 class="h2">What funded traders <span class="gt">actually say.</span></h2>
+        </div>
+        <p>Verified payouts from Capital Chain traders. Scroll →</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="hscroll">
+        <div class="hcard rev reveal">
+          <div class="stars">★★★★★</div>
+          <p>Took the daily cycle for a week to cover rent, switched to monthly after. Having the choice is the whole
+            point.</p>
+          <div class="who"><span class="av"></span>
+            <div>
+              <div class="nm">Evgeny M.</div>
+              <div class="l">$100K · Funded</div>
+            </div><span class="pay">$36,393</span>
+          </div>
+        </div>
+        <div class="hcard rev reveal">
+          <div class="stars">★★★★★</div>
+          <p>The dashboard shows my exact drawdown buffer at all times. I never have to guess where I stand on the
+            rules.</p>
+          <div class="who"><span class="av"></span>
+            <div>
+              <div class="nm">Mac Ting</div>
+              <div class="l">$200K · Funded</div>
+            </div><span class="pay">$50,400</span>
+          </div>
+        </div>
+        <div class="hcard rev reveal">
+          <div class="stars">★★★★★</div>
+          <p>Support actually answers. Got a payout question resolved on chat in fifteen minutes at 2am my time.</p>
+          <div class="who"><span class="av"></span>
+            <div>
+              <div class="nm">Nipong</div>
+              <div class="l">$50K · Funded</div>
+            </div><span class="pay">$12,656</span>
+          </div>
+        </div>
+        <div class="hcard rev reveal">
+          <div class="stars">★★★★★</div>
+          <p>Came from a firm that moved the target after I passed. Capital Chain published every rule. Refreshing.</p>
+          <div class="who"><span class="av"></span>
+            <div>
+              <div class="nm">Aisha N.</div>
+              <div class="l">$100K · Funded</div>
+            </div><span class="pay">$41,210</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMUNITY + SUPPORT -->
+  <section class="sec band" id="community">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div><span class="idx">[ 10 — COMMUNITY ]</span>
+          <h2 class="h2">You're not trading <span class="gt">alone.</span></h2>
+        </div>
+        <p>Thousands of traders, live market chat, and humans on support around the clock.</p>
+      </div>
+      <div class="commgrid">
+        <div class="comm reveal">
+          <div class="dlogo"><svg viewBox="0 0 24 24">
+              <path
+                d="M20.3 4.4A19.8 19.8 0 0015.4 3l-.3.5a14.6 14.6 0 014.4 1.4 12.6 12.6 0 00-15 0A14.6 14.6 0 018.9 3.5L8.6 3a19.8 19.8 0 00-4.9 1.4C.6 9 0 13.5.3 17.9a19.9 19.9 0 006 3l.5-1.3a13 13 0 01-1.9-.9l.4-.3a14.2 14.2 0 0012.4 0l.4.3a13 13 0 01-1.9.9l.5 1.3a19.9 19.9 0 006-3c.4-5.1-.7-9.6-2.8-13.5zM8.3 15.3c-1.2 0-2.1-1.1-2.1-2.4S7.1 10.5 8.3 10.5s2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4zm7.4 0c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4z" />
+            </svg></div>
+          <h3>Join the Capital Chain Discord</h3>
+          <p>Live market talk, payout drops, challenge tips and direct access to the team. Where funded traders actually
+            hang out.</p>
+          <a href="#" class="btn btn-p btn-lg" data-magnetic data-discord>Join Discord →</a>
+        </div>
+        <div class="support reveal">
+          <div class="ic"><svg viewBox="0 0 24 24">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+            </svg></div>
+          <h3>24/7 support</h3>
+          <p>Real humans on live chat and email, every hour of every day. Average first reply under an hour.</p>
+          <div class="langs">Multilingual · EN · AR · UR · ES · HI</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AFFILIATE -->
+  <section class="sec" id="affiliate">
+    <div class="wrap">
+      <div class="aff">
+        <div class="reveal">
+          <span class="idx">[ 11 — AFFILIATE PROGRAM ]</span>
+          <h2 class="h2" style="margin-bottom:18px">Earn while your <span class="gt">network trades.</span></h2>
+          <p style="color:var(--dim);font-size:18px;max-width:44ch;margin-bottom:30px">Refer traders to Capital Chain
+            and earn lifetime commission on every evaluation they buy. Real-time tracking, monthly payouts, no caps.</p>
+          <a href="#" class="btn btn-p btn-lg" data-magnetic>Become an affiliate →</a>
+        </div>
+        <div class="aff-card reveal" data-tilt>
+          <div class="pct">15%</div>
+          <div class="pl">Lifetime commission</div>
+          <div class="arow">
+            <div>
+              <div class="v gt">Monthly</div>
+              <div class="k">Payouts</div>
+            </div>
+            <div>
+              <div class="v gt">Real-time</div>
+              <div class="k">Dashboard</div>
+            </div>
+            <div>
+              <div class="v gt">No cap</div>
+              <div class="k">Earnings</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sec band" id="faq">
+    <div class="wrap">
+      <div class="faq-grid">
+        <div class="reveal"><span class="idx">[ 12 — FAQ ]</span>
+          <h2 class="h2">Straight <span class="gt">answers.</span></h2>
+          <p style="color:var(--dim);margin-top:14px">If it isn't here, our team replies in under an hour.</p>
+        </div>
+        <div class="faq-list reveal">
+          <div class="faq-item"><button class="faq-q">What is a prop firm? <span class="pm">+</span></button>
+            <div class="faq-a">
+              <div>A proprietary trading firm supplies its own capital to skilled traders. You prove your edge in an
+                evaluation, then trade the firm's capital and share the profit — without risking a large balance of your
+                own.</div>
+            </div>
+          </div>
+          <div class="faq-item"><button class="faq-q">How do the payout cycles work? <span class="pm">+</span></button>
+            <div class="faq-a">
+              <div>You choose: Daily (60% split, paid in one business day, up to 25% of balance per request), Pay Friday
+                (70%, every Friday), Bi-weekly (80%, every 10 business days), or Monthly (100%, every 21 business days).
+                Faster access trades a little split for speed.</div>
+            </div>
+          </div>
+          <div class="faq-item"><button class="faq-q">What exactly am I trading? <span class="pm">+</span></button>
+            <div class="faq-a">
+              <div>Evaluation accounts run in a simulated environment that mirrors live market data. Once funded, your
+                performance is allocated against Capital Chain's risk capital under full market conditions.</div>
+            </div>
+          </div>
+          <div class="faq-item"><button class="faq-q">Is the fee really refundable? <span class="pm">+</span></button>
+            <div class="faq-a">
+              <div>Yes. The one-time fee is returned with your first payout after you become funded and complete a
+                withdrawal. It's a deposit on your discipline, not a subscription.</div>
+            </div>
+          </div>
+          <div class="faq-item"><button class="faq-q">How does scaling to $2M work? <span class="pm">+</span></button>
+            <div class="faq-a">
+              <div>Stay consistent and profitable across payout cycles and your allocation steps up automatically — no
+                new fee and no re-evaluation — up to $2M.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <section class="final">
+    <div class="wrap">
+      <h2>The capital was<br>never the <span class="gt">problem.</span></h2>
+      <p>Prove your edge once and trade size that matches your skill. Start today.</p>
+      <div class="final-actions"><a href="#programs" class="btn btn-p btn-lg" data-magnetic>Buy Evaluation →</a><a
+          href="#how" class="btn btn-lg">See how it works</a></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="news reveal">
+        <div>
+          <h4>Stay ahead of the markets.</h4>
+          <p>Payout drops, challenge updates and trading insights. No spam.</p>
+        </div>
+        <div class="form"><input type="email" placeholder="you@email.com" aria-label="email"><a href="#"
+            class="btn btn-p" data-magnetic>Subscribe</a></div>
+      </div>
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <a href="#" class="logo"><svg class="mark" viewBox="0 0 40 40" fill="none">
+              <path class="lkp" d="M14 20a6 6 0 016-6h0a6 6 0 016 6m0 0a6 6 0 01-6 6h0a6 6 0 01-6-6" stroke-width="3"
+                stroke-linecap="round" fill="none" />
+              <circle class="lkp" cx="20" cy="20" r="17" stroke-width="2.4" stroke-dasharray="4 5" opacity=".5"
+                fill="none" />
+            </svg>Capital<b>Chain</b></a>
+          <p>The bridge between your trading skills and real earnings — built on transparency and leading technology.
+          </p>
+        </div>
+        <div class="foot-col">
+          <h5>Platform</h5><a href="#programs">Programs</a><a href="#payouts">Payouts</a><a href="#scaling">Scaling
+            Plan</a><a href="#platforms">Platforms</a>
+        </div>
+        <div class="foot-col">
+          <h5>Company</h5><a href="#why">About Us</a><a href="#affiliate">Affiliate</a><a
+            href="#community">Community</a><a href="#community">Contact Us</a>
+        </div>
+        <div class="foot-col">
+          <h5>Legal</h5><a href="#">Terms of Use</a><a href="#">Privacy</a><a href="#">Risk disclosure</a><a
+            href="#">Refund policy</a>
+        </div>
+      </div>
+      <div class="disclaimer"><strong style="color:var(--dim)">Risk disclosure.</strong> Trading leveraged instruments
+        carries a substantial risk of loss and is not suitable for everyone. Capital Chain provides evaluation and
+        funded-trader programs in a simulated environment; participation in an evaluation is not an offer of employment
+        or investment, and nothing on this site constitutes financial, investment or trading advice. Stats, payout
+        figures, leaderboard names and testimonials shown here are illustrative placeholders and do not guarantee or
+        imply future results. Profit splits, payouts and program terms are subject to the full Terms of Service and
+        account agreement.</div>
+      <div class="foot-bot"><span>© 2026 CapitalChain.co — All rights reserved.</span><span>capitalchain.co</span></div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    let setGlobeTheme = function () { };
+    (function () {
+      if (!window.THREE) return;
+      const canvas = document.getElementById('globe');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 1, 2000); camera.position.z = 420;
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setSize(innerWidth, innerHeight);
+      const group = new THREE.Group(); scene.add(group);
+      const R = 140, N = 1400;
+      const c = document.createElement('canvas'); c.width = c.height = 64; const cx = c.getContext('2d');
+      const g = cx.createRadialGradient(32, 32, 0, 32, 32, 32);
+      g.addColorStop(0, 'rgba(160,255,248,1)'); g.addColorStop(.4, 'rgba(40,230,214,.9)'); g.addColorStop(1, 'rgba(40,230,214,0)');
+      cx.fillStyle = g; cx.beginPath(); cx.arc(32, 32, 32, 0, Math.PI * 2); cx.fill();
+      const tex = new THREE.CanvasTexture(c);
+      const arr = [], pts = [];
+      for (let i = 0; i < N; i++) {
+        const phi = Math.acos(1 - 2 * (i + 0.5) / N), th = Math.PI * (1 + Math.sqrt(5)) * i;
+        const x = Math.sin(phi) * Math.cos(th), y = Math.sin(phi) * Math.sin(th), z = Math.cos(phi);
+        arr.push(x * R, y * R, z * R); pts.push(new THREE.Vector3(x * R, y * R, z * R));
+      }
+      const pg = new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.Float32BufferAttribute(arr, 3));
+      const ptsMat = new THREE.PointsMaterial({ size: 3.6, map: tex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, color: 0x35e8da, opacity: .8, sizeAttenuation: true });
+      group.add(new THREE.Points(pg, ptsMat));
+      const wireMat = new THREE.MeshBasicMaterial({ color: 0x0f6b66, wireframe: true, transparent: true, opacity: .1 });
+      group.add(new THREE.Mesh(new THREE.SphereGeometry(R * 0.985, 36, 36), wireMat));
+      const ringGroup = new THREE.Group(); group.add(ringGroup);
+      const octMat = new THREE.MeshBasicMaterial({ color: 0x19e6d6, transparent: true, opacity: .85, blending: THREE.AdditiveBlending });
+      const octGlowMat = new THREE.MeshBasicMaterial({ color: 0x19e6d6, transparent: true, opacity: .12, blending: THREE.AdditiveBlending });
+      ringGroup.add(new THREE.Mesh(new THREE.TorusGeometry(R * 1.55, 9, 18, 8), octMat));
+      ringGroup.add(new THREE.Mesh(new THREE.TorusGeometry(R * 1.55, 20, 16, 8), octGlowMat));
+      ringGroup.rotation.set(0.5, 0.3, 0.2);
+      const haloMat = new THREE.SpriteMaterial({ map: tex, color: 0x19e6d6, transparent: true, opacity: .45, blending: THREE.AdditiveBlending, depthWrite: false });
+      const halo = new THREE.Sprite(haloMat); halo.scale.set(R * 5, R * 5, 1); scene.add(halo);
+      const trav = [], lineMats = [], travMats = [];
+      function arc(a, b) {
+        const s = pts[a].clone(), e = pts[b].clone(), m = s.clone().add(e).multiplyScalar(.5);
+        m.normalize().multiplyScalar(R + s.distanceTo(e) * .45);
+        const cu = new THREE.QuadraticBezierCurve3(s, m, e);
+        const lm = new THREE.LineBasicMaterial({ color: 0x19e6d6, transparent: true, opacity: .22 }); lineMats.push(lm);
+        group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(cu.getPoints(46)), lm));
+        const dm = new THREE.SpriteMaterial({ map: tex, color: 0x6dffc0, transparent: true, opacity: 1, blending: THREE.AdditiveBlending, depthWrite: false }); travMats.push(dm);
+        const d = new THREE.Sprite(dm); d.scale.set(13, 13, 1); group.add(d); trav.push({ cu, d, t: Math.random(), sp: .0016 + Math.random() * .0022 });
+      }
+      for (let i = 0; i < 13; i++)arc((Math.random() * N) | 0, (Math.random() * N) | 0);
+
+      setGlobeTheme = function (light) {
+        if (light) {
+          ptsMat.color.setHex(0x0fa89c); ptsMat.blending = THREE.NormalBlending; ptsMat.opacity = .55; ptsMat.needsUpdate = true;
+          wireMat.color.setHex(0x9fd6d0); wireMat.opacity = .18;
+          octMat.color.setHex(0x0fa89c); octMat.blending = THREE.NormalBlending; octMat.opacity = .9; octMat.needsUpdate = true;
+          octGlowMat.opacity = .06;
+          haloMat.opacity = .12;
+          lineMats.forEach(m => { m.color.setHex(0x0fa89c); m.opacity = .3; });
+          travMats.forEach(m => { m.color.setHex(0x12b07e); m.blending = THREE.NormalBlending; m.needsUpdate = true; });
+        } else {
+          ptsMat.color.setHex(0x35e8da); ptsMat.blending = THREE.AdditiveBlending; ptsMat.opacity = .8; ptsMat.needsUpdate = true;
+          wireMat.color.setHex(0x0f6b66); wireMat.opacity = .1;
+          octMat.color.setHex(0x19e6d6); octMat.blending = THREE.AdditiveBlending; octMat.opacity = .85; octMat.needsUpdate = true;
+          octGlowMat.opacity = .12;
+          haloMat.opacity = .45;
+          lineMats.forEach(m => { m.color.setHex(0x19e6d6); m.opacity = .22; });
+          travMats.forEach(m => { m.color.setHex(0x6dffc0); m.blending = THREE.AdditiveBlending; m.needsUpdate = true; });
+        }
+      };
+
+      function place() {
+        const r = innerWidth > 1040 ? 165 : 0; group.position.x = r; halo.position.set(r, 0, -60);
+        group.scale.setScalar(innerWidth < 700 ? .66 : (innerWidth < 1040 ? .82 : 1));
+      }
+      place();
+      let mx = 0, my = 0, tx = 0, ty = 0, sy = 0;
+      addEventListener('mousemove', e => { tx = e.clientX / innerWidth - .5; ty = e.clientY / innerHeight - .5; });
+      addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); place(); });
+      addEventListener('scroll', () => { sy = window.scrollY; });
+      (function loop() {
+        requestAnimationFrame(loop);
+        group.rotation.y += 0.0012; ringGroup.rotation.z += 0.0016; ringGroup.rotation.x += 0.0006;
+        mx += (tx - mx) * .05; my += (ty - my) * .05;
+        group.rotation.x = -0.16 + my * 0.32 + sy * 0.00012; group.rotation.z = mx * 0.05;
+        trav.forEach(t => { t.t += t.sp; if (t.t > 1) t.t = 0; t.d.position.copy(t.cu.getPoint(t.t)); });
+        renderer.render(scene, camera);
+      })();
+    })();
+  </script>
+  <script>
+    // theme toggle (in-memory only, no storage)
+    const themeTg = document.getElementById('themeTg');
+    themeTg.onclick = () => { const light = document.body.classList.toggle('light'); setGlobeTheme(light); };
+
+    const hdr = document.getElementById('hdr'), prog = document.getElementById('prog');
+    function onScroll() { const y = window.scrollY; hdr.classList.toggle('scrolled', y > 20); const h = document.documentElement.scrollHeight - innerHeight; prog.style.width = (y / h * 100) + '%'; }
+    addEventListener('scroll', onScroll); onScroll();
+
+    const spot = document.getElementById('spot');
+    if (matchMedia('(pointer:fine)').matches) {
+      addEventListener('mousemove', e => { spot.style.opacity = 1; spot.style.left = e.clientX + 'px'; spot.style.top = e.clientY + 'px'; });
+      document.querySelectorAll('[data-magnetic]').forEach(b => {
+        b.addEventListener('mousemove', e => { const r = b.getBoundingClientRect(); const x = e.clientX - r.left - r.width / 2, y = e.clientY - r.top - r.height / 2; b.style.transform = `translate(${x * .25}px,${y * .35}px)`; });
+        b.addEventListener('mouseleave', () => b.style.transform = '');
+      });
+      document.querySelectorAll('[data-tilt]').forEach(t => {
+        t.addEventListener('mousemove', e => { const r = t.getBoundingClientRect(); const px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5; t.style.transform = `perspective(900px) rotateY(${px * 6}deg) rotateX(${-py * 6}deg) translateY(-4px)`; });
+        t.addEventListener('mouseleave', () => t.style.transform = '');
+      });
     }
-  };
 
-  function place(){const r=innerWidth>1040?165:0;group.position.x=r;halo.position.set(r,0,-60);
-    group.scale.setScalar(innerWidth<700?.66:(innerWidth<1040?.82:1));}
-  place();
-  let mx=0,my=0,tx=0,ty=0,sy=0;
-  addEventListener('mousemove',e=>{tx=e.clientX/innerWidth-.5;ty=e.clientY/innerHeight-.5;});
-  addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);place();});
-  addEventListener('scroll',()=>{sy=window.scrollY;});
-  (function loop(){requestAnimationFrame(loop);
-    group.rotation.y+=0.0012;ringGroup.rotation.z+=0.0016;ringGroup.rotation.x+=0.0006;
-    mx+=(tx-mx)*.05;my+=(ty-my)*.05;
-    group.rotation.x=-0.16+my*0.32+sy*0.00012;group.rotation.z=mx*0.05;
-    trav.forEach(t=>{t.t+=t.sp;if(t.t>1)t.t=0;t.d.position.copy(t.cu.getPoint(t.t));});
-    renderer.render(scene,camera);})();
-})();
-</script>
-<script>
-  // theme toggle (in-memory only, no storage)
-  const themeTg=document.getElementById('themeTg');
-  themeTg.onclick=()=>{const light=document.body.classList.toggle('light');setGlobeTheme(light);};
+    const names = ['Ahmed R.', 'Sofia L.', 'Daniel K.', 'Mei Chen', 'Carlos V.', 'Priya S.', 'Omar F.', 'Lukas B.', 'Aisha N.', 'Tomáš H.', 'Yuki T.', 'Imran B.'];
+    const flags = ['🇦🇪', '🇪🇸', '🇩🇪', '🇸🇬', '🇧🇷', '🇮🇳', '🇪🇬', '🇦🇹', '🇵🇰', '🇨🇿', '🇯🇵', '🇬🇧'];
+    function chip(i) { const a = Math.random() * 9000 + 800; return `<span class="chip"><span class="f">${flags[i % flags.length]}</span><span class="n">${names[i % names.length]}</span><span class="a">+$${Math.round(a).toLocaleString('en-US')}</span></span>`; }
+    let ch = ''; for (let i = 0; i < 14; i++)ch += chip(i); document.getElementById('chips').innerHTML = ch + ch;
 
-  const hdr=document.getElementById('hdr'),prog=document.getElementById('prog');
-  function onScroll(){const y=window.scrollY;hdr.classList.toggle('scrolled',y>20);const h=document.documentElement.scrollHeight-innerHeight;prog.style.width=(y/h*100)+'%';}
-  addEventListener('scroll',onScroll);onScroll();
-
-  const spot=document.getElementById('spot');
-  if(matchMedia('(pointer:fine)').matches){
-    addEventListener('mousemove',e=>{spot.style.opacity=1;spot.style.left=e.clientX+'px';spot.style.top=e.clientY+'px';});
-    document.querySelectorAll('[data-magnetic]').forEach(b=>{
-      b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();const x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;b.style.transform=`translate(${x*.25}px,${y*.35}px)`;});
-      b.addEventListener('mouseleave',()=>b.style.transform='');});
-    document.querySelectorAll('[data-tilt]').forEach(t=>{
-      t.addEventListener('mousemove',e=>{const r=t.getBoundingClientRect();const px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;t.style.transform=`perspective(900px) rotateY(${px*6}deg) rotateX(${-py*6}deg) translateY(-4px)`;});
-      t.addEventListener('mouseleave',()=>t.style.transform='');});
-  }
-
-  const names=['Ahmed R.','Sofia L.','Daniel K.','Mei Chen','Carlos V.','Priya S.','Omar F.','Lukas B.','Aisha N.','Tomáš H.','Yuki T.','Imran B.'];
-  const flags=['🇦🇪','🇪🇸','🇩🇪','🇸🇬','🇧🇷','🇮🇳','🇪🇬','🇦🇹','🇵🇰','🇨🇿','🇯🇵','🇬🇧'];
-  function chip(i){const a=Math.random()*9000+800;return `<span class="chip"><span class="f">${flags[i%flags.length]}</span><span class="n">${names[i%names.length]}</span><span class="a">+$${Math.round(a).toLocaleString('en-US')}</span></span>`;}
-  let ch='';for(let i=0;i<14;i++)ch+=chip(i);document.getElementById('chips').innerHTML=ch+ch;
-
-  const DATA={
-    '1step':{note:'One profit target. Hit it within the drawdown limits — no minimum days, no deadline.',
-      sizes:{'5K':{fee:49,was:59,target:'8%',dd:'10%',daily:'5%'},'25K':{fee:189,was:229,target:'8%',dd:'10%',daily:'5%'},'50K':{fee:289,was:349,target:'8%',dd:'10%',daily:'5%'},'100K':{fee:489,was:540,target:'8%',dd:'10%',daily:'5%'},'200K':{fee:889,was:999,target:'8%',dd:'10%',daily:'5%'},'500K':{fee:1899,was:2199,target:'8%',dd:'10%',daily:'5%'}}},
-    '2step':{note:'Two phases, lower targets and a smaller fee. The patient route to a funded account.',
-      sizes:{'5K':{fee:39,was:49,target:'8% / 5%',dd:'12%',daily:'5%'},'25K':{fee:149,was:189,target:'8% / 5%',dd:'12%',daily:'5%'},'50K':{fee:229,was:289,target:'8% / 5%',dd:'12%',daily:'5%'},'100K':{fee:389,was:449,target:'8% / 5%',dd:'12%',daily:'5%'},'200K':{fee:699,was:799,target:'8% / 5%',dd:'12%',daily:'5%'},'500K':{fee:1499,was:1799,target:'8% / 5%',dd:'12%',daily:'5%'}}},
-    'instant':{note:'Skip the evaluation. Pay once and trade a funded account immediately.',
-      sizes:{'5K':{fee:199,was:249,target:'None',dd:'6%',daily:'4%'},'25K':{fee:699,was:849,target:'None',dd:'6%',daily:'4%'},'50K':{fee:1199,was:1399,target:'None',dd:'6%',daily:'4%'},'100K':{fee:1999,was:2399,target:'None',dd:'6%',daily:'4%'},'200K':{fee:3499,was:3999,target:'None',dd:'6%',daily:'4%'},'500K':{fee:7999,was:8999,target:'None',dd:'6%',daily:'4%'}}}
-  };
-  let tab='1step',size='100K';
-  const sizeRow=document.getElementById('sizeRow');
-  function rSizes(){sizeRow.innerHTML=Object.keys(DATA[tab].sizes).map(s=>`<button class="size-pill ${s===size?'active':''}" data-s="${s}">$${s}</button>`).join('');
-    sizeRow.querySelectorAll('.size-pill').forEach(b=>b.onclick=()=>{size=b.dataset.s;rSizes();rPlan();});}
-  function rPlan(){const d=DATA[tab].sizes[size];
-    document.getElementById('segNote').textContent=DATA[tab].note;
-    document.getElementById('buyAcct').innerHTML=`$${size.replace('K','')}<span>K</span>`;
-    document.getElementById('buyWas').textContent='$'+d.was;
-    document.getElementById('buyNow').innerHTML=`<span class="gt">$${d.fee}</span><small> one-time</small>`;
-    document.getElementById('specList').innerHTML=`
+    const DATA = {
+      '1step': {
+        note: 'One profit target. Hit it within the drawdown limits — no minimum days, no deadline.',
+        sizes: { '5K': { fee: 49, was: 59, target: '8%', dd: '10%', daily: '5%' }, '25K': { fee: 189, was: 229, target: '8%', dd: '10%', daily: '5%' }, '50K': { fee: 289, was: 349, target: '8%', dd: '10%', daily: '5%' }, '100K': { fee: 489, was: 540, target: '8%', dd: '10%', daily: '5%' }, '200K': { fee: 889, was: 999, target: '8%', dd: '10%', daily: '5%' }, '500K': { fee: 1899, was: 2199, target: '8%', dd: '10%', daily: '5%' } }
+      },
+      '2step': {
+        note: 'Two phases, lower targets and a smaller fee. The patient route to a funded account.',
+        sizes: { '5K': { fee: 39, was: 49, target: '8% / 5%', dd: '12%', daily: '5%' }, '25K': { fee: 149, was: 189, target: '8% / 5%', dd: '12%', daily: '5%' }, '50K': { fee: 229, was: 289, target: '8% / 5%', dd: '12%', daily: '5%' }, '100K': { fee: 389, was: 449, target: '8% / 5%', dd: '12%', daily: '5%' }, '200K': { fee: 699, was: 799, target: '8% / 5%', dd: '12%', daily: '5%' }, '500K': { fee: 1499, was: 1799, target: '8% / 5%', dd: '12%', daily: '5%' } }
+      },
+      'instant': {
+        note: 'Skip the evaluation. Pay once and trade a funded account immediately.',
+        sizes: { '5K': { fee: 199, was: 249, target: 'None', dd: '6%', daily: '4%' }, '25K': { fee: 699, was: 849, target: 'None', dd: '6%', daily: '4%' }, '50K': { fee: 1199, was: 1399, target: 'None', dd: '6%', daily: '4%' }, '100K': { fee: 1999, was: 2399, target: 'None', dd: '6%', daily: '4%' }, '200K': { fee: 3499, was: 3999, target: 'None', dd: '6%', daily: '4%' }, '500K': { fee: 7999, was: 8999, target: 'None', dd: '6%', daily: '4%' } }
+      }
+    };
+    let tab = '1step', size = '100K';
+    const sizeRow = document.getElementById('sizeRow');
+    function rSizes() {
+      sizeRow.innerHTML = Object.keys(DATA[tab].sizes).map(s => `<button class="size-pill ${s === size ? 'active' : ''}" data-s="${s}">$${s}</button>`).join('');
+      sizeRow.querySelectorAll('.size-pill').forEach(b => b.onclick = () => { size = b.dataset.s; rSizes(); rPlan(); });
+    }
+    function rPlan() {
+      const d = DATA[tab].sizes[size];
+      document.getElementById('segNote').textContent = DATA[tab].note;
+      document.getElementById('buyAcct').innerHTML = `$${size.replace('K', '')}<span>K</span>`;
+      document.getElementById('buyWas').textContent = '$' + d.was;
+      document.getElementById('buyNow').innerHTML = `<span class="gt">$${d.fee}</span><small> one-time</small>`;
+      document.getElementById('specList').innerHTML = `
       <div class="r"><span class="k">Profit target</span><span class="v">${d.target}</span></div>
       <div class="r"><span class="k">Max drawdown</span><span class="v">${d.dd}</span></div>
       <div class="r"><span class="k">Daily loss limit</span><span class="v">${d.daily}</span></div>
@@ -725,27 +2995,31 @@ let setGlobeTheme=function(){};
       <div class="r"><span class="k">Min days</span><span class="v ok">None</span></div>
       <div class="r"><span class="k">Time limit</span><span class="v ok">Unlimited</span></div>
       <div class="r"><span class="k">News &amp; EAs</span><span class="v ok">Allowed</span></div>
-      <div class="r"><span class="k">Payouts</span><span class="v">4 cycles</span></div>`;}
-  document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.seg button').forEach(x=>x.classList.remove('active'));b.classList.add('active');tab=b.dataset.tab;rSizes();rPlan();});
-  rSizes();rPlan();
+      <div class="r"><span class="k">Payouts</span><span class="v">4 cycles</span></div>`;
+    }
+    document.querySelectorAll('.seg button').forEach(b => b.onclick = () => { document.querySelectorAll('.seg button').forEach(x => x.classList.remove('active')); b.classList.add('active'); tab = b.dataset.tab; rSizes(); rPlan(); });
+    rSizes(); rPlan();
 
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const s=[...e.target.parentElement.querySelectorAll('.reveal')];e.target.style.transitionDelay=(s.indexOf(e.target)%6*70)+'ms';e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-  const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const el=e.target,t=+el.dataset.count,sf=el.dataset.suffix||'',st=performance.now();const tk=n=>{const p=Math.min((n-st)/1300,1),ez=1-Math.pow(1-p,3);el.textContent=Math.round(t*ez)+sf;if(p<1)requestAnimationFrame(tk);};requestAnimationFrame(tk);cio.unobserve(el);}}),{threshold:.5});
-  document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { const s = [...e.target.parentElement.querySelectorAll('.reveal')]; e.target.style.transitionDelay = (s.indexOf(e.target) % 6 * 70) + 'ms'; e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    const cio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { const el = e.target, t = +el.dataset.count, sf = el.dataset.suffix || '', st = performance.now(); const tk = n => { const p = Math.min((n - st) / 1300, 1), ez = 1 - Math.pow(1 - p, 3); el.textContent = Math.round(t * ez) + sf; if (p < 1) requestAnimationFrame(tk); }; requestAnimationFrame(tk); cio.unobserve(el); } }), { threshold: .5 });
+    document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
 
-  document.querySelectorAll('.faq-q').forEach(q=>q.onclick=()=>{const it=q.parentElement,a=it.querySelector('.faq-a'),op=it.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i=>{i.classList.remove('open');i.querySelector('.faq-a').style.maxHeight=null;});
-    if(!op){it.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';}});
+    document.querySelectorAll('.faq-q').forEach(q => q.onclick = () => {
+      const it = q.parentElement, a = it.querySelector('.faq-a'), op = it.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => { i.classList.remove('open'); i.querySelector('.faq-a').style.maxHeight = null; });
+      if (!op) { it.classList.add('open'); a.style.maxHeight = a.scrollHeight + 'px'; }
+    });
 
-  // calculator with payout cycles
-  const SZ=[5000,25000,100000,200000,500000];
-  const CYC=[{n:'Daily · 60%',s:.60},{n:'Friday · 70%',s:.70},{n:'Bi-weekly · 80%',s:.80},{n:'Monthly · 100%',s:1.0}];
-  const aS=document.getElementById('accSlider'),rS=document.getElementById('retSlider'),pS=document.getElementById('splitSlider');
-  const aO=document.getElementById('accOut'),rO=document.getElementById('retOut'),pO=document.getElementById('splitOut'),yO=document.getElementById('payoutOut');
-  const fmt=n=>'$'+Math.round(n).toLocaleString('en-US');
-  function calc(){const s=SZ[+aS.value],r=+rS.value,cy=CYC[+pS.value];aO.textContent=fmt(s);rO.textContent=r+'%';pO.textContent=cy.n;yO.textContent=fmt(s*(r/100)*cy.s);}
-  [aS,rS,pS].forEach(x=>x.oninput=calc);calc();
-</script>
+    // calculator with payout cycles
+    const SZ = [5000, 25000, 100000, 200000, 500000];
+    const CYC = [{ n: 'Daily · 60%', s: .60 }, { n: 'Friday · 70%', s: .70 }, { n: 'Bi-weekly · 80%', s: .80 }, { n: 'Monthly · 100%', s: 1.0 }];
+    const aS = document.getElementById('accSlider'), rS = document.getElementById('retSlider'), pS = document.getElementById('splitSlider');
+    const aO = document.getElementById('accOut'), rO = document.getElementById('retOut'), pO = document.getElementById('splitOut'), yO = document.getElementById('payoutOut');
+    const fmt = n => '$' + Math.round(n).toLocaleString('en-US');
+    function calc() { const s = SZ[+aS.value], r = +rS.value, cy = CYC[+pS.value]; aO.textContent = fmt(s); rO.textContent = r + '%'; pO.textContent = cy.n; yO.textContent = fmt(s * (r / 100) * cy.s); }
+    [aS, rS, pS].forEach(x => x.oninput = calc); calc();
+  </script>
 </body>
+
 </html>

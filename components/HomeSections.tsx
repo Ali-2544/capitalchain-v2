@@ -45,7 +45,7 @@ const REGISTRY: Record<string, { Comp: React.ComponentType; label: string }> = {
 
 const DEFAULT_ORDER = [
   'hero', 'trust', 'ticker', 'how', 'programs', 'payouts', 'calc', 'who', 'why',
-  'platforms', 'champions', 'scaling', 'live', 'testimonials', 'community', 'affiliate', 'faq', 'finalcta',
+  'platforms', 'scaling', 'live', 'testimonials', 'community', 'affiliate', 'faq', 'finalcta',
 ];
 
 // Build a valid, complete order: keep saved order (known keys only), then append

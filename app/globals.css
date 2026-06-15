@@ -401,7 +401,8 @@ footer{border-top:1px solid var(--line);padding:72px 0 40px;background:var(--foo
 .news{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;padding:36px;border:1px solid var(--line);border-radius:22px;background:var(--surface);margin-bottom:54px}
 .news h4{font-family:var(--fd);font-weight:700;font-size:22px;margin-bottom:6px}
 .news p{color:var(--dim);font-size:15px}
-.news .form{display:flex;gap:10px}
+.news .form{display:flex;gap:10px;flex-wrap:wrap}
+.news-status{flex-basis:100%;font-size:13px;margin:0;font-weight:600}
 .news input{font-family:var(--fb);font-size:15px;padding:13px 18px;border-radius:12px;border:1px solid var(--line);background:var(--bg-2);color:var(--text);width:280px;max-width:60vw}
 .news input:focus{outline:none;border-color:var(--teal)}
 .foot-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr;gap:44px;margin-bottom:52px}

@@ -24,7 +24,7 @@ const body = Hanken_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'CapitalChain — We Connect Traders To Capital',
+  title: 'Empowering traders with access to funded capital',
   description:
     'Trade with straightforward rules and clear challenges at Capital Chain. Join a global community of traders in a simulated environment and earn generous rewards. Start your challenge today.',
 };

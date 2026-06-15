@@ -4,6 +4,7 @@ import { useT } from './LanguageProvider';
 import Editable from '@/components/Editable';
 import EditableLink from '@/components/EditableLink';
 import EditableImage from '@/components/EditableImage';
+import NewsletterForm from '@/components/NewsletterForm';
 import { LINKS, EXTERNAL } from '@/lib/links';
 
 // Footer social row. Plain anchors (static) — each opens its profile in a new tab.
@@ -25,10 +26,7 @@ export default function Footer() {
             <h4><Editable id="footer.newsH">{t.footer.newsH}</Editable></h4>
             <p><Editable id="footer.newsP">{t.footer.newsP}</Editable></p>
           </div>
-          <div className="form">
-            <input type="email" placeholder={t.footer.emailPlaceholder} aria-label="email" />
-            <EditableLink id="footer.subscribe" href="#" className="btn btn-p" data-magnetic>{t.footer.subscribe}</EditableLink>
-          </div>
+          <NewsletterForm />
         </div>
         <div className="foot-grid">
           <div className="foot-brand">
