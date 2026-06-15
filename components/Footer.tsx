@@ -47,7 +47,7 @@ export default function Footer() {
           </div>
           <div className="foot-col">
             <h5><Editable id="footer.platform">{t.footer.platform}</Editable></h5>
-            <EditableLink id="footer.programs" href="/#programs">{t.footer.programs}</EditableLink>
+            <EditableLink id="footer.programs" href={LINKS.programs}>{t.footer.programs}</EditableLink>
             <EditableLink id="footer.payouts" href="/#payouts">{t.footer.payouts}</EditableLink>
             <EditableLink id="footer.scaling" href="/#scaling">{t.footer.scaling}</EditableLink>
             <EditableLink id="footer.platforms" href="/#platforms">{t.footer.platforms}</EditableLink>

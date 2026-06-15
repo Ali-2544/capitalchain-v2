@@ -3,7 +3,8 @@
 export const LINKS = {
   // Purchase / start a challenge.
   checkout: 'https://checkout.capitalchain.co/',
-  // Home page calculator section (payout estimator).
+  // Home page sections (in-page anchors).
+  programs: '/#programs',
   calculator: '/#calc',
   // Login / sign-up / become a partner.
   getStarted: 'https://checkout.capitalchain.co/get-started/',

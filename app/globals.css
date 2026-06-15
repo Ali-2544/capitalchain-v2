@@ -335,7 +335,8 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .plat-bento{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;grid-auto-rows:minmax(150px,auto)}
 .ptile{border:1px solid var(--line);border-radius:22px;padding:30px;background:var(--surface);backdrop-filter:blur(10px);transition:transform .25s,border-color .25s;display:flex;flex-direction:column;justify-content:space-between;transform-style:preserve-3d}
 .ptile:hover{border-color:var(--teal)}
-.ptile .badge{font-family:var(--fm);font-weight:700;color:var(--teal);font-size:13px;letter-spacing:.05em}
+.ptile .badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--fm);font-weight:700;color:var(--teal);font-size:13px;letter-spacing:.05em}
+.ptile-badge-ic{width:15px;height:15px;flex-shrink:0;color:var(--teal)}
 .ptile h4{font-family:var(--fd);font-weight:600;font-size:20px;margin:auto 0 6px}
 .ptile p{font-size:14px;color:var(--dim)}
 /* 4 tiles (cTrader + API removed): clean 2×2 grid */
