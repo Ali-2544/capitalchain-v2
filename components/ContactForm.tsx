@@ -14,14 +14,24 @@ export default function ContactForm() {
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('sending');
-    // Simulate API call
-    setTimeout(() => {
-      setStatus('success');
-      setFormData({ name: '', email: '', subject: 'support', message: '' });
-    }, 1500);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        setStatus('success');
+        setFormData({ name: '', email: '', subject: 'support', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -160,9 +170,15 @@ export default function ContactForm() {
             />
           </div>
 
-          <button 
-            type="submit" 
-            className="btn btn-p" 
+          {status === 'error' && (
+            <p style={{ color: '#ff6b6b', fontSize: '14px', margin: 0 }}>
+              Could not send your message. Please email info@capitalchain.co directly.
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="btn btn-p"
             style={{ width: '100%', justifyContent: 'center', padding: '14px 20px', marginTop: '8px' }}
             disabled={status === 'sending'}
           >
