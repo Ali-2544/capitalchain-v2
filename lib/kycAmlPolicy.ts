@@ -11,6 +11,6 @@ export const KYC_AML_POLICY: TermsItem[] = [
   {
     id: 2,
     title: 'Contact',
-    html: "<p>Capital Chain Group Ltd., Opal Tower, Bussiness Bay, Dubai</p> <p>Email: info@capitalchain.co</p>",
+    html: "<p>Capital Chain Group Ltd., Opal Tower, Bussiness Bay, Dubai</p> <p>Email: support@capitalchain.co</p>",
   },
 ];

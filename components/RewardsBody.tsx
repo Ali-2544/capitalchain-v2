@@ -96,7 +96,7 @@ export default function RewardsBody() {
   }, []);
 
   const count = data.count.toLocaleString('en-US');
-  const { crypto, bank } = data.rails;
+  const { crypto } = data.rails;
 
   // Ledger controls — real search, date-range filter and pagination.
   const [query, setQuery] = useState('');
@@ -307,24 +307,6 @@ export default function RewardsBody() {
                 <span>{crypto.count.toLocaleString('en-US')}</span>
                 <span><Editable id="rewardsPage.max">{t.max}</Editable> {crypto.max}</span>
               </div>
-            </div>
-            <div className="rw-rail">
-              <div className="rw-rail-head">
-                <span>{t.bankRail.replace(/[\d.]+%/, bank.pct + '%')}</span>
-                <span className="amt gt">{bank.amt}</span>
-              </div>
-              <div className="rw-bar">
-                <span style={{ width: `${bank.pct}%` }} />
-              </div>
-              <div className="rw-rail-meta">
-                <span><Editable id="rewardsPage.avg">{t.avg}</Editable> {bank.avg}</span>
-                <span>{bank.count.toLocaleString('en-US')}</span>
-                <span><Editable id="rewardsPage.max">{t.max}</Editable> {bank.max}</span>
-              </div>
-            </div>
-            <div className="rw-balance">
-              <span style={{ width: `${crypto.pct}%` }} className="c" />
-              <span style={{ width: `${bank.pct}%` }} className="r" />
             </div>
           </div>
         </div>

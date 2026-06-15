@@ -125,29 +125,30 @@ export default function LiveRewards() {
               <div className="rf-meta">
                 {card.time} {t.live.ago} · {card.net}
               </div>
-              {/* Destination is dynamic (each payout → its own certificate), so this is a
-                  plain anchor — only the label is editable, never the href. */}
-              <a
-                href={certHref(card.id) ?? '#rewards'}
-                target={card.id ? '_blank' : undefined}
-                rel="noreferrer"
-                className="btn btn-p"
-                data-magnetic
-                style={{ marginTop: 22 }}
-                onClick={(e) => {
-                  if (!card.id) e.preventDefault();
-                }}
-              ><Editable id="live.proof">{t.live.proof}</Editable></a>
-              {card.txUrl ? (
-                <a
-                  className="rf-verify"
-                  href={card.txUrl}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  <Editable id="live.verify">{t.live.verify}</Editable> ↗
-                </a>
-              ) : null}
+              <div className="rf-actions">
+                {card.txUrl ? (
+                  <a
+                    href={card.txUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="btn btn-p"
+                    data-magnetic
+                  >
+                    <Editable id="live.proof">{t.live.proof}</Editable>
+                  </a>
+                ) : null}
+                {card.id ? (
+                  <a
+                    href={certHref(card.id)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={card.txUrl ? 'rf-verify' : 'btn btn-p'}
+                    data-magnetic={!card.txUrl || undefined}
+                  >
+                    <Editable id="live.verify">{t.live.verify}</Editable> →
+                  </a>
+                ) : null}
+              </div>
             </div>
           </div>
 

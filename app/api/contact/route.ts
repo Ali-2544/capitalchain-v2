@@ -19,7 +19,7 @@ const SUBJECTS: Record<string, string> = {
 
 // Where submissions land. Override with CONTACT_TO="a@x.com,b@x.com" in .env.
 const DEFAULT_TO =
-  'info@capitalchain.co,bilal@capitalchain.co,mohammadkhan@capitalchain.co,engineer@capitalchain.co';
+  'support@capitalchain.co,bilal@capitalchain.co,mohammadkhan@capitalchain.co,engineer@capitalchain.co';
 
 function escapeHtml(s: string): string {
   return s.replace(

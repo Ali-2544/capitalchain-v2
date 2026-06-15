@@ -31,6 +31,6 @@ export const RISK_DISCLOSURE: TermsItem[] = [
   {
     id: 6,
     title: "Contact",
-    html: "<p>Capital Chain Group Ltd., Opal Tower, Bussiness Bay, Dubai</p> <p>Email: info@capitalchain.co</p>",
+    html: "<p>Capital Chain Group Ltd., Opal Tower, Bussiness Bay, Dubai</p> <p>Email: support@capitalchain.co</p>",
   },
 ];
