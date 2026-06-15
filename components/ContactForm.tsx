@@ -13,26 +13,23 @@ export default function ContactForm() {
     message: '',
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
-  const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('sending');
-    setErrorMsg('');
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-      if (!res.ok) {
-        const data = await res.json().catch(() => null);
-        throw new Error(data?.error || 'Something went wrong.');
+      if (res.ok) {
+        setStatus('success');
+        setFormData({ name: '', email: '', subject: 'support', message: '' });
+      } else {
+        setStatus('error');
       }
-      setStatus('success');
-      setFormData({ name: '', email: '', subject: 'support', message: '' });
-    } catch (err) {
-      setErrorMsg(err instanceof Error ? err.message : 'Something went wrong.');
+    } catch {
       setStatus('error');
     }
   };
@@ -173,10 +170,10 @@ export default function ContactForm() {
             />
           </div>
 
-          {status === 'error' && errorMsg && (
-            <div style={{ padding: '12px 16px', border: '1px solid var(--red, #ef4444)', borderRadius: '12px', background: 'var(--soft)', color: 'var(--red, #ef4444)', fontSize: '14px' }}>
-              {errorMsg}
-            </div>
+          {status === 'error' && (
+            <p style={{ color: '#ff6b6b', fontSize: '14px', margin: 0 }}>
+              Could not send your message. Please email info@capitalchain.co directly.
+            </p>
           )}
 
           <button

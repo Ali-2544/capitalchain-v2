@@ -1,87 +1,101 @@
 import { NextResponse } from 'next/server';
-import { getTransporter, contactRecipients } from '@/lib/mailer';
 
 export const dynamic = 'force-dynamic';
 
-// Human-readable labels for the inquiry <select> values.
-const SUBJECT_LABELS: Record<string, string> = {
+interface ContactInput {
+  name?: string;
+  email?: string;
+  subject?: string;
+  message?: string;
+}
+
+// Inquiry <select> values → readable labels used in the email subject line.
+const SUBJECTS: Record<string, string> = {
   support: 'General Support & Payouts',
-  billing: 'Billing & Refund Policy',
-  rules: 'Evaluation Rules & Violations',
-  partnership: 'Affiliates & Partnerships',
+  billing: 'Billing',
+  rules: 'Trading Rules',
+  partnership: 'Partnership',
 };
 
-const esc = (s: string) =>
-  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+// Where submissions land. Override with CONTACT_TO="a@x.com,b@x.com" in .env.
+const DEFAULT_TO =
+  'info@capitalchain.co,bilal@capitalchain.co,mohammadkhan@capitalchain.co,engineer@capitalchain.co';
 
-export async function POST(request: Request) {
-  let body: Record<string, unknown>;
-  try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 });
-  }
+function escapeHtml(s: string): string {
+  return s.replace(
+    /[&<>"']/g,
+    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!),
+  );
+}
 
-  const name = String(body.name ?? '').trim();
-  const email = String(body.email ?? '').trim();
-  const subjectKey = String(body.subject ?? '').trim();
-  const message = String(body.message ?? '').trim();
+export async function POST(req: Request) {
+  const input = (await req.json().catch(() => ({}))) as ContactInput;
+  const name = (input.name ?? '').trim();
+  const email = (input.email ?? '').trim();
+  const message = (input.message ?? '').trim();
+  const inquiry = SUBJECTS[input.subject ?? ''] ?? 'General';
 
-  // Every required field must be present so nothing is missing from the email.
-  if (!name || !email || !subjectKey || !message) {
-    return NextResponse.json({ error: 'Please fill in all fields.' }, { status: 400 });
+  if (!name || !email || !message) {
+    return NextResponse.json({ error: 'Name, email and message are required.' }, { status: 400 });
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ error: 'Please enter a valid email address.' }, { status: 400 });
   }
 
-  const subjectLabel = SUBJECT_LABELS[subjectKey] ?? subjectKey;
-  const recipients = contactRecipients();
-  if (recipients.length === 0) {
-    return NextResponse.json({ error: 'No recipients configured.' }, { status: 500 });
+  // Mailgun credentials come from .env — never hard-coded.
+  const apiKey = process.env.MAILGUN_API_KEY;
+  const domain = process.env.MAILGUN_DOMAIN;
+  if (!apiKey || !domain) {
+    console.error('[contact] MAILGUN_API_KEY / MAILGUN_DOMAIN not set');
+    return NextResponse.json({ error: 'Email is not configured on the server yet.' }, { status: 503 });
   }
+  // US region by default. For an EU Mailgun account set
+  // MAILGUN_BASE=https://api.eu.mailgun.net in .env.
+  const base = process.env.MAILGUN_BASE || 'https://api.mailgun.net';
+  const from = process.env.MAILGUN_FROM || `Capital Chain Contact <postmaster@${domain}>`;
+  const to = process.env.CONTACT_TO || DEFAULT_TO;
 
-  const receivedAt = new Date().toISOString();
-
-  // Plain-text + HTML body, both carrying every submitted field.
-  const text = [
-    'New contact form submission — CapitalChain',
-    '',
-    `Name:    ${name}`,
-    `Email:   ${email}`,
-    `Inquiry: ${subjectLabel} (${subjectKey})`,
-    `Sent at: ${receivedAt}`,
-    '',
-    'Message:',
-    message,
-  ].join('\n');
-
-  const html = `
-    <div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#0f172a;line-height:1.6">
-      <h2 style="margin:0 0 16px">New contact form submission</h2>
-      <table cellpadding="0" cellspacing="0" style="border-collapse:collapse">
-        <tr><td style="padding:4px 16px 4px 0;color:#64748b">Name</td><td style="padding:4px 0"><strong>${esc(name)}</strong></td></tr>
-        <tr><td style="padding:4px 16px 4px 0;color:#64748b">Email</td><td style="padding:4px 0"><a href="mailto:${esc(email)}">${esc(email)}</a></td></tr>
-        <tr><td style="padding:4px 16px 4px 0;color:#64748b">Inquiry</td><td style="padding:4px 0">${esc(subjectLabel)} <span style="color:#94a3b8">(${esc(subjectKey)})</span></td></tr>
-        <tr><td style="padding:4px 16px 4px 0;color:#64748b">Sent at</td><td style="padding:4px 0">${esc(receivedAt)}</td></tr>
-      </table>
-      <p style="margin:18px 0 6px;color:#64748b">Message</p>
-      <div style="white-space:pre-wrap;padding:14px 16px;background:#f1f5f9;border-radius:10px">${esc(message)}</div>
-    </div>`;
+  const form = new URLSearchParams();
+  form.append('from', from);
+  to.split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .forEach((addr) => form.append('to', addr));
+  form.append('h:Reply-To', email);
+  form.append('subject', `[Contact – ${inquiry}] ${name}`);
+  form.append('text', `Name: ${name}\nEmail: ${email}\nInquiry: ${inquiry}\n\nMessage:\n${message}`);
+  form.append(
+    'html',
+    `<h2>New contact form submission</h2>` +
+      `<p><strong>Name:</strong> ${escapeHtml(name)}</p>` +
+      `<p><strong>Email:</strong> ${escapeHtml(email)}</p>` +
+      `<p><strong>Inquiry:</strong> ${escapeHtml(inquiry)}</p>` +
+      `<hr/><p>${escapeHtml(message).replace(/\n/g, '<br/>')}</p>`,
+  );
 
   try {
-    const transporter = getTransporter();
-    await transporter.sendMail({
-      from: `"CapitalChain Contact" <${process.env.SMTP_USER}>`,
-      to: recipients,
-      replyTo: `"${name}" <${email}>`,
-      subject: `[Contact] ${subjectLabel} — ${name}`,
-      text,
-      html,
+    const res = await fetch(`${base}/v3/${domain}/messages`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Basic ' + Buffer.from(`api:${apiKey}`).toString('base64'),
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: form.toString(),
     });
+    if (!res.ok) {
+      const detail = await res.text().catch(() => '');
+      console.error('[contact] mailgun error', res.status, detail);
+      return NextResponse.json(
+        { error: 'Could not send your message. Please try again later.' },
+        { status: 502 },
+      );
+    }
     return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error('Contact form email failed:', err);
-    return NextResponse.json({ error: 'Could not send your message. Please try again.' }, { status: 502 });
+  } catch (e) {
+    console.error('[contact] send failed', e);
+    return NextResponse.json(
+      { error: 'Could not send your message. Please try again later.' },
+      { status: 502 },
+    );
   }
 }

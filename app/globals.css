@@ -2,6 +2,7 @@
 
 /* ===== DARK (default) ===== */
 :root{
+  
   --bg:#050A14;--bg-2:#081020;
   --surface:rgba(13,24,44,.6);--surface-2:#0E1B30;
   --line:rgba(60,200,205,.13);--line-2:rgba(60,200,205,.06);
