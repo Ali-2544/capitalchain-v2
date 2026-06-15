@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useContent } from './ContentProvider';
 import Hero from './Hero';
-import TrustBand from './TrustBand';
+// import TrustBand from './TrustBand';
 import Ticker from './Ticker';
 import HowStacking from './HowStacking';
 import ProgramsConfigurator from './ProgramsConfigurator';
@@ -24,7 +24,7 @@ import FinalCTA from './FinalCTA';
 // key -> component + human label (label shown on the drag handle).
 const REGISTRY: Record<string, { Comp: React.ComponentType; label: string }> = {
   hero: { Comp: Hero, label: 'Hero' },
-  trust: { Comp: TrustBand, label: 'Trust band' },
+  // trust: { Comp: TrustBand, label: 'Trust band' },
   ticker: { Comp: Ticker, label: 'Ticker' },
   how: { Comp: HowStacking, label: 'The Chain' },
   programs: { Comp: ProgramsConfigurator, label: 'Programs' },

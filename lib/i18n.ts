@@ -15,7 +15,7 @@ const en = {
     buy: 'View Programs →',
     language: 'Language',
   },
-  promo: ['Transparent, published rules — no moving targets', 'Up to 100% profit split', 'Payouts from 1 business day'],
+  promo: ['Buy 1 Get 1 — enter code BOGO at checkout' , 'Buy 1 Get 1 — enter code BOGO at checkout' , 'Buy 1 Get 1 — enter code BOGO at checkout'],
   hero: {
     eyebrow: 'PROPRIETARY TRADING · 160+ COUNTRIES',
     title_a: 'We Connect',
