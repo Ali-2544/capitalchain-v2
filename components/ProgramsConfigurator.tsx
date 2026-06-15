@@ -126,7 +126,6 @@ export default function ProgramsConfigurator() {
   const details = DETAILS[`${type}-${step}`];
   const price = PRICING[`${type}-${step}-${size}`];
   const sizes = isAtomic ? SIZES.filter((s) => s.value !== '3k') : SIZES;
-  const sizeInfo = SIZES.find((s) => s.value === size) ?? SIZES[1];
 
   const checkoutUrl = useMemo(() => {
     const p = new URLSearchParams({
@@ -248,11 +247,6 @@ export default function ProgramsConfigurator() {
 
           {/* RIGHT: pricing + payment methods */}
           <div className="buy reveal">
-            <div className="cap"><Editable id="programs.balance">{t.programs.balance}</Editable></div>
-            <div className="acct">
-              ${sizeInfo.short}
-              <span>K</span>
-            </div>
             <div>
               <div className="now">
                 {price != null ? (
