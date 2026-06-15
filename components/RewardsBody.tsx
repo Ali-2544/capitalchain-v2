@@ -394,7 +394,9 @@ export default function RewardsBody() {
                       <td>{r.plan}</td>
                       <td className="amt gt">{r.amt}</td>
                       <td className="tx">
-                        <a href={r.txUrl || `/certificate/${r.id}`} target="_blank" rel="noreferrer"><Editable id="rewardsPage.thTx">{t.thTx}</Editable> ↗</a>
+                        {r.txUrl ? (
+                          <a href={r.txUrl} target="_blank" rel="noreferrer"><Editable id="rewardsPage.thTx">{t.thTx}</Editable> ↗</a>
+                        ) : null}
                       </td>
                     </tr>
                   ))

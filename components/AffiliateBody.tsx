@@ -26,7 +26,8 @@ export default function AffiliateBody() {
               <Editable id="affiliatePage.hero.sub">{t.hero.sub}</Editable>
             </p>
             <div className="hero-actions">
-              <EditableLink id="affiliatePage.hero.cta" href={LINKS.getStarted} className="btn btn-p btn-lg" data-magnetic {...EXTERNAL}>{t.hero.cta}</EditableLink>
+              <EditableLink id="affiliatePage.hero.cta" href={LINKS.affiliateSignup} className="btn btn-p btn-lg" data-magnetic {...EXTERNAL}>{t.hero.cta}</EditableLink>
+              <EditableLink id="affiliatePage.hero.ctaLogin" href={LINKS.affiliateSignin} className="btn btn-lg" {...EXTERNAL}>Affiliate login</EditableLink>
             </div>
           </div>
 

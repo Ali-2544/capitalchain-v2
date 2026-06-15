@@ -3,7 +3,7 @@
 import { useT } from './LanguageProvider';
 import Editable from '@/components/Editable';
 import EditableLink from '@/components/EditableLink';
-import { LINKS, EXTERNAL } from '@/lib/links';
+import { LINKS } from '@/lib/links';
 
 export default function FinalCTA() {
   const t = useT();
@@ -17,7 +17,7 @@ export default function FinalCTA() {
         </h2>
         <p><Editable id="finalCta.sub">{t.finalCta.sub}</Editable></p>
         <div className="final-actions">
-          <EditableLink id="finalCta.buy" href={LINKS.checkout} className="btn btn-p btn-lg" data-magnetic {...EXTERNAL}>{t.finalCta.buy}</EditableLink>
+          <EditableLink id="finalCta.buy" href={LINKS.calculator} className="btn btn-p btn-lg" data-magnetic>{t.finalCta.buy}</EditableLink>
           <EditableLink id="finalCta.how" href="/#how" className="btn btn-lg">{t.finalCta.how}</EditableLink>
         </div>
       </div>

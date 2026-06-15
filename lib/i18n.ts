@@ -5,7 +5,7 @@
 const en = {
   nav: {
     home: 'Home',
-    rewards: 'Rewards',
+    rewards: 'Payouts',
     affiliate: 'Affiliate Program',
     blog: 'Blog',
     about: 'About Us',

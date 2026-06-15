@@ -1,27 +1,15 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useT } from './LanguageProvider';
-import { useLiveData } from '@/lib/useLiveData';
 import Editable from '@/components/Editable';
 
 const SPLITS = [0.6, 0.7, 0.8, 1.0];
 const fmt = (n: number) => '$' + Math.round(n).toLocaleString('en-US');
 
-// "5K" -> 5000 · "100K" -> 100000 · "2M" -> 2000000
-function parseSize(s: string): number {
-  const m = /^([\d.]+)\s*([KkMm]?)/.exec(String(s).replace(/[,$\s]/g, ''));
-  if (!m) return 0;
-  let v = parseFloat(m[1]) || 0;
-  const suf = m[2].toLowerCase();
-  if (suf === 'k') v *= 1e3;
-  else if (suf === 'm') v *= 1e6;
-  return Math.round(v);
-}
-
-// Fallback account sizes — mirror the Programs section sizes (see ProgramsConfigurator
-// SIZES) until /api/programs loads, so the calculator always matches the programs.
-const FALLBACK_SIZES = ['3K', '5K', '10K', '25K', '50K', '100K'].map((size, sizeOrder) => ({ size, sizeOrder }));
+// Account sizes — the exact money values offered in the Programs section
+// (see ProgramsConfigurator SIZES). Kept in sync as a fixed list.
+const SIZES = [3000, 5000, 10000, 25000, 50000, 100000];
 
 const FEAT_ICONS = [
   <path key="0" d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 6v6l4 2" />,
@@ -49,30 +37,18 @@ function Ticks({ count, activeFrac }: { count: number; activeFrac: number }) {
 
 export default function Calculator() {
   const t = useT();
-  // Account sizes come from the Programs data — the same sizes the dashboard manages.
-  const plans = useLiveData<{ size: string; sizeOrder: number }>('/api/programs', FALLBACK_SIZES);
   const [acc, setAcc] = useState(4); // index into the size list (defaults to $50,000)
   const [ret, setRet] = useState(8); // monthly return %
   const [split, setSplit] = useState(3); // index into SPLITS
 
-  // Distinct account sizes, sorted ascending.
-  const sizes = useMemo(() => {
-    const set = new Set<number>();
-    for (const p of plans) {
-      const v = parseSize(p.size);
-      if (v) set.add(v);
-    }
-    const arr = [...set].sort((a, b) => a - b);
-    return arr.length ? arr : FALLBACK_SIZES.map((f) => parseSize(f.size));
-  }, [plans]);
-
+  const sizes = SIZES;
   const maxIdx = sizes.length - 1;
   const safeAcc = Math.min(acc, maxIdx);
   const size = sizes[safeAcc];
   const payout = size * (ret / 100) * SPLITS[split];
 
   return (
-    <section className="sec">
+    <section className="sec" id="calc">
       <div className="wrap">
         <div className="calc-grid">
           <div className="reveal">
