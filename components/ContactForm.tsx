@@ -13,15 +13,28 @@ export default function ContactForm() {
     message: '',
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('sending');
-    // Simulate API call
-    setTimeout(() => {
+    setErrorMsg('');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error || 'Something went wrong.');
+      }
       setStatus('success');
       setFormData({ name: '', email: '', subject: 'support', message: '' });
-    }, 1500);
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : 'Something went wrong.');
+      setStatus('error');
+    }
   };
 
   return (
@@ -160,9 +173,15 @@ export default function ContactForm() {
             />
           </div>
 
-          <button 
-            type="submit" 
-            className="btn btn-p" 
+          {status === 'error' && errorMsg && (
+            <div style={{ padding: '12px 16px', border: '1px solid var(--red, #ef4444)', borderRadius: '12px', background: 'var(--soft)', color: 'var(--red, #ef4444)', fontSize: '14px' }}>
+              {errorMsg}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            className="btn btn-p"
             style={{ width: '100%', justifyContent: 'center', padding: '14px 20px', marginTop: '8px' }}
             disabled={status === 'sending'}
           >

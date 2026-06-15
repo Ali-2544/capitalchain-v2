@@ -19,8 +19,9 @@ function parseSize(s: string): number {
   return Math.round(v);
 }
 
-// Fallback account sizes (mirrors the Programs section) until /api/programs loads.
-const FALLBACK_SIZES = ['5K', '25K', '50K', '100K', '200K', '500K'].map((size, sizeOrder) => ({ size, sizeOrder }));
+// Fallback account sizes — mirror the Programs section sizes (see ProgramsConfigurator
+// SIZES) until /api/programs loads, so the calculator always matches the programs.
+const FALLBACK_SIZES = ['3K', '5K', '10K', '25K', '50K', '100K'].map((size, sizeOrder) => ({ size, sizeOrder }));
 
 const FEAT_ICONS = [
   <path key="0" d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 6v6l4 2" />,
@@ -50,7 +51,7 @@ export default function Calculator() {
   const t = useT();
   // Account sizes come from the Programs data — the same sizes the dashboard manages.
   const plans = useLiveData<{ size: string; sizeOrder: number }>('/api/programs', FALLBACK_SIZES);
-  const [acc, setAcc] = useState(2); // index into the size list
+  const [acc, setAcc] = useState(4); // index into the size list (defaults to $50,000)
   const [ret, setRet] = useState(8); // monthly return %
   const [split, setSplit] = useState(3); // index into SPLITS
 

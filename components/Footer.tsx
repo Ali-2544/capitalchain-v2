@@ -62,9 +62,11 @@ export default function Footer() {
           <div className="foot-col">
             <h5><Editable id="footer.legal">{t.footer.legal}</Editable></h5>
             <EditableLink id="footer.termsOfUse" href="/terms">{t.footer.termsOfUse}</EditableLink>
-            <EditableLink id="footer.privacy" href="/terms#risk">{t.footer.privacy}</EditableLink>
-            <EditableLink id="footer.risk" href="/terms#risk">{t.footer.risk}</EditableLink>
-            <EditableLink id="footer.refund" href="/terms#refund">{t.footer.refund}</EditableLink>
+            <EditableLink id="footer.privacy" href="/privacy">{t.footer.privacy}</EditableLink>
+            <EditableLink id="footer.cookies" href="/cookies">Cookie Policy</EditableLink>
+            <EditableLink id="footer.refund" href="/refund">{t.footer.refund}</EditableLink>
+            <EditableLink id="footer.kycAml" href="/kyc-aml">KYC &amp; AML Policy</EditableLink>
+            <EditableLink id="footer.risk" href="/risk-disclosure">{t.footer.risk}</EditableLink>
           </div>
         </div>
         <div className="disclaimer">

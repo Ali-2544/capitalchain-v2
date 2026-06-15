@@ -22,7 +22,7 @@ export default function Affiliate() {
             <EditableLink id="affiliate.cta" href={LINKS.getStarted} className="btn btn-p btn-lg" data-magnetic {...EXTERNAL}>{t.affiliate.cta}</EditableLink>
           </div>
           <div className="aff-card reveal" data-tilt>
-            <div className="pct"><Editable id="affiliate.commissionPct">15%</Editable></div>
+            <div className="pct"><Editable id="affiliate.commissionPct">12%</Editable></div>
             <div className="pl"><Editable id="affiliate.pct">{t.affiliate.pct}</Editable></div>
             <div className="arow">
               <div>

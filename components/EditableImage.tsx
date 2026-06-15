@@ -11,7 +11,7 @@ export default function EditableImage({
   src,
   alt = '',
   fill = false,
-  width,
+  width, 
   height,
   className,
   imgStyle,
