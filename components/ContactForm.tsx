@@ -172,7 +172,7 @@ export default function ContactForm() {
 
           {status === 'error' && (
             <p style={{ color: '#ff6b6b', fontSize: '14px', margin: 0 }}>
-              Could not send your message. Please email info@capitalchain.co directly.
+              Could not send your message. Please email support@capitalchain.co directly.
             </p>
           )}
 

@@ -26,6 +26,6 @@ export const REFUND_POLICY: TermsItem[] = [
   {
     id: 5,
     title: 'Contact',
-    html: "<p>Capital Chain Group Ltd., Opal Tower, Bussiness Bay, Dubai</p> <p>Email: info@capitalchain.co</p>",
+    html: "<p>Capital Chain Group Ltd., Opal Tower, Bussiness Bay, Dubai</p> <p>Email: support@capitalchain.co</p>",
   },
 ];

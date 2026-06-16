@@ -19,7 +19,10 @@ export default function Affiliate() {
             <p style={{ color: 'var(--dim)', fontSize: 18, maxWidth: '44ch', marginBottom: 30 }}>
               <Editable id="affiliate.sub">{t.affiliate.sub}</Editable>
             </p>
-            <EditableLink id="affiliate.cta" href={LINKS.getStarted} className="btn btn-p btn-lg" data-magnetic {...EXTERNAL}>{t.affiliate.cta}</EditableLink>
+            <div className="hero-actions">
+              <EditableLink id="affiliate.cta" href={LINKS.affiliateSignup} className="btn btn-p btn-lg" data-magnetic {...EXTERNAL}>{t.affiliate.cta}</EditableLink>
+              <EditableLink id="affiliate.ctaLogin" href={LINKS.affiliateSignin} className="btn btn-lg" {...EXTERNAL}>Affiliate login</EditableLink>
+            </div>
           </div>
           <div className="aff-card reveal" data-tilt>
             <div className="pct"><Editable id="affiliate.commissionPct">12%</Editable></div>

@@ -5,7 +5,7 @@ import { useT } from '@/components/LanguageProvider';
 import Editable from '@/components/Editable';
 import EditableLink from '@/components/EditableLink';
 import Ticker from '@/components/Ticker';
-import { LINKS, EXTERNAL } from '@/lib/links';
+import { LINKS } from '@/lib/links';
 
 interface LedgerRow {
   id: number;
@@ -96,7 +96,7 @@ export default function RewardsBody() {
   }, []);
 
   const count = data.count.toLocaleString('en-US');
-  const { crypto, bank } = data.rails;
+  const { crypto } = data.rails;
 
   // Ledger controls — real search, date-range filter and pagination.
   const [query, setQuery] = useState('');
@@ -159,7 +159,7 @@ export default function RewardsBody() {
               <Editable className="gt" id="rewardsPage.heroTitle_b">{t.heroTitle_b}</Editable>
             </h1>
             <p><Editable id="rewardsPage.heroP">{t.heroP}</Editable></p>
-            <EditableLink id="rewardsPage.heroCta" href={LINKS.checkout} className="btn btn-p" data-magnetic {...EXTERNAL}>{t.heroCta}</EditableLink>
+            <EditableLink id="rewardsPage.heroCta" href={LINKS.programs} className="btn btn-p" data-magnetic>{t.heroCta}</EditableLink>
           </div>
 
           <div className="rw-right">
@@ -308,24 +308,6 @@ export default function RewardsBody() {
                 <span><Editable id="rewardsPage.max">{t.max}</Editable> {crypto.max}</span>
               </div>
             </div>
-            <div className="rw-rail">
-              <div className="rw-rail-head">
-                <span>{t.bankRail.replace(/[\d.]+%/, bank.pct + '%')}</span>
-                <span className="amt gt">{bank.amt}</span>
-              </div>
-              <div className="rw-bar">
-                <span style={{ width: `${bank.pct}%` }} />
-              </div>
-              <div className="rw-rail-meta">
-                <span><Editable id="rewardsPage.avg">{t.avg}</Editable> {bank.avg}</span>
-                <span>{bank.count.toLocaleString('en-US')}</span>
-                <span><Editable id="rewardsPage.max">{t.max}</Editable> {bank.max}</span>
-              </div>
-            </div>
-            <div className="rw-balance">
-              <span style={{ width: `${crypto.pct}%` }} className="c" />
-              <span style={{ width: `${bank.pct}%` }} className="r" />
-            </div>
           </div>
         </div>
 
@@ -394,7 +376,9 @@ export default function RewardsBody() {
                       <td>{r.plan}</td>
                       <td className="amt gt">{r.amt}</td>
                       <td className="tx">
-                        <a href={r.txUrl || `/certificate/${r.id}`} target="_blank" rel="noreferrer"><Editable id="rewardsPage.thTx">{t.thTx}</Editable> ↗</a>
+                        {r.txUrl ? (
+                          <a href={r.txUrl} target="_blank" rel="noreferrer"><Editable id="rewardsPage.thTx">{t.thTx}</Editable> ↗</a>
+                        ) : null}
                       </td>
                     </tr>
                   ))

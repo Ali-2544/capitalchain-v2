@@ -52,7 +52,7 @@ export default function ContactBody() {
                 <Editable id="contactPage.direct.body">{t.direct.body}</Editable>
               </p>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--line)', paddingTop: '16px' }}>
-                <span style={{ color: 'var(--text)', fontWeight: 600 }}><Editable id="contactPage.direct.email">info@capitalchain.co</Editable></span>
+                <span style={{ color: 'var(--text)', fontWeight: 600 }}><Editable id="contactPage.direct.email">support@capitalchain.co</Editable></span>
                 <span style={{ fontSize: '12px', background: 'rgba(25,230,214,0.1)', color: 'var(--teal)', padding: '4px 10px', borderRadius: '20px' }}><Editable id="contactPage.direct.badge">{t.direct.badge}</Editable></span>
               </div>
             </div>

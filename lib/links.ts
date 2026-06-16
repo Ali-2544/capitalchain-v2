@@ -3,8 +3,14 @@
 export const LINKS = {
   // Purchase / start a challenge.
   checkout: 'https://checkout.capitalchain.co/',
+  // Home page sections (in-page anchors).
+  programs: '/#programs',
+  calculator: '/#calc',
   // Login / sign-up / become a partner.
   getStarted: 'https://checkout.capitalchain.co/get-started/',
+  // Affiliate program — new partner signup + existing affiliate login.
+  affiliateSignup: 'https://checkout.capitalchain.co/affiliate-signup/',
+  affiliateSignin: 'https://checkout.capitalchain.co/affiliate-signin/',
 
   // Community + social.
   discord: 'https://discord.com/invite/capitalchain',

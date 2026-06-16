@@ -184,7 +184,7 @@ export default function Nav() {
             <EditableLink id="nav.login" href={LINKS.getStarted} className="btn nav-login" {...EXTERNAL}>
               {t.nav.login}
             </EditableLink>
-            <EditableLink id="nav.buy" href={LINKS.checkout} className="btn btn-p nav-buy" data-magnetic {...EXTERNAL}>
+            <EditableLink id="nav.buy" href={LINKS.programs} className="btn btn-p nav-buy" data-magnetic>
               {t.nav.buy}
             </EditableLink>
           </div>
@@ -217,7 +217,7 @@ export default function Nav() {
               <EditableLink id="nav.login" href={LINKS.getStarted} className="btn" {...EXTERNAL}>
                 {t.nav.login}
               </EditableLink>
-              <EditableLink id="nav.buy" href={LINKS.checkout} className="btn btn-p" data-magnetic onClick={() => setMenuOpen(false)} {...EXTERNAL}>
+              <EditableLink id="nav.buy" href={LINKS.programs} className="btn btn-p" data-magnetic onClick={() => setMenuOpen(false)}>
                 {t.nav.buy}
               </EditableLink>
             </div>
