@@ -15,7 +15,7 @@ export default function Home() {
     <>
       <PromoBar />
       <Nav />
-      {/* The home content sections — reorderable via drag in admin Edit mode. */}
+      {/* The home content sections, reorderable via drag in admin Edit mode. */}
       <HomeSections />
       <Footer />
     </>

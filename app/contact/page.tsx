@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import ContactBody from '@/components/ContactBody';
 
 export const metadata: Metadata = {
-  title: 'Contact Us — CapitalChain',
+  title: 'Contact Us, CapitalChain',
   description: 'Get in touch with the Capital Chain support team. Contact us 24/7 via live chat, email, or join our community Discord server.',
 };
 

@@ -92,9 +92,9 @@ const PAYMENTS = [
 ];
 
 const NOTES: Record<string, string> = {
-  'Standard-1': 'One profit target. Hit it within the drawdown limits — no minimum days, no deadline.',
+  'Standard-1': 'One profit target. Hit it within the drawdown limits, no minimum days, no deadline.',
   'Standard-2': 'Two evaluation phases with relaxed targets and wider drawdown.',
-  'Atomic-1': 'One aggressive phase with a tighter max loss — for confident, fast traders.',
+  'Atomic-1': 'One aggressive phase with a tighter max loss, for confident, fast traders.',
   'Atomic-2': 'Two phases with the widest drawdown buffer in the Atomic line.',
 };
 

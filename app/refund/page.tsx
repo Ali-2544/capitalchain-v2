@@ -7,8 +7,8 @@ import LegalBody from '@/components/LegalBody';
 import { REFUND_POLICY } from '@/lib/refundPolicy';
 
 export const metadata: Metadata = {
-  title: 'Refund Policy — CapitalChain',
-  description: 'Learn when and how refunds may be issued at Capital Chain — clear guidance on eligibility and the refund process.',
+  title: 'Refund Policy, CapitalChain',
+  description: 'Learn when and how refunds may be issued at Capital Chain, clear guidance on eligibility and the refund process.',
 };
 
 export default function RefundPolicy() {
@@ -20,7 +20,7 @@ export default function RefundPolicy() {
         eyebrow="Legal"
         titleA="Refund"
         titleB="Policy"
-        sub="Learn when and how refunds may be issued — clear guidance on eligibility and the process for refunds."
+        sub="Learn when and how refunds may be issued, clear guidance on eligibility and the process for refunds."
         items={REFUND_POLICY}
       />
       <FinalCTA />

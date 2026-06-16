@@ -8,9 +8,9 @@ import { prisma } from '@/lib/prisma';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Blog — CapitalChain',
+  title: 'Blog, CapitalChain',
   description:
-    'Trading insights, payout updates, and product news from Capital Chain — the bridge between your trading skills and real earnings.',
+    'Trading insights, payout updates, and product news from Capital Chain, the bridge between your trading skills and real earnings.',
 };
 
 function fmtDate(d: Date) {
@@ -49,7 +49,7 @@ export default async function BlogIndex() {
               Insights from the <span className="gt">desk.</span>
             </h1>
             <p className="hero-sub reveal" style={{ maxWidth: '640px' }}>
-              Trading insights, payout updates and product news — straight from the Capital Chain team.
+              Trading insights, payout updates and product news, straight from the Capital Chain team.
             </p>
           </div>
         </section>
@@ -57,7 +57,7 @@ export default async function BlogIndex() {
         <section className="sec band">
           <div className="wrap">
             {posts.length === 0 ? (
-              <p style={{ color: 'var(--dim)', textAlign: 'center' }}>No posts published yet — check back soon.</p>
+              <p style={{ color: 'var(--dim)', textAlign: 'center' }}>No posts published yet, check back soon.</p>
             ) : (
               <div className="blog-grid">
                 {posts.map((p) => (

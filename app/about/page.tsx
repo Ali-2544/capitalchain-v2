@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import AboutBody from '@/components/AboutBody';
 
 export const metadata: Metadata = {
-  title: 'About Us — CapitalChain',
+  title: 'About Us, CapitalChain',
   description: 'Learn about Capital Chain, our mission, vision, and the professional team behind the world\'s leading prop trading platform.',
 };
 

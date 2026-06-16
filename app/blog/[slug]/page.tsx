@@ -23,9 +23,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPost(slug);
-  if (!post) return { title: 'Post not found — CapitalChain' };
+  if (!post) return { title: 'Post not found, CapitalChain' };
   return {
-    title: `${post.title} — CapitalChain`,
+    title: `${post.title}, CapitalChain`,
     description: post.excerpt || undefined,
     openGraph: {
       title: post.title,

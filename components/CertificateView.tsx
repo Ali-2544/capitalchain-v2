@@ -68,7 +68,7 @@ export default function CertificateView({ variant = 'payout', name, amount, size
   const tpl = TEMPLATES[variant];
   const pos = LAYOUT[variant];
   const isPayout = variant === 'payout';
-  const altText = isPayout ? 'Payout Certificate' : `Evaluation Certificate — ${variant === 'phase1' ? 'Phase 1' : 'Phase 2'}`;
+  const altText = isPayout ? 'Payout Certificate' : `Evaluation Certificate ${variant === 'phase1' ? 'Phase 1' : 'Phase 2'}`;
 
   const fileBase = `capitalchain-${variant}-certificate-${name.replace(/[^a-z0-9]+/gi, '-').toLowerCase() || 'trader'}`;
 

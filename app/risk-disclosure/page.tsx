@@ -7,7 +7,7 @@ import LegalBody from '@/components/LegalBody';
 import { RISK_DISCLOSURE } from '@/lib/riskDisclosure';
 
 export const metadata: Metadata = {
-  title: 'Risk Disclosure — CapitalChain',
+  title: 'Risk Disclosure, CapitalChain',
   description: 'Important information about the risks of trading and participation in Capital Chain programs. Please read carefully.',
 };
 

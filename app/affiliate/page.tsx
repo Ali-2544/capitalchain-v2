@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import AffiliateBody from '@/components/AffiliateBody';
 
 export const metadata: Metadata = {
-  title: 'Affiliate Program — CapitalChain',
+  title: 'Affiliate Program, CapitalChain',
   description: 'Join the Capital Chain Affiliate Program. Refer traders to our industry-leading prop firm and earn 12% lifetime commission with monthly payouts and real-time dashboards.',
 };
 

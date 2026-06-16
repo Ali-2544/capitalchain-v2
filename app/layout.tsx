@@ -40,7 +40,7 @@ export default function RootLayout({
         <ThemeProvider>
           <LanguageProvider>
             <ContentProvider>
-              {/* Fixed full-viewport WebGL globe — rendered once, persists across routes. */}
+              {/* Fixed full-viewport WebGL globe, rendered once, persists across routes. */}
               <GlobeMount />
               {/* Fixed scrims + JS-driven chrome + all page micro-interactions. */}
               <Effects />

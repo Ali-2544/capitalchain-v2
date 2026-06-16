@@ -7,7 +7,7 @@ import LegalBody from '@/components/LegalBody';
 import { KYC_AML_POLICY } from '@/lib/kycAmlPolicy';
 
 export const metadata: Metadata = {
-  title: 'KYC & AML Policy — CapitalChain',
+  title: 'KYC & AML Policy, CapitalChain',
   description: 'Capital Chain identity verification (KYC) requirements and anti-money laundering (AML) compliance measures.',
 };
 

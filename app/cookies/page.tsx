@@ -7,7 +7,7 @@ import LegalBody from '@/components/LegalBody';
 import { COOKIE_POLICY } from '@/lib/cookiePolicy';
 
 export const metadata: Metadata = {
-  title: 'Cookie Policy — CapitalChain',
+  title: 'Cookie Policy, CapitalChain',
   description: 'Understand how Capital Chain uses cookies, local storage, and similar technologies, and the choices available to you.',
 };
 
@@ -20,7 +20,7 @@ export default function CookiePolicy() {
         eyebrow="Legal"
         titleA="Cookie"
         titleB="Policy"
-        sub="Understand how we use cookies and similar technologies — details on cookies, local storage, and similar tech we use."
+        sub="Understand how we use cookies and similar technologies, details on cookies, local storage, and similar tech we use."
         items={COOKIE_POLICY}
       />
       <FinalCTA />
