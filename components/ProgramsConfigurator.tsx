@@ -155,6 +155,7 @@ export default function ProgramsConfigurator() {
     { name: 'Profit Target', icon: '/challenge/target.png', v: details.profitTarget },
     { name: 'Maximum Loss Limit', icon: '/challenge/speed-limit.png', v: details.maximumLossLimit },
     ...(!isInstant ? [{ name: 'Daily Loss Limit', icon: '/challenge/sun-energy.png', v: details.dailyLossLimit }] : []),
+    ...(isInstant ? [{ name: 'Risk Per Trade', icon: '/challenge/sun-energy.png', v: { step1: '', step2: '', funded: '2%' } }] : []),
     { name: 'Maximum Loss Limit Type', icon: '/challenge/coding.png', v: details.maximumLossLimitType },
     ...(!isAtomic ? [{ name: 'Profit Split', icon: '/challenge/division.png', v: details.profitSplit }] : []),
     { name: 'Refundable Fee', icon: '/challenge/recycle.png', v: { step1: details.refundableFee.step1, step2: '-', funded: isInstant ? 'With 3rd payout' : '-' } },
