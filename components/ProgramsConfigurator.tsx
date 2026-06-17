@@ -66,7 +66,7 @@ const DETAILS: Record<string, Details> = {
   // Instant funding — no evaluation phase, only the live/funded account applies.
   'Instant-1': {
     profitTarget: { step1: '', step2: '', funded: 'Unlimited' },
-    maximumLossLimit: { step1: '', step2: '', funded: '10%' },
+    maximumLossLimit: { step1: '', step2: '', funded: '5%' },
     dailyLossLimit: { step1: '', step2: '', funded: '5%' },
     maximumLossLimitType: { step1: '', step2: '', funded: 'Static' },
     profitSplit: { step1: '', step2: '', funded: '80%' },
@@ -157,7 +157,7 @@ export default function ProgramsConfigurator() {
     ...(!isInstant ? [{ name: 'Daily Loss Limit', icon: '/challenge/sun-energy.png', v: details.dailyLossLimit }] : []),
     { name: 'Maximum Loss Limit Type', icon: '/challenge/coding.png', v: details.maximumLossLimitType },
     ...(!isAtomic ? [{ name: 'Profit Split', icon: '/challenge/division.png', v: details.profitSplit }] : []),
-    { name: 'Refundable Fee', icon: '/challenge/recycle.png', v: { step1: details.refundableFee.step1, step2: '-', funded: isInstant ? 'After 3rd payout' : '-' } },
+    { name: 'Refundable Fee', icon: '/challenge/recycle.png', v: { step1: details.refundableFee.step1, step2: '-', funded: isInstant ? 'With 3rd payout' : '-' } },
     { name: 'Leverage', icon: '/challenge/division.png', v: { step1: '1:100', step2: '1:100', funded: isInstant ? '1:50' : '1:100' } },
   ];
 
