@@ -12,7 +12,7 @@ import { LINKS } from '@/lib/links';
    checkout with the selection.
    ────────────────────────────────────────────────────────────────────────── */
 
-type ChallengeType = 'Standard' | 'Atomic';
+type ChallengeType = 'Standard' | 'Atomic' | 'Instant';
 type StepType = '1' | '2';
 type SizeType = '3k' | '5k' | '10k' | '25k' | '50k' | '100k';
 
@@ -63,6 +63,15 @@ const DETAILS: Record<string, Details> = {
     profitSplit: { step1: '20%', step2: '20%', funded: '80%' },
     refundableFee: { step1: '100%', step2: '100%', funded: '100%' },
   },
+  // Instant funding — no evaluation phase, only the live/funded account applies.
+  'Instant-1': {
+    profitTarget: { step1: '', step2: '', funded: 'Unlimited' },
+    maximumLossLimit: { step1: '', step2: '', funded: '10%' },
+    dailyLossLimit: { step1: '', step2: '', funded: '5%' },
+    maximumLossLimitType: { step1: '', step2: '', funded: 'Static' },
+    profitSplit: { step1: '', step2: '', funded: '80%' },
+    refundableFee: { step1: '', step2: '', funded: '100%' },
+  },
 };
 
 // `${type}-${step}-${size}` -> one-time price (USD)
@@ -71,6 +80,7 @@ const PRICING: Record<string, number> = {
   'Standard-2-3k': 22, 'Standard-2-5k': 35, 'Standard-2-10k': 69, 'Standard-2-25k': 170, 'Standard-2-50k': 300, 'Standard-2-100k': 515,
   'Atomic-1-5k': 54, 'Atomic-1-10k': 85, 'Atomic-1-25k': 219, 'Atomic-1-50k': 362, 'Atomic-1-100k': 625,
   'Atomic-2-5k': 48, 'Atomic-2-10k': 79, 'Atomic-2-25k': 199, 'Atomic-2-50k': 328, 'Atomic-2-100k': 603,
+  'Instant-1-5k': 99, 'Instant-1-10k': 179, 'Instant-1-25k': 349, 'Instant-1-50k': 699, 'Instant-1-100k': 1399,
 };
 
 const SIZES: { value: SizeType; label: string; short: string }[] = [
@@ -96,6 +106,7 @@ const NOTES: Record<string, string> = {
   'Standard-2': 'Two evaluation phases with relaxed targets and wider drawdown.',
   'Atomic-1': 'One aggressive phase with a tighter max loss, for confident, fast traders.',
   'Atomic-2': 'Two phases with the widest drawdown buffer in the Atomic line.',
+  'Instant-1': 'Skip the evaluation. Get a funded account instantly and start trading right away.',
 };
 
 const Check = () => (
@@ -115,28 +126,30 @@ export default function ProgramsConfigurator() {
   const [step, setStep] = useState<StepType>('1');
   const [size, setSize] = useState<SizeType>('5k');
 
-  // $3,000 is Standard-only — bump to 5k when switching to Atomic.
+  // $3,000 is Standard-only — bump to 5k when switching to Atomic/Instant.
   useEffect(() => {
-    if (type === 'Atomic' && size === '3k') setSize('5k');
+    if (type !== 'Standard' && size === '3k') setSize('5k');
   }, [type, size]);
 
-  const stepName = step === '1' ? 'One Step' : 'Two Step';
+  const isInstant = type === 'Instant';
   const isOne = step === '1';
   const isAtomic = type === 'Atomic';
-  const details = DETAILS[`${type}-${step}`];
-  const price = PRICING[`${type}-${step}-${size}`];
-  const sizes = isAtomic ? SIZES.filter((s) => s.value !== '3k') : SIZES;
+  const stepName = isInstant ? 'Instant' : step === '1' ? 'One Step' : 'Two Step';
+  const planLabel = isInstant ? 'Instant Funded' : `${type} · ${stepName}`;
+  const details = DETAILS[isInstant ? 'Instant-1' : `${type}-${step}`];
+  const price = PRICING[isInstant ? `Instant-1-${size}` : `${type}-${step}-${size}`];
+  const sizes = isAtomic || isInstant ? SIZES.filter((s) => s.value !== '3k') : SIZES;
 
   const checkoutUrl = useMemo(() => {
     const p = new URLSearchParams({
       challenge_type: type,
-      challenge_step: step,
+      challenge_step: isInstant ? 'instant' : step,
       account_size: size,
-      product_name: `${type} ${stepName} ${size}`,
+      product_name: isInstant ? `Instant ${size}` : `${type} ${stepName} ${size}`,
     });
     if (price != null) p.append('price', String(price));
     return `${LINKS.checkout}?${p.toString()}`;
-  }, [type, step, size, stepName, price]);
+  }, [type, step, size, stepName, price, isInstant]);
 
   const rows = [
     { name: 'Profit Target', icon: '/challenge/target.png', v: details.profitTarget },
@@ -144,7 +157,7 @@ export default function ProgramsConfigurator() {
     { name: 'Daily Loss Limit', icon: '/challenge/sun-energy.png', v: details.dailyLossLimit },
     { name: 'Maximum Loss Limit Type', icon: '/challenge/coding.png', v: details.maximumLossLimitType },
     ...(!isAtomic ? [{ name: 'Profit Split', icon: '/challenge/division.png', v: details.profitSplit }] : []),
-    { name: 'Refundable Fee', icon: '/challenge/recycle.png', v: { step1: details.refundableFee.step1, step2: '-', funded: '-' } },
+    { name: 'Refundable Fee', icon: '/challenge/recycle.png', v: { step1: details.refundableFee.step1, step2: '-', funded: isInstant ? details.refundableFee.funded : '-' } },
     { name: 'Leverage', icon: '/challenge/division.png', v: { step1: '1:100', step2: '1:100', funded: '1:100' } },
   ];
 
@@ -155,7 +168,7 @@ export default function ProgramsConfigurator() {
       <span className={`v${value === 'Unlimited' || value === '80%' ? ' ok' : ''}`}>{value}</span>
     );
 
-  const cols = isOne ? ['Step 1', 'Funded'] : ['Step 1', 'Step 2', 'Funded'];
+  const cols = isInstant ? ['Funded'] : isOne ? ['Step 1', 'Funded'] : ['Step 1', 'Step 2', 'Funded'];
 
   return (
     <section className="sec band" id="programs">
@@ -176,19 +189,29 @@ export default function ProgramsConfigurator() {
           <div className="reveal">
             <div className="seg-row">
               <div className="seg">
-                {(['Standard', 'Atomic'] as ChallengeType[]).map((tp) => (
-                  <button key={tp} type="button" className={tp === type ? 'active' : undefined} onClick={() => setType(tp)}>
+                {(['Standard', 'Atomic', 'Instant'] as ChallengeType[]).map((tp) => (
+                  <button
+                    key={tp}
+                    type="button"
+                    className={tp === type ? 'active' : undefined}
+                    onClick={() => {
+                      setType(tp);
+                      if (tp === 'Instant') setStep('1');
+                    }}
+                  >
                     {tp}
                   </button>
                 ))}
               </div>
-              <div className="seg">
-                {([['1', 'One Step'], ['2', 'Two Step']] as [StepType, string][]).map(([s, label]) => (
-                  <button key={s} type="button" className={s === step ? 'active' : undefined} onClick={() => setStep(s)}>
-                    {label}
-                  </button>
-                ))}
-              </div>
+              {!isInstant && (
+                <div className="seg">
+                  {([['1', 'One Step'], ['2', 'Two Step']] as [StepType, string][]).map(([s, label]) => (
+                    <button key={s} type="button" className={s === step ? 'active' : undefined} onClick={() => setStep(s)}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="seg-note">{NOTES[`${type}-${step}`]}</div>
@@ -210,7 +233,7 @@ export default function ProgramsConfigurator() {
             <div className="spec-cols">
               <div className="spec-cols-head">
                 <span className="sc-name">
-                  {type} · {stepName}
+                  {planLabel}
                 </span>
                 <span className="sc-vals">
                   {cols.map((c) => (
@@ -226,9 +249,15 @@ export default function ProgramsConfigurator() {
                     {r.name}
                   </span>
                   <span className="scol-vals">
-                    <Val value={r.v.step1} />
-                    {!isOne && <Val value={r.v.step2} />}
-                    <Val value={r.v.funded} />
+                    {isInstant ? (
+                      <Val value={r.v.funded} />
+                    ) : (
+                      <>
+                        <Val value={r.v.step1} />
+                        {!isOne && <Val value={r.v.step2} />}
+                        <Val value={r.v.funded} />
+                      </>
+                    )}
                   </span>
                 </div>
               ))}
@@ -258,7 +287,7 @@ export default function ProgramsConfigurator() {
                   <span className="gt">—</span>
                 )}
               </div>
-              <div className="pstep">{type} · {stepName}</div>
+              <div className="pstep">{planLabel}</div>
             </div>
             <div className="refund"><Editable id="programs.refund">{t.programs.refund}</Editable></div>
             <a href={checkoutUrl} target="_blank" rel="noopener noreferrer" className="btn btn-p btn-lg" data-magnetic>

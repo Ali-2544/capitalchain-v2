@@ -314,7 +314,7 @@ const en = {
       eyebrow: 'GET IN TOUCH',
       title_a: 'Need Help?',
       title_b: 'We’re Here for You',
-      sub: 'Have questions about Capital Chain prop trading evaluations, scaling limits, or payout structure? Our dedicated support team is available 24/7 to assist traders and affiliates with fast, reliable guidance.',
+      sub: 'Have questions about Capital Chain prop trading evaluations, scaling limits, or payout structure? Our dedicated support team is available 24/7 to assist traders and affiliates with fast and reliable guidance.',
     },
     form: {
       title: 'Send us a message',
@@ -460,8 +460,8 @@ const en = {
     },
     community: {
       idx: '[ 02, PARTNER WITH US ]',
-      title_a: 'Join the fastest growing',
-      title_b: 'Trading Community',
+      title_a: 'Join a trusted network of traders who trust Capital Chain',
+      title_b: 'to scale your trading journey.',
       sub: 'Learn, Connect, and Grow With Thousands of Traders.',
       p_a: 'Connect with fellow traders, access premium educational resources, and receive dedicated support from our team. Our community-driven approach helps traders develop their skills, share strategies, and build confidence in the markets.',
       p_b: 'Join a trusted network of traders who trust Capital Chain to scale their trading journey.',
@@ -875,9 +875,9 @@ const ar: Dict = {
   contactPage: {
     hero: {
       eyebrow: 'تواصل معنا',
-      title_a: 'نحن هنا',
-      title_b: 'للمساعدة.',
-      sub: 'لديك أسئلة عن تقييمات التداول الممول أو حدود الارتقاء أو هيكل السحوبات؟ فريقنا الاحترافي هنا لمساعدتك على مدار الساعة.',
+      title_a: 'هل تحتاج مساعدة؟',
+      title_b: 'نحن هنا من أجلك',
+      sub: 'هل لديك أسئلة حول تقييمات التداول الممول من Capital Chain، أو حدود الارتقاء، أو هيكل السحوبات؟ فريق الدعم المتخصص لدينا متاح على مدار الساعة طوال أيام الأسبوع 24/7 لمساعدة المتداولين والشركاء بإرشادات سريعة وموثوقة.',
     },
     form: {
       title: 'أرسل لنا رسالة',
@@ -1023,8 +1023,8 @@ const ar: Dict = {
     },
     community: {
       idx: '[ 02, كن شريكًا لنا ]',
-      title_a: 'انضم إلى أسرع',
-      title_b: 'مجتمع تداول نموًّا',
+      title_a: 'انضم إلى شبكة موثوقة من المتداولين الذين يثقون بـ Capital Chain',
+      title_b: 'لتطوير رحلتك في التداول.',
       sub: 'مجتمعنا في صميم كل ما نقوم به.',
       p_a: 'نؤمن بأن المجتمع القوي ضروري لنجاح أي متداول. لذلك نُعلي قيمة مجتمعنا، ونقدّم الدعم والتعليم والموارد لمساعدة متداولينا على النجاح.',
       p_b: 'انضم إلى مجتمعنا العالمي من المتداولين اليوم وابدأ رحلتك نحو الحرية المالية.',
@@ -1436,9 +1436,9 @@ const hi: Dict = {
   contactPage: {
     hero: {
       eyebrow: 'संपर्क में रहें',
-      title_a: 'हम मदद के लिए',
-      title_b: 'यहाँ हैं.',
-      sub: 'हमारे प्रॉप मूल्यांकन, स्केलिंग सीमाओं या पेआउट संरचना के बारे में सवाल हैं? हमारा पेशेवर स्टाफ़ चौबीसों घंटे आपकी मदद के लिए यहाँ है।',
+      title_a: 'मदद चाहिए?',
+      title_b: 'हम आपके लिए यहाँ हैं',
+      sub: 'Capital Chain प्रॉप ट्रेडिंग मूल्यांकन, स्केलिंग सीमाओं या पेआउट संरचना के बारे में सवाल हैं? हमारी समर्पित सहायता टीम ट्रेडर्स और एफिलिएट्स को तेज़ और भरोसेमंद मार्गदर्शन देने के लिए 24/7 उपलब्ध है।',
     },
     form: {
       title: 'हमें संदेश भेजें',
@@ -1584,8 +1584,8 @@ const hi: Dict = {
     },
     community: {
       idx: '[ 02, हमारे साथ पार्टनर बनें ]',
-      title_a: 'सबसे तेज़ी से बढ़ते',
-      title_b: 'ट्रेडिंग समुदाय से जुड़ें',
+      title_a: 'ट्रेडर्स के एक भरोसेमंद नेटवर्क से जुड़ें जो Capital Chain पर भरोसा करते हैं',
+      title_b: 'अपनी ट्रेडिंग यात्रा को आगे बढ़ाने के लिए।',
       sub: 'हमारा समुदाय हम जो भी करते हैं उसके केंद्र में है।',
       p_a: 'हम मानते हैं कि किसी भी ट्रेडर की सफलता के लिए एक मज़बूत समुदाय आवश्यक है। इसीलिए हम अपने समुदाय को उच्च महत्व देते हैं, अपने ट्रेडर्स की सफलता में मदद के लिए सहायता, शिक्षा और संसाधन प्रदान करते हैं।',
       p_b: 'आज ही ट्रेडर्स के हमारे वैश्विक समुदाय से जुड़ें और वित्तीय स्वतंत्रता की ओर अपनी यात्रा शुरू करें।',
@@ -1997,9 +1997,9 @@ const es: Dict = {
   contactPage: {
     hero: {
       eyebrow: 'PONTE EN CONTACTO',
-      title_a: 'Estamos aquí para',
-      title_b: 'ayudar.',
-      sub: '¿Tienes preguntas sobre nuestras evaluaciones prop, los límites de escalado o la estructura de pagos? Nuestro personal profesional está aquí para ayudarte las 24 horas.',
+      title_a: '¿Necesitas ayuda?',
+      title_b: 'Estamos aquí para ti',
+      sub: '¿Tienes preguntas sobre las evaluaciones de prop trading de Capital Chain, los límites de escalado o la estructura de pagos? Nuestro equipo de soporte dedicado está disponible 24/7 para ayudar a traders y afiliados con una orientación rápida y fiable.',
     },
     form: {
       title: 'Envíanos un mensaje',
@@ -2145,8 +2145,8 @@ const es: Dict = {
     },
     community: {
       idx: '[ 02, ASÓCIATE CON NOSOTROS ]',
-      title_a: 'La comunidad',
-      title_b: 'por encima de todo',
+      title_a: 'Únete a una red de confianza de traders que confían en Capital Chain',
+      title_b: 'para hacer crecer tu trayectoria de trading.',
       sub: 'Nuestra comunidad es el núcleo de todo lo que hacemos.',
       p_a: 'Creemos que una comunidad fuerte es esencial para el éxito de cualquier trader. Por eso damos un gran valor a nuestra comunidad, ofreciendo apoyo, educación y recursos para ayudar a nuestros traders a triunfar.',
       p_b: 'Únete hoy a nuestra comunidad global de traders y comienza tu camino hacia la libertad financiera.',
@@ -2558,9 +2558,9 @@ const fr: Dict = {
   contactPage: {
     hero: {
       eyebrow: 'CONTACTEZ-NOUS',
-      title_a: 'Nous sommes là pour',
-      title_b: 'vous aider.',
-      sub: 'Des questions sur nos évaluations prop, les limites de montée en échelle ou la structure des paiements ? Notre personnel professionnel est là pour vous aider 24h/24.',
+      title_a: 'Besoin d’aide ?',
+      title_b: 'Nous sommes là pour vous',
+      sub: 'Vous avez des questions sur les évaluations de prop trading de Capital Chain, les limites de montée en échelle ou la structure des paiements ? Notre équipe de support dédiée est disponible 24/7 pour aider les traders et les affiliés avec des conseils rapides et fiables.',
     },
     form: {
       title: 'Envoyez-nous un message',
@@ -2706,8 +2706,8 @@ const fr: Dict = {
     },
     community: {
       idx: '[ 02, DEVENEZ PARTENAIRE ]',
-      title_a: 'La communauté',
-      title_b: 'avant tout',
+      title_a: 'Rejoignez un réseau de confiance de traders qui font confiance à Capital Chain',
+      title_b: 'pour faire évoluer votre parcours de trading.',
       sub: 'Notre communauté est au cœur de tout ce que nous faisons.',
       p_a: 'Nous croyons qu’une communauté forte est essentielle au succès de tout trader. C’est pourquoi nous accordons une grande valeur à notre communauté, en offrant soutien, formation et ressources pour aider nos traders à réussir.',
       p_b: 'Rejoignez dès aujourd’hui notre communauté mondiale de traders et entamez votre parcours vers la liberté financière.',
@@ -3119,9 +3119,9 @@ const bn: Dict = {
   contactPage: {
     hero: {
       eyebrow: 'যোগাযোগ করুন',
-      title_a: 'আমরা সাহায্য করতে',
-      title_b: 'এখানে আছি.',
-      sub: 'আমাদের প্রপ মূল্যায়ন, স্কেলিং সীমা বা পেআউট কাঠামো সম্পর্কে প্রশ্ন আছে? আমাদের পেশাদার কর্মীরা চব্বিশ ঘণ্টা আপনাকে সাহায্য করতে এখানে আছেন।',
+      title_a: 'সাহায্য প্রয়োজন?',
+      title_b: 'আমরা আপনার জন্য এখানে আছি',
+      sub: 'Capital Chain প্রপ ট্রেডিং মূল্যায়ন, স্কেলিং সীমা বা পেআউট কাঠামো সম্পর্কে প্রশ্ন আছে? আমাদের নিবেদিত সাপোর্ট টিম ট্রেডার ও অ্যাফিলিয়েটদের দ্রুত ও নির্ভরযোগ্য নির্দেশনা দিতে 24/7 উপলব্ধ।',
     },
     form: {
       title: 'আমাদের একটি বার্তা পাঠান',
@@ -3267,8 +3267,8 @@ const bn: Dict = {
     },
     community: {
       idx: '[ 02, আমাদের সাথে পার্টনার হন ]',
-      title_a: 'কমিউনিটি',
-      title_b: 'সবকিছুর ঊর্ধ্বে',
+      title_a: 'ট্রেডারদের একটি বিশ্বস্ত নেটওয়ার্কে যোগ দিন যারা Capital Chain-এর উপর আস্থা রাখে',
+      title_b: 'আপনার ট্রেডিং যাত্রাকে এগিয়ে নিতে।',
       sub: 'আমাদের কমিউনিটি আমরা যা কিছু করি তার কেন্দ্রে।',
       p_a: 'আমরা বিশ্বাস করি যে কোনো ট্রেডারের সাফল্যের জন্য একটি শক্তিশালী কমিউনিটি অপরিহার্য। সেই কারণেই আমরা আমাদের কমিউনিটিকে উচ্চ মূল্য দিই, আমাদের ট্রেডারদের সফল হতে সহায়তা, শিক্ষা ও রিসোর্স প্রদান করি।',
       p_b: 'আজই আমাদের বৈশ্বিক ট্রেডার কমিউনিটিতে যোগ দিন এবং আর্থিক স্বাধীনতার দিকে আপনার যাত্রা শুরু করুন।',
@@ -3680,9 +3680,9 @@ const ur: Dict = {
   contactPage: {
     hero: {
       eyebrow: 'رابطہ کریں',
-      title_a: 'ہم یہاں آپ کی مدد',
-      title_b: 'کے لیے ہیں.',
-      sub: 'ہماری پراپ تشخیصات، اسکیلنگ حدود یا ادائیگی کے ڈھانچے کے بارے میں سوالات ہیں؟ ہمارا پیشہ ور عملہ چوبیس گھنٹے آپ کی مدد کے لیے یہاں موجود ہے۔',
+      title_a: 'مدد چاہیے؟',
+      title_b: 'ہم آپ کے لیے یہاں موجود ہیں',
+      sub: 'Capital Chain پراپ ٹریڈنگ تشخیصات، اسکیلنگ حدود یا ادائیگی کے ڈھانچے کے بارے میں سوالات ہیں؟ ہماری مخصوص سپورٹ ٹیم ٹریڈرز اور ایفیلی ایٹس کو تیز اور قابلِ اعتماد رہنمائی فراہم کرنے کے لیے 24/7 دستیاب ہے۔',
     },
     form: {
       title: 'ہمیں پیغام بھیجیں',
@@ -3828,8 +3828,8 @@ const ur: Dict = {
     },
     community: {
       idx: '[ 02, ہمارے ساتھ شراکت کریں ]',
-      title_a: 'کمیونٹی',
-      title_b: 'سب سے بڑھ کر',
+      title_a: 'ٹریڈرز کے ایک قابلِ اعتماد نیٹ ورک میں شامل ہوں جو Capital Chain پر بھروسہ کرتے ہیں',
+      title_b: 'اپنے ٹریڈنگ سفر کو آگے بڑھانے کے لیے۔',
       sub: 'ہماری کمیونٹی ہر اس کام کے مرکز میں ہے جو ہم کرتے ہیں۔',
       p_a: 'ہم یقین رکھتے ہیں کہ کسی بھی ٹریڈر کی کامیابی کے لیے ایک مضبوط کمیونٹی لازمی ہے۔ یہی وجہ ہے کہ ہم اپنی کمیونٹی کو بہت اہمیت دیتے ہیں، اور اپنے ٹریڈرز کی کامیابی میں مدد کے لیے مدد، تعلیم اور وسائل فراہم کرتے ہیں۔',
       p_b: 'آج ہی ٹریڈرز کی ہماری عالمی کمیونٹی میں شامل ہوں اور مالی آزادی کی طرف اپنا سفر شروع کریں۔',
