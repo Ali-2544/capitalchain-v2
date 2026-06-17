@@ -107,7 +107,7 @@ body.light .theme-tg .sun{display:none}body.light .theme-tg .moon{display:block}
 .btn{font-family:var(--fb);font-weight:600;font-size:14.5px;padding:11px 20px;border-radius:12px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--text);transition:.22s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
 .btn:hover{border-color:var(--teal);background:var(--soft)}
 .btn-p{background:var(--grad);color:var(--btn-ink);border-color:transparent;font-weight:700;box-shadow:0 6px 24px -10px var(--glow)}
-.btn-p:hover{box-shadow:0 12px 38px -8px var(--glow);transform:translateY(-1px)}
+.btn-p:hover{background:var(--grad);border-color:transparent;color:var(--btn-ink);box-shadow:0 12px 38px -8px var(--glow);transform:translateY(-1px)}
 .btn-lg{padding:16px 30px;font-size:16px;border-radius:14px;letter-spacing:.02em}
 .menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:10px;color:var(--text);padding:9px 13px;cursor:pointer;font-size:18px;line-height:1}
 .mobile-menu{display:none}

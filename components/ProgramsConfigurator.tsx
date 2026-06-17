@@ -157,8 +157,8 @@ export default function ProgramsConfigurator() {
     ...(!isInstant ? [{ name: 'Daily Loss Limit', icon: '/challenge/sun-energy.png', v: details.dailyLossLimit }] : []),
     { name: 'Maximum Loss Limit Type', icon: '/challenge/coding.png', v: details.maximumLossLimitType },
     ...(!isAtomic ? [{ name: 'Profit Split', icon: '/challenge/division.png', v: details.profitSplit }] : []),
-    { name: 'Refundable Fee', icon: '/challenge/recycle.png', v: { step1: details.refundableFee.step1, step2: '-', funded: isInstant ? details.refundableFee.funded : '-' } },
-    { name: 'Leverage', icon: '/challenge/division.png', v: { step1: '1:100', step2: '1:100', funded: '1:100' } },
+    { name: 'Refundable Fee', icon: '/challenge/recycle.png', v: { step1: details.refundableFee.step1, step2: '-', funded: isInstant ? 'After 3rd payout' : '-' } },
+    { name: 'Leverage', icon: '/challenge/division.png', v: { step1: '1:100', step2: '1:100', funded: isInstant ? '1:50' : '1:100' } },
   ];
 
   const Val = ({ value }: { value: string }) =>
@@ -289,7 +289,7 @@ export default function ProgramsConfigurator() {
               </div>
               <div className="pstep">{planLabel}</div>
             </div>
-            <div className="refund"><Editable id="programs.refund">{t.programs.refund}</Editable></div>
+            {isAtomic && <div className="refund"><Editable id="programs.refund">{t.programs.refund}</Editable></div>}
             <a href={checkoutUrl} target="_blank" rel="noopener noreferrer" className="btn btn-p btn-lg" data-magnetic>
               Start Challenge →
             </a>
