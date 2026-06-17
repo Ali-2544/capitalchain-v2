@@ -194,6 +194,7 @@ export default function ProgramsConfigurator() {
                   <button
                     key={tp}
                     type="button"
+                    data-seg={tp}
                     className={tp === type ? 'active' : undefined}
                     onClick={() => {
                       setType(tp);
@@ -201,6 +202,7 @@ export default function ProgramsConfigurator() {
                     }}
                   >
                     {tp}
+                    {tp === 'Instant' && <span className="seg-new">NEW</span>}
                   </button>
                 ))}
               </div>

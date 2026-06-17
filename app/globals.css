@@ -220,9 +220,12 @@ section{position:relative;z-index:3}
 
 .config{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:start}
 .seg{display:inline-flex;gap:6px;padding:6px;border:1px solid var(--line);border-radius:14px;background:var(--surface);backdrop-filter:blur(8px);margin-bottom:28px}
-.seg button{font-family:var(--fb);font-weight:600;font-size:14.5px;padding:10px 20px;border-radius:9px;border:none;background:transparent;color:var(--dim);cursor:pointer;transition:.22s}
+.seg button{font-family:var(--fb);font-weight:600;font-size:14.5px;padding:10px 20px;border-radius:9px;border:none;background:transparent;color:var(--dim);cursor:pointer;transition:.22s;position:relative}
 .seg button:hover{color:var(--text)}
 .seg button.active{background:var(--grad);color:var(--btn-ink);box-shadow:0 6px 18px -8px var(--glow)}
+/* "NEW" badge on the Instant toggle (newly launched program) — shown in both
+   active and inactive states so it always stands out from the other programs. */
+.seg-new{position:absolute;top:-9px;right:-7px;background:#FF5A3C;color:#fff;font-family:var(--fm);font-size:8.5px;font-weight:700;letter-spacing:.08em;line-height:1;padding:3px 6px;border-radius:7px;box-shadow:0 4px 12px -3px rgba(255,90,60,.6);pointer-events:none}
 .seg-note{font-family:var(--fm);font-size:13px;color:var(--faint);margin-bottom:34px;line-height:1.6;max-width:46ch}
 .size-track{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
 .size-pill{font-family:var(--fm);font-size:14px;padding:13px 22px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--dim);cursor:pointer;transition:.2s}
