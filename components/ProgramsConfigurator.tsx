@@ -154,7 +154,7 @@ export default function ProgramsConfigurator() {
   const rows = [
     { name: 'Profit Target', icon: '/challenge/target.png', v: details.profitTarget },
     { name: 'Maximum Loss Limit', icon: '/challenge/speed-limit.png', v: details.maximumLossLimit },
-    { name: 'Daily Loss Limit', icon: '/challenge/sun-energy.png', v: details.dailyLossLimit },
+    ...(!isInstant ? [{ name: 'Daily Loss Limit', icon: '/challenge/sun-energy.png', v: details.dailyLossLimit }] : []),
     { name: 'Maximum Loss Limit Type', icon: '/challenge/coding.png', v: details.maximumLossLimitType },
     ...(!isAtomic ? [{ name: 'Profit Split', icon: '/challenge/division.png', v: details.profitSplit }] : []),
     { name: 'Refundable Fee', icon: '/challenge/recycle.png', v: { step1: details.refundableFee.step1, step2: '-', funded: isInstant ? details.refundableFee.funded : '-' } },
