@@ -228,6 +228,49 @@ section{position:relative;z-index:3}
 .seg-new{position:absolute;top:-9px;right:-7px;background:#FF5A3C;color:#fff;font-family:var(--fm);font-size:8.5px;font-weight:700;letter-spacing:.08em;line-height:1;padding:3px 6px;border-radius:7px;box-shadow:0 4px 12px -3px rgba(255,90,60,.6);pointer-events:none}
 .seg-note{font-family:var(--fm);font-size:13px;color:var(--faint);margin-bottom:34px;line-height:1.6;max-width:46ch}
 .size-track{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+
+/* ── Programs pricing: card grid (one card per account size) ───────────────── */
+.prog-controls{display:flex;flex-direction:column;gap:12px;align-items:center;margin-bottom:16px}
+.prog-ctl-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:center}
+.prog-note{text-align:center;font-family:var(--fm);font-size:13px;color:var(--faint);line-height:1.6;max-width:60ch;margin:0 auto 30px}
+.prog-cards{display:flex;gap:16px;overflow-x:auto;padding:14px 2px 8px;scrollbar-width:thin}
+.prog-card{flex:1 1 0;min-width:184px;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;background:var(--surface);backdrop-filter:blur(8px);padding:20px 18px;position:relative;transition:transform .2s,border-color .2s,box-shadow .2s}
+.prog-card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--teal) 45%,var(--line))}
+.prog-card.popular{border-color:var(--teal);box-shadow:0 22px 60px -28px var(--glow)}
+.pcp-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--grad);color:var(--btn-ink);font-family:var(--fm);font-size:9.5px;font-weight:700;letter-spacing:.1em;padding:5px 12px;border-radius:100px;white-space:nowrap;box-shadow:0 6px 16px -6px var(--glow)}
+.pc-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:16px}
+.pc-head-r{text-align:right}
+.pc-lab{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+.pc-size,.pc-price{font-family:var(--fd);font-size:23px;font-weight:700;color:var(--text);letter-spacing:-.01em;line-height:1}
+.pc-cur{font-size:14px;color:var(--dim);vertical-align:top;margin-right:1px}
+.pc-buy{display:block;text-align:center;font-family:var(--fb);font-weight:700;font-size:14.5px;padding:12px;border-radius:12px;background:var(--grad);color:var(--btn-ink);box-shadow:0 8px 22px -10px var(--glow);transition:transform .15s}
+.pc-buy:hover{transform:translateY(-1px)}
+.pc-specs{display:flex;flex-direction:column;gap:9px;flex:1}
+/* card bottom actions: info button above the Buy Challenge button */
+.pc-actions{margin-top:14px;display:flex;flex-direction:column;gap:9px}
+.pc-info-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-family:var(--fm);font-size:11.5px;font-weight:600;letter-spacing:.04em;padding:8px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--dim);cursor:pointer;transition:.16s}
+.pc-info-btn:hover{color:var(--teal);border-color:var(--teal);background:color-mix(in srgb,var(--teal) 8%,transparent)}
+.pc-info-btn svg{flex:none}
+/* details popup — centered modal over the page */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.prog-modal{position:fixed;inset:0;z-index:200;background:rgba(2,8,12,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .15s ease}
+.prog-modal-box{position:relative;width:min(460px,100%);max-height:86vh;overflow:auto;background:var(--bg-2);border:1px solid var(--teal);border-radius:18px;padding:28px 24px 24px;display:flex;flex-direction:column;gap:11px;box-shadow:0 30px 90px -30px rgba(0,0,0,.65)}
+.pc-info-x{position:absolute;top:12px;right:14px;width:28px;height:28px;border:none;background:none;color:var(--dim);font-size:24px;line-height:1;cursor:pointer;border-radius:8px}
+.pc-info-x:hover{color:var(--text);background:var(--soft)}
+.pcip-title{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--text);margin:0 24px 0 0}
+.pcip-desc{font-size:12.5px;color:var(--dim);line-height:1.55;margin:0}
+.pcip-list{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.pcip-list li{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;color:var(--dim);padding-top:8px;border-top:1px solid color-mix(in srgb,var(--line) 60%,transparent)}
+.pcip-list b{color:var(--text);font-weight:600;text-align:right}
+.pc-grp-h{display:flex;align-items:center;gap:7px;font-family:var(--fb);font-weight:600;font-size:13.5px;color:var(--text);margin-bottom:4px}
+.pc-grp-h img{opacity:.85}
+.pc-sub{display:flex;justify-content:space-between;font-size:12.5px;color:var(--dim);padding:1px 0}
+.pc-row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--dim);padding-top:9px;margin-top:2px;border-top:1px solid color-mix(in srgb,var(--line) 60%,transparent)}
+.pc-v{font-weight:600;color:var(--text)}
+.pc-v.gt{background:var(--grad-text);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.pc-foot{margin-top:16px;padding-top:13px;border-top:1px solid var(--line);font-family:var(--fm);font-size:11.5px;color:var(--faint);text-align:center;line-height:1.5}
+.pc-foot b{color:var(--text);font-weight:700}
+@media (max-width:720px){.prog-card{min-width:230px}}
 .size-pill{font-family:var(--fm);font-size:14px;padding:13px 22px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--dim);cursor:pointer;transition:.2s}
 .size-pill:hover{color:var(--text);border-color:var(--teal)}
 .size-pill.active{border-color:var(--teal);color:var(--text);background:var(--soft);box-shadow:0 0 0 1px var(--teal) inset}

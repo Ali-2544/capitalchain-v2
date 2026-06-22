@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useT } from './LanguageProvider';
 import Editable from '@/components/Editable';
 import { LINKS } from '@/lib/links';
@@ -92,14 +92,18 @@ const SIZES: { value: SizeType; label: string; short: string }[] = [
   { value: '100k', label: '$100,000', short: '100' },
 ];
 
-const PAYMENTS = [
-  { name: 'Visa', img: '/challenge/visa.jpg' },
-  { name: 'MasterCard', img: '/challenge/master-card.jpg' },
-  { name: 'UPI', img: '/challenge/upi.jpg' },
-  { name: 'Korapay', img: '/challenge/korepay.jpg' },
-  { name: 'Bitolo', img: '/challenge/bitolo.jpg' },
-  { name: 'Crypto', img: '/challenge/crypto.jpg' },
-];
+// Average first-payout figure shown on each card's footer (per account size).
+const AVG_REWARDS: Record<SizeType, string> = {
+  '3k': '$140',
+  '5k': '$232',
+  '10k': '$475',
+  '25k': '$1,076',
+  '50k': '$1,897',
+  '100k': '$3,614',
+};
+
+// Which size card gets the "MOST POPULAR" highlight.
+const POPULAR: SizeType = '50k';
 
 const NOTES: Record<string, string> = {
   'Standard-1': 'One profit target. Hit it within the drawdown limits, no minimum days, no deadline.',
@@ -109,67 +113,77 @@ const NOTES: Record<string, string> = {
   'Instant-1': 'Skip the evaluation. Get a funded account instantly and start trading right away.',
 };
 
-const Check = () => (
-  <svg width="15" height="11" viewBox="0 0 19 15" fill="none" aria-hidden="true" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M18.421 0.336783C19.0748 0.87877 19.1926 1.88306 18.684 2.5799L10.67 13.5599C9.42258 15.2692 7.07618 15.4909 5.56599 14.0424L0.49656 9.18053C-0.119199 8.58995 -0.169119 7.57929 0.38508 6.92307C0.939259 6.26684 1.8877 6.21377 2.50345 6.80435L7.57278 11.6663C7.78858 11.8732 8.12378 11.8414 8.30198 11.5972L16.316 0.617176C16.8246 -0.0796701 17.767 -0.205204 18.421 0.336783Z"
-      fill="currentColor"
-    />
-  </svg>
-);
-
 export default function ProgramsConfigurator() {
   const t = useT();
   const [type, setType] = useState<ChallengeType>('Standard');
   const [step, setStep] = useState<StepType>('1');
-  const [size, setSize] = useState<SizeType>('5k');
+  const [infoOpen, setInfoOpen] = useState<SizeType | null>(null);
 
-  // $3,000 is Standard-only — bump to 5k when switching to Atomic/Instant.
+  // Close the details modal on Escape.
   useEffect(() => {
-    if (type !== 'Standard' && size === '3k') setSize('5k');
-  }, [type, size]);
+    if (!infoOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setInfoOpen(null);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [infoOpen]);
 
   const isInstant = type === 'Instant';
   const isOne = step === '1';
   const isAtomic = type === 'Atomic';
-  const stepName = isInstant ? 'Instant' : step === '1' ? 'One Step' : 'Two Step';
-  const planLabel = isInstant ? 'Instant Funded' : `${type} · ${stepName}`;
+  const stepName = isInstant ? 'Instant' : isOne ? 'One Step' : 'Two Step';
   const details = DETAILS[isInstant ? 'Instant-1' : `${type}-${step}`];
-  const price = PRICING[isInstant ? `Instant-1-${size}` : `${type}-${step}-${size}`];
   const sizes = isAtomic || isInstant ? SIZES.filter((s) => s.value !== '3k') : SIZES;
 
-  const checkoutUrl = useMemo(() => {
+  const priceFor = (sz: SizeType) => PRICING[isInstant ? `Instant-1-${sz}` : `${type}-${step}-${sz}`];
+
+  const checkoutFor = (sz: SizeType) => {
     const p = new URLSearchParams({
       challenge_type: type,
       challenge_step: isInstant ? 'instant' : step,
-      account_size: size,
-      product_name: isInstant ? `Instant ${size}` : `${type} ${stepName} ${size}`,
+      account_size: sz,
+      product_name: isInstant ? `Instant ${sz}` : `${type} ${stepName} ${sz}`,
     });
-    if (price != null) p.append('price', String(price));
+    const pr = priceFor(sz);
+    if (pr != null) p.append('price', String(pr));
     return `${LINKS.checkout}?${p.toString()}`;
-  }, [type, step, size, stepName, price, isInstant]);
+  };
 
-  const rows = [
-    { name: 'Profit Target', icon: '/challenge/target.png', v: details.profitTarget },
-    { name: 'Maximum Loss Limit', icon: '/challenge/speed-limit.png', v: details.maximumLossLimit },
-    ...(!isInstant ? [{ name: 'Daily Loss Limit', icon: '/challenge/sun-energy.png', v: details.dailyLossLimit }] : []),
-    ...(isInstant ? [{ name: 'Risk Per Trade', icon: '/challenge/sun-energy.png', v: { step1: '', step2: '', funded: '2%' } }] : []),
-    { name: 'Maximum Loss Limit Type', icon: '/challenge/coding.png', v: details.maximumLossLimitType },
-    ...(!isAtomic ? [{ name: 'Profit Split', icon: '/challenge/division.png', v: details.profitSplit }] : []),
-    { name: 'Refundable Fee', icon: '/challenge/recycle.png', v: { step1: details.refundableFee.step1, step2: '-', funded: isInstant ? 'With 3rd payout' : '-' } },
-    { name: 'Leverage', icon: '/challenge/division.png', v: { step1: '1:100', step2: '1:100', funded: isInstant ? '1:50' : '1:100' } },
+  // Spec rows are the same across every size card — only price + avg rewards differ.
+  const profitSub: [string, string][] = isInstant
+    ? [['Funded', details.profitTarget.funded]]
+    : isOne
+      ? [['Phase 1', details.profitTarget.step1], ['Funded', details.profitTarget.funded]]
+      : [['Phase 1', details.profitTarget.step1], ['Phase 2', details.profitTarget.step2], ['Funded', details.profitTarget.funded]];
+
+  const flatRows: [string, string][] = isInstant
+    ? [
+        ['Max Loss', details.maximumLossLimit.funded],
+        ['Risk Per Trade', '2%'],
+        ['Max Loss Type', details.maximumLossLimitType.funded],
+        ['Split', `Weekly · ${details.profitSplit.funded}`],
+        ['Refundable Fee', 'With 3rd payout'],
+        ['Leverage', '1:50'],
+      ]
+    : [
+        ['Max Loss', details.maximumLossLimit.funded],
+        ['Daily Loss', details.dailyLossLimit.funded],
+        ['Max Loss Type', details.maximumLossLimitType.funded],
+        ['Split', `Weekly · ${details.profitSplit.funded}`],
+        ['Leverage', '1:100'],
+      ];
+
+  // Extra details shown in the per-card info popup.
+  const planTitle = isInstant ? 'Instant Funded' : `${type} · ${stepName}`;
+  const note = NOTES[isInstant ? 'Instant-1' : `${type}-${step}`];
+  const infoFacts: [string, string][] = [
+    ['Refundable Fee', isInstant ? 'Refunded with 3rd payout' : 'Fully refundable (100%)'],
+    ['Min Trading Days', 'None'],
+    ['Weekend Holding', 'Allowed'],
+    ['News Trading', 'Allowed'],
+    ['Payout Cycle', 'Weekly'],
   ];
-
-  const Val = ({ value }: { value: string }) =>
-    value === '100%' ? (
-      <span className="v ok"><Check /></span>
-    ) : (
-      <span className={`v${value === 'Unlimited' || value === '80%' ? ' ok' : ''}`}>{value}</span>
-    );
-
-  const cols = isInstant ? ['Funded'] : isOne ? ['Step 1', 'Funded'] : ['Step 1', 'Step 2', 'Funded'];
 
   return (
     <section className="sec band" id="programs">
@@ -185,130 +199,149 @@ export default function ProgramsConfigurator() {
           <p><Editable id="programs.sub">{t.programs.sub}</Editable></p>
         </div>
 
-        <div className="config">
-          {/* LEFT: selectors + spec table */}
-          <div className="reveal">
-            <div className="seg-row">
-              <div className="seg">
-                {(['Standard', 'Atomic', 'Instant'] as ChallengeType[]).map((tp) => (
-                  <button
-                    key={tp}
-                    type="button"
-                    data-seg={tp}
-                    className={tp === type ? 'active' : undefined}
-                    onClick={() => {
-                      setType(tp);
-                      if (tp === 'Instant') setStep('1');
-                    }}
-                  >
-                    {tp}
-                    {tp === 'Instant' && <span className="seg-new">NEW</span>}
-                  </button>
-                ))}
-              </div>
-              {!isInstant && (
-                <div className="seg">
-                  {([['1', 'One Step'], ['2', 'Two Step']] as [StepType, string][]).map(([s, label]) => (
-                    <button key={s} type="button" className={s === step ? 'active' : undefined} onClick={() => setStep(s)}>
-                      {label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="seg-note">{NOTES[`${type}-${step}`]}</div>
-
-            <div className="size-track">
-              {sizes.map((s) => (
+        {/* toggles — top: Instant / One Step / Two Step; bottom: Standard / Atomic */}
+        <div className="prog-controls reveal">
+          <div className="prog-ctl-row">
+            <div className="seg">
+              <button
+                type="button"
+                data-seg="Instant"
+                className={isInstant ? 'active' : undefined}
+                onClick={() => setType('Instant')}
+              >
+                Instant
+                <span className="seg-new">NEW</span>
+              </button>
+              {([['1', 'One Step'], ['2', 'Two Step']] as [StepType, string][]).map(([s, label]) => (
                 <button
-                  key={s.value}
+                  key={s}
                   type="button"
-                  className={`size-pill ${s.value === size ? 'active' : ''}`}
-                  onClick={() => setSize(s.value)}
+                  className={!isInstant && s === step ? 'active' : undefined}
+                  onClick={() => {
+                    if (isInstant) setType('Standard');
+                    setStep(s);
+                  }}
                 >
-                  {s.label}
+                  {label}
                 </button>
               ))}
             </div>
-
-            {/* spec table with Step / Funded columns */}
-            <div className="spec-cols">
-              <div className="spec-cols-head">
-                <span className="sc-name">
-                  {planLabel}
-                </span>
-                <span className="sc-vals">
-                  {cols.map((c) => (
-                    <span key={c}>{c}</span>
-                  ))}
-                </span>
-              </div>
-              {rows.map((r) => (
-                <div className="scol-row" key={r.name}>
-                  <span className="scol-name">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={r.icon} alt="" width={20} height={20} loading="lazy" />
-                    {r.name}
-                  </span>
-                  <span className="scol-vals">
-                    {isInstant ? (
-                      <Val value={r.v.funded} />
-                    ) : (
-                      <>
-                        <Val value={r.v.step1} />
-                        {!isOne && <Val value={r.v.step2} />}
-                        <Val value={r.v.funded} />
-                      </>
-                    )}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* feature pills */}
-            <div className="feat-pills">
-              {['Weekend Holding', 'News Trading'].map((f) => (
-                <div className="feat-pill" key={f}>
-                  <span>{f}</span>
-                  <span className="chk"><Check /></span>
-                </div>
-              ))}
-            </div>
           </div>
-
-          {/* RIGHT: pricing + payment methods */}
-          <div className="buy reveal">
-            <div>
-              <div className="now">
-                {price != null ? (
-                  <>
-                    <span className="gt">${price}</span>
-                    <small><Editable id="programs.oneTime">{t.programs.oneTime}</Editable></small>
-                  </>
-                ) : (
-                  <span className="gt">—</span>
-                )}
-              </div>
-              <div className="pstep">{planLabel}</div>
-            </div>
-            {isAtomic && <div className="refund"><Editable id="programs.refund">{t.programs.refund}</Editable></div>}
-            <a href={checkoutUrl} target="_blank" rel="noopener noreferrer" className="btn btn-p btn-lg" data-magnetic>
-              Start Challenge →
-            </a>
-
-            <div className="pay-grid">
-              {PAYMENTS.map((m) => (
-                <div className="pay-tile" key={m.name}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={m.img} alt={m.name} width={34} height={34} loading="lazy" />
-                  <span>{m.name}</span>
-                </div>
+          <div className="prog-ctl-row">
+            <div className="seg">
+              {(['Standard', 'Atomic'] as ChallengeType[]).map((tp) => (
+                <button
+                  key={tp}
+                  type="button"
+                  data-seg={tp}
+                  className={tp === type ? 'active' : undefined}
+                  onClick={() => setType(tp)}
+                >
+                  {tp}
+                </button>
               ))}
             </div>
           </div>
         </div>
+
+        <p className="prog-note reveal">{NOTES[isInstant ? 'Instant-1' : `${type}-${step}`]}</p>
+
+        {/* pricing cards — one per account size */}
+        <div className="prog-cards reveal">
+          {sizes.map((s) => {
+            const pr = priceFor(s.value);
+            const popular = s.value === POPULAR;
+            return (
+              <div className={`prog-card${popular ? ' popular' : ''}`} key={s.value}>
+                {popular && <span className="pcp-badge">MOST POPULAR</span>}
+
+                <div className="pc-head">
+                  <div>
+                    <span className="pc-lab">Account Size</span>
+                    <span className="pc-size">${s.short}K</span>
+                  </div>
+                  <div className="pc-head-r">
+                    <span className="pc-lab">Price</span>
+                    <span className="pc-price"><span className="pc-cur">$</span>{pr ?? '—'}</span>
+                  </div>
+                </div>
+
+                <div className="pc-specs">
+                  <div className="pc-grp">
+                    <div className="pc-grp-h">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src="/challenge/target.png" alt="" width={18} height={18} loading="lazy" />
+                      Profit Target
+                    </div>
+                    {profitSub.map(([l, v]) => (
+                      <div className="pc-sub" key={l}>
+                        <span>{l}</span>
+                        <span className="pc-v">{v || '-'}</span>
+                      </div>
+                    ))}
+                  </div>
+                  {flatRows.map(([l, v]) => (
+                    <div className="pc-row" key={l}>
+                      <span>{l}</span>
+                      <span className="pc-v gt">{v}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pc-foot">
+                  Traders earn <b>{AVG_REWARDS[s.value]}</b> avg first rewards
+                </div>
+
+                <div className="pc-actions">
+                  <button
+                    type="button"
+                    className="pc-info-btn"
+                    aria-expanded={infoOpen === s.value}
+                    onClick={() => setInfoOpen(infoOpen === s.value ? null : s.value)}
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="11" x2="12" y2="16" />
+                      <line x1="12" y1="8" x2="12.01" y2="8" />
+                    </svg>
+                    Program details
+                  </button>
+                  <a
+                    href={checkoutFor(s.value)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pc-buy"
+                    data-magnetic
+                  >
+                    Buy Challenge
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
+
+      {/* Program details — centered modal (room to grow as more data is added) */}
+      {infoOpen && (
+        <div className="prog-modal" role="dialog" aria-modal="true" onClick={() => setInfoOpen(null)}>
+          <div className="prog-modal-box" onClick={(e) => e.stopPropagation()}>
+            <button type="button" className="pc-info-x" aria-label="Close" onClick={() => setInfoOpen(null)}>
+              ×
+            </button>
+            <h4 className="pcip-title">{planTitle}</h4>
+            <p className="pcip-desc">{note}</p>
+            <ul className="pcip-list">
+              {infoFacts.map(([l, v]) => (
+                <li key={l}>
+                  <span>{l}</span>
+                  <b>{v}</b>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
