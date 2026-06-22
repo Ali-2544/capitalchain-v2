@@ -74,7 +74,7 @@ export default function Nav() {
   const DEFAULT_NAV: { key: string; href: string; label: React.ReactNode; external?: boolean }[] = [
     { key: 'home', href: '/', label: t.nav.home },
     { key: 'rewards', href: '/rewards', label: t.nav.rewards },
-    { key: 'affiliate', href: '/affiliate', label: t.nav.affiliate },
+    { key: 'affiliate', href: '/partnership', label: t.nav.affiliate },
     { key: 'blog', href: '/blog', label: t.nav.blog },
     { key: 'about', href: '/about', label: t.nav.about },
     { key: 'contact', href: '/contact', label: t.nav.contact },
