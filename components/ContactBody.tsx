@@ -46,7 +46,7 @@ export default function ContactBody() {
                     <polyline points="22,6 12,13 2,6" />
                   </svg>
                 </div>
-                <h4 style={{ fontFamily: 'var(--fd)', fontSize: '20px', fontWeight: 600, margin: 0 }}><Editable id="contactPage.direct.title">{t.direct.title}</Editable></h4>
+                <h2 style={{ fontFamily: 'var(--fd)', fontSize: '20px', fontWeight: 600, margin: 0 }}><Editable id="contactPage.direct.title">{t.direct.title}</Editable></h2>
               </div>
               <p style={{ color: 'var(--dim)', fontSize: '14.5px', marginBottom: '16px', lineHeight: 1.6 }}>
                 <Editable id="contactPage.direct.body">{t.direct.body}</Editable>
@@ -65,7 +65,7 @@ export default function ContactBody() {
                     <path d="M20.3 4.4A19.8 19.8 0 0015.4 3l-.3.5a14.6 14.6 0 014.4 1.4 12.6 12.6 0 00-15 0A14.6 14.6 0 018.9 3.5L8.6 3a19.8 19.8 0 00-4.9 1.4C.6 9 0 13.5.3 17.9a19.9 19.9 0 006 3l.5-1.3a13 13 0 01-1.9-.9l.4-.3a14.2 14.2 0 0012.4 0l.4.3a13 13 0 01-1.9.9l.5 1.3a19.9 19.9 0 006-3c.4-5.1-.7-9.6-2.8-13.5zM8.3 15.3c-1.2 0-2.1-1.1-2.1-2.4S7.1 10.5 8.3 10.5s2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4zm7.4 0c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4z" />
                   </svg>
                 </div>
-                <h4 style={{ fontFamily: 'var(--fd)', fontSize: '20px', fontWeight: 600, margin: 0 }}><Editable id="contactPage.discord.title">{t.discord.title}</Editable></h4>
+                <h2 style={{ fontFamily: 'var(--fd)', fontSize: '20px', fontWeight: 600, margin: 0 }}><Editable id="contactPage.discord.title">{t.discord.title}</Editable></h2>
               </div>
               <p style={{ color: 'var(--dim)', fontSize: '14.5px', marginBottom: '16px', lineHeight: 1.6 }}>
                 <Editable id="contactPage.discord.body">{t.discord.body}</Editable>
@@ -84,7 +84,7 @@ export default function ContactBody() {
                     <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                   </svg>
                 </div>
-                <h4 style={{ fontFamily: 'var(--fd)', fontSize: '20px', fontWeight: 600, margin: 0 }}><Editable id="contactPage.business.title">{t.business.title}</Editable></h4>
+                <h2 style={{ fontFamily: 'var(--fd)', fontSize: '20px', fontWeight: 600, margin: 0 }}><Editable id="contactPage.business.title">{t.business.title}</Editable></h2>
               </div>
               <p style={{ color: 'var(--dim)', fontSize: '14.5px', lineHeight: 1.6 }}>
                 <Editable id="contactPage.business.body">{t.business.body}</Editable> <strong style={{ color: 'var(--text)' }}><Editable id="contactPage.business.email">partners@capitalchain.co</Editable></strong>

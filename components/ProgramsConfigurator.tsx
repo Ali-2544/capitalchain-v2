@@ -329,7 +329,7 @@ export default function ProgramsConfigurator() {
             <button type="button" className="pc-info-x" aria-label="Close" onClick={() => setInfoOpen(null)}>
               ×
             </button>
-            <h4 className="pcip-title">{planTitle}</h4>
+            <h3 className="pcip-title">{planTitle}</h3>
             <p className="pcip-desc">{note}</p>
             <ul className="pcip-list">
               {infoFacts.map(([l, v]) => (

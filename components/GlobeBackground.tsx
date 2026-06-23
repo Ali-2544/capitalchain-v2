@@ -348,6 +348,8 @@ export default function GlobeBackground() {
             href={p.id ? `/certificate/${p.id}` : undefined}
             target={p.id ? '_blank' : undefined}
             rel="noreferrer"
+            // Decorative globe layer is aria-hidden — keep its links out of the tab order.
+            tabIndex={-1}
           >
             <span className="gdot" />
             <span className="gflag">{p.flag}</span>

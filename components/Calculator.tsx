@@ -64,7 +64,7 @@ export default function Calculator() {
                     <svg viewBox="0 0 24 24">{FEAT_ICONS[i]}</svg>
                   </div>
                   <div>
-                    <h4><Editable id={`calc.feats.${i}.h`}>{f.h}</Editable></h4>
+                    <h3 style={{ fontSize: '1em', fontWeight: 600, margin: '0 0 3px' }}><Editable id={`calc.feats.${i}.h`}>{f.h}</Editable></h3>
                     <p><Editable id={`calc.feats.${i}.p`}>{f.p}</Editable></p>
                   </div>
                 </div>
@@ -83,6 +83,7 @@ export default function Calculator() {
                 <input
                   type="range"
                   id="accSlider"
+                  aria-label="Account size"
                   min="0"
                   max={maxIdx}
                   step="1"
@@ -103,6 +104,7 @@ export default function Calculator() {
                 <input
                   type="range"
                   id="retSlider"
+                  aria-label="Monthly return"
                   min="2"
                   max="20"
                   step="1"
@@ -123,6 +125,7 @@ export default function Calculator() {
                 <input
                   type="range"
                   id="splitSlider"
+                  aria-label="Payout cycle"
                   min="0"
                   max="3"
                   step="1"

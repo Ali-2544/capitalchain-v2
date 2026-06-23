@@ -17,9 +17,8 @@
   --footer-bg:rgba(7,13,26,.92);
   --fd:var(--font-display),'Space Grotesk',sans-serif;
   --fb:var(--font-body),'Hanken Grotesk',sans-serif;
-  /* "mono" slots now use the Hanken body font too — only headings (--fd) keep
-     their own typeface. (Kept as a variable so spacing/uppercase rules still work.) */
-  --fm:var(--font-body),'Hanken Grotesk',sans-serif;
+  /* "mono" slots (eyebrows, labels) use JetBrains Mono, self-hosted via next/font. */
+  --fm:var(--font-mono),'JetBrains Mono',ui-monospace,monospace;
   --w:1380px;
 }
 /* ===== LIGHT (brand teal on light) ===== */
@@ -44,6 +43,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:17px
 
 #prog{position:fixed;top:0;left:0;height:2px;width:0;background:var(--grad);z-index:200;box-shadow:0 0 12px var(--glow)}
 #globe{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;transition:opacity .4s}
+/* Lightweight static stand-in for the WebGL globe — server-rendered, paints
+   immediately, and fades out once the real globe is loaded (see GlobeMount). */
+.globe-poster{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:1;transition:opacity .8s ease;
+  background:
+    radial-gradient(42% 38% at 50% 40%, color-mix(in srgb, var(--teal) 16%, transparent), transparent 70%),
+    radial-gradient(80% 60% at 50% 42%, color-mix(in srgb, var(--teal) 7%, transparent), transparent 72%)}
+.globe-poster.is-hidden{opacity:0}
 .mesh{position:fixed;inset:0;z-index:0;pointer-events:none;
   background:radial-gradient(60% 50% at 78% 30%,var(--mesh-1),transparent 60%),radial-gradient(50% 50% at 12% 8%,var(--mesh-2),transparent 60%)}
 .scrim{position:fixed;inset:0;z-index:1;pointer-events:none}
@@ -383,7 +389,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .ptile:hover{border-color:var(--teal)}
 .ptile .badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--fm);font-weight:700;color:var(--teal);font-size:13px;letter-spacing:.05em}
 .ptile-badge-ic{width:15px;height:15px;flex-shrink:0;color:var(--teal)}
-.ptile h4{font-family:var(--fd);font-weight:600;font-size:20px;margin:auto 0 6px}
+.ptile h3{font-family:var(--fd);font-weight:600;font-size:20px;margin:auto 0 6px}
 .ptile p{font-size:14px;color:var(--dim)}
 /* 4 tiles (cTrader + API removed): clean 2×2 grid */
 .ptile.a{grid-column:span 6}.ptile.d{grid-column:span 6}.ptile.e{grid-column:span 6}.ptile.f{grid-column:span 6}
@@ -447,7 +453,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
 footer{border-top:1px solid var(--line);padding:72px 0 40px;background:var(--footer-bg);backdrop-filter:blur(10px);position:relative;z-index:3}
 .news{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;padding:36px;border:1px solid var(--line);border-radius:22px;background:var(--surface);margin-bottom:54px}
-.news h4{font-family:var(--fd);font-weight:700;font-size:22px;margin-bottom:6px}
+.news h2{font-family:var(--fd);font-weight:700;font-size:22px;margin-bottom:6px}
 .news p{color:var(--dim);font-size:15px}
 .news .form{display:flex;gap:10px;flex-wrap:wrap}
 .news-status{flex-basis:100%;font-size:13px;margin:0;font-weight:600}
@@ -460,7 +466,7 @@ footer{border-top:1px solid var(--line);padding:72px 0 40px;background:var(--foo
 .foot-social-link{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid var(--line);border-radius:10px;color:var(--dim);background:var(--surface);transition:color .2s,border-color .2s,transform .2s}
 .foot-social-link svg{width:18px;height:18px;fill:currentColor}
 .foot-social-link:hover{color:var(--teal);border-color:var(--teal);transform:translateY(-2px)}
-.foot-col h5{font-family:var(--fm);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:18px}
+.foot-col h3{font-family:var(--fm);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:18px}
 .foot-col a{display:block;color:var(--dim);font-size:14.5px;margin-bottom:12px;transition:.2s}
 .foot-col a:hover{color:var(--teal)}
 .disclaimer{border-top:1px solid var(--line);padding-top:28px;font-family:var(--fb);font-size:13px;color:var(--faint);line-height:1.7;max-width:920px}
@@ -599,7 +605,7 @@ footer{border-top:1px solid var(--line);padding:72px 0 40px;background:var(--foo
 .rw-pager button:hover{border-color:var(--teal);color:var(--teal)}
 /* methodology */
 .rw-method{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.rw-method h3{font-family:var(--fd);font-weight:600;font-size:19px;letter-spacing:-.01em;margin:16px 0 10px}
+.rw-method h2{font-family:var(--fd);font-weight:600;font-size:19px;letter-spacing:-.01em;margin:16px 0 10px}
 .rw-method p{color:var(--dim);font-size:13.5px;line-height:1.6}
 .rw-update{margin-top:18px;display:flex;flex-direction:column}
 .rw-update-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-top:1px solid var(--line);font-family:var(--fm);font-size:11px;letter-spacing:.06em;color:var(--faint)}
@@ -821,8 +827,8 @@ body.rtl .lang-menu{right:auto;left:0}
 .adm-err{color:#e2557b;font-size:13px;font-family:var(--fm)}
 .adm-shell{min-height:100vh}
 /* belt-and-braces: hide the marketing globe layers on the admin route */
-body:has(.adm-shell) #globe,body:has(.adm-shell) .globe-labels,body:has(.adm-shell) .scrim,body:has(.adm-shell) #spot,body:has(.adm-shell) .mesh,
-body:has(.adm-login) #globe,body:has(.adm-login) .globe-labels,body:has(.adm-login) .scrim,body:has(.adm-login) #spot,body:has(.adm-login) .mesh{display:none}
+body:has(.adm-shell) #globe,body:has(.adm-shell) .globe-labels,body:has(.adm-shell) .globe-poster,body:has(.adm-shell) .scrim,body:has(.adm-shell) #spot,body:has(.adm-shell) .mesh,
+body:has(.adm-login) #globe,body:has(.adm-login) .globe-labels,body:has(.adm-login) .globe-poster,body:has(.adm-login) .scrim,body:has(.adm-login) #spot,body:has(.adm-login) .mesh{display:none}
 .adm-top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:24px;padding:16px 28px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(16px)}
 .adm-brand{font-family:var(--fd);font-weight:700;font-size:18px}
 .adm-brand b{color:var(--teal)}

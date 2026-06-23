@@ -401,12 +401,12 @@ export default function RewardsBody() {
         <div className="rw-method reveal">
           <div className="rw-panel">
             <span className="rw-tag"><Editable id="rewardsPage.methodTag">{t.methodTag}</Editable></span>
-            <h3><Editable id="rewardsPage.methodH">{t.methodH}</Editable></h3>
+            <h2><Editable id="rewardsPage.methodH">{t.methodH}</Editable></h2>
             <p><Editable id="rewardsPage.methodP">{t.methodP}</Editable></p>
           </div>
           <div className="rw-panel">
             <span className="rw-tag"><Editable id="rewardsPage.whyTag">{t.whyTag}</Editable></span>
-            <h3><Editable id="rewardsPage.whyH">{t.whyH}</Editable></h3>
+            <h2><Editable id="rewardsPage.whyH">{t.whyH}</Editable></h2>
             <p><Editable id="rewardsPage.whyP">{t.whyP}</Editable></p>
           </div>
           <div className="rw-panel">

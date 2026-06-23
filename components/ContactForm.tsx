@@ -36,11 +36,11 @@ export default function ContactForm() {
 
   return (
     <div className="tile feature" style={{ padding: '40px' }}>
-      <h3 style={{ fontSize: '24px', marginTop: 0, marginBottom: '24px' }}><Editable id="contactPage.form.title">{t.title}</Editable></h3>
+      <h2 style={{ fontSize: '24px', marginTop: 0, marginBottom: '24px' }}><Editable id="contactPage.form.title">{t.title}</Editable></h2>
 
       {status === 'success' ? (
         <div style={{ padding: '24px', border: '1px solid var(--green)', borderRadius: '14px', background: 'var(--soft)', textAlign: 'center' }}>
-          <h4 style={{ color: 'var(--green)', fontFamily: 'var(--fd)', fontSize: '20px', marginBottom: '8px' }}><Editable id="contactPage.form.successTitle">{t.successTitle}</Editable></h4>
+          <h2 style={{ color: 'var(--green)', fontFamily: 'var(--fd)', fontSize: '20px', marginBottom: '8px' }}><Editable id="contactPage.form.successTitle">{t.successTitle}</Editable></h2>
           <p style={{ color: 'var(--dim)', fontSize: '14.5px' }}>
             <Editable id="contactPage.form.successBody">{t.successBody}</Editable>
           </p>

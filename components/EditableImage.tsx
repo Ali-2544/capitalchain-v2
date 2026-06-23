@@ -1,20 +1,25 @@
 'use client';
 
+import Image from 'next/image';
+
 /**
- * Static image. Inline-CMS image replacement has been turned off — images render
- * from their fixed `src` in code. Kept as a thin passthrough so call sites don't
- * have to change.
+ * Static image rendered through next/image: automatic AVIF/WebP via the default
+ * loader, responsive `srcset`, and lazy loading by default. Pass `priority` for
+ * the hero/LCP image so it is eager-loaded + preloaded; everything else stays lazy.
  *
- *   <EditableImage id="aboutPage.img.booth" src="/about_booth.png" alt="…" fill />
+ *   <EditableImage src="/about_booth.png" alt="…" fill sizes="(max-width:768px) 100vw, 50vw" priority />
+ *   <EditableImage src="/logo.png" alt="…" width={150} height={33} />
  */
 export default function EditableImage({
   src,
   alt = '',
   fill = false,
-  width, 
+  width,
   height,
   className,
   imgStyle,
+  sizes,
+  priority = false,
 }: {
   id?: string;
   src: string;
@@ -24,20 +29,33 @@ export default function EditableImage({
   height?: number;
   className?: string;
   imgStyle?: React.CSSProperties;
+  sizes?: string;
+  priority?: boolean;
 }) {
-  const fillStyle: React.CSSProperties = fill
-    ? { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }
-    : {};
+  if (fill) {
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes ?? '100vw'}
+        priority={priority}
+        className={className}
+        style={{ objectFit: 'cover', ...imgStyle }}
+      />
+    );
+  }
 
-  // eslint-disable-next-line @next/next/no-img-element
   return (
-    <img
+    <Image
       src={src}
       alt={alt}
-      width={fill ? undefined : width}
-      height={fill ? undefined : height}
+      width={width ?? 0}
+      height={height ?? 0}
+      sizes={sizes}
+      priority={priority}
       className={className}
-      style={{ ...fillStyle, ...imgStyle }}
+      style={imgStyle}
     />
   );
 }

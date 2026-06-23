@@ -48,7 +48,7 @@ export default function Platforms() {
                 {'icon' in m && m.icon ? <BadgeIcon type={m.icon} /> : null}
                 <Editable id={`platforms.tiles.${m.tile}.badge`}>{m.badge}</Editable>
               </span>
-              <h4><Editable id={`platforms.tiles.${m.tile}.h`}>{t.platforms.tiles[m.tile].h}</Editable></h4>
+              <h3><Editable id={`platforms.tiles.${m.tile}.h`}>{t.platforms.tiles[m.tile].h}</Editable></h3>
               <p><Editable id={`platforms.tiles.${m.tile}.p`}>{t.platforms.tiles[m.tile].p}</Editable></p>
             </div>
           ))}

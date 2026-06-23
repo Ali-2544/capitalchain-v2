@@ -30,7 +30,7 @@ export default function AboutBody() {
             </p>
           </div>
           <div className="reveal" style={{ position: 'relative', width: '100%', height: '420px', borderRadius: '24px', overflow: 'hidden', border: '1px solid var(--line)', boxShadow: '0 20px 48px -16px var(--glow)' }}>
-            <EditableImage id="aboutPage.img.booth" src="/about_booth.png" alt="Capital Chain Expo Booth" fill />
+            <EditableImage id="aboutPage.img.booth" src="/about_booth.png" alt="Capital Chain Expo Booth" fill sizes="(max-width: 768px) 100vw, 50vw" priority />
           </div>
         </div>
       </section>
@@ -63,10 +63,10 @@ export default function AboutBody() {
 
           <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             <div style={{ position: 'relative', width: '100%', height: '240px', borderRadius: '20px', overflow: 'hidden', border: '1px solid var(--line)' }}>
-              <EditableImage id="aboutPage.img.vision1" src="/about_community.png" alt="Traders Networking" fill />
+              <EditableImage id="aboutPage.img.vision1" src="/about_community.png" alt="Traders Networking" fill sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
             <div style={{ position: 'relative', width: '100%', height: '240px', borderRadius: '20px', overflow: 'hidden', border: '1px solid var(--line)' }}>
-              <EditableImage id="aboutPage.img.vision2" src="/about_mission.png" alt="Capital Chain Corporate Meeting" fill />
+              <EditableImage id="aboutPage.img.vision2" src="/about_mission.png" alt="Capital Chain Corporate Meeting" fill sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@ export default function AboutBody() {
 
           <div className="grid-2 reveal" style={{ gap: 48, marginBottom: 48 }}>
             <div style={{ position: 'relative', width: '100%', height: '420px', borderRadius: '24px', overflow: 'hidden', border: '1px solid var(--line)' }}>
-              <EditableImage id="aboutPage.img.community" src="/about_community.png" alt="Capital Chain Expo Crowd" fill />
+              <EditableImage id="aboutPage.img.community" src="/about_community.png" alt="Capital Chain Expo Crowd" fill sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 24 }}>
               <p style={{ color: 'var(--dim)', fontSize: 18, lineHeight: 1.6 }}>
@@ -121,9 +121,9 @@ export default function AboutBody() {
             <div className="about-mission-cols">
               {t.mission.cols.map((col, i) => (
                 <div key={i}>
-                  <h4 style={{ fontFamily: 'var(--fd)', fontSize: 18, fontWeight: 600, color: 'var(--text)', marginBottom: 12 }}>
+                  <h3 style={{ fontFamily: 'var(--fd)', fontSize: 18, fontWeight: 600, color: 'var(--text)', marginBottom: 12 }}>
                     <Editable id={`aboutPage.mission.cols.${i}.h`}>{col.h}</Editable>
-                  </h4>
+                  </h3>
                   <p style={{ color: 'var(--dim)', fontSize: 14.5, lineHeight: 1.6 }}>
                     <Editable id={`aboutPage.mission.cols.${i}.p`}>{col.p}</Editable>
                   </p>
@@ -133,7 +133,7 @@ export default function AboutBody() {
           </div>
 
           <div className="reveal" style={{ position: 'relative', width: '100%', height: '360px', borderRadius: '24px', overflow: 'hidden', border: '1px solid var(--line)' }}>
-            <EditableImage id="aboutPage.img.mission" src="/about_mission.png" alt="Capital Chain Logo Roundtable" fill />
+            <EditableImage id="aboutPage.img.mission" src="/about_mission.png" alt="Capital Chain Logo Roundtable" fill sizes="(max-width: 768px) 100vw, 50vw" />
           </div>
         </div>
       </section>

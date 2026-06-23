@@ -37,7 +37,7 @@ export default function TermsBody() {
         <div className="wrap terms-grid">
           <aside className="reveal" style={{ position: 'sticky', top: '100px' }}>
             <div className="tile" style={{ padding: '20px' }}>
-              <h4 className="terms-toc-h">Contents</h4>
+              <h2 className="terms-toc-h">Contents</h2>
               <nav className="terms-toc">
                 {TERMS.map((x) => (
                   <button

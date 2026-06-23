@@ -23,7 +23,7 @@ export default function Footer() {
       <div className="wrap">
         <div className="news reveal">
           <div>
-            <h4><Editable id="footer.newsH">{t.footer.newsH}</Editable></h4>
+            <h2><Editable id="footer.newsH">{t.footer.newsH}</Editable></h2>
             <p><Editable id="footer.newsP">{t.footer.newsP}</Editable></p>
           </div>
           <NewsletterForm />
@@ -46,21 +46,21 @@ export default function Footer() {
             </div>
           </div>
           <div className="foot-col">
-            <h5><Editable id="footer.platform">{t.footer.platform}</Editable></h5>
+            <h3><Editable id="footer.platform">{t.footer.platform}</Editable></h3>
             <EditableLink id="footer.programs" href={LINKS.programs}>{t.footer.programs}</EditableLink>
             <EditableLink id="footer.payouts" href="/#payouts">{t.footer.payouts}</EditableLink>
             <EditableLink id="footer.scaling" href="/#scaling">{t.footer.scaling}</EditableLink>
             <EditableLink id="footer.platforms" href="/#platforms">{t.footer.platforms}</EditableLink>
           </div>
           <div className="foot-col">
-            <h5><Editable id="footer.company">{t.footer.company}</Editable></h5>
+            <h3><Editable id="footer.company">{t.footer.company}</Editable></h3>
             <EditableLink id="footer.about" href="/about">{t.footer.about}</EditableLink>
             <EditableLink id="footer.affiliate" href="/partnership">{t.footer.affiliate}</EditableLink>
             <EditableLink id="footer.community" href="/#community">{t.footer.community}</EditableLink>
             <EditableLink id="footer.contact" href="/contact">{t.footer.contact}</EditableLink>
           </div>
           <div className="foot-col">
-            <h5><Editable id="footer.legal">{t.footer.legal}</Editable></h5>
+            <h3><Editable id="footer.legal">{t.footer.legal}</Editable></h3>
             <EditableLink id="footer.termsOfUse" href="/terms">{t.footer.termsOfUse}</EditableLink>
             <EditableLink id="footer.privacy" href="/privacy">{t.footer.privacy}</EditableLink>
             <EditableLink id="footer.cookies" href="/cookies">Cookie Policy</EditableLink>
