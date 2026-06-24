@@ -164,35 +164,6 @@ export default function AboutBody() {
           </div>
         </div>
       </section>
-
-      {/* Section 6: Office / Location */}
-      <section className="sec" style={{ paddingTop: 0 }}>
-        <div className="wrap reveal">
-          <div className="about-location-card">
-            <div className="loc-content">
-              <div className="loc-pin">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 21s-7-6.3-7-11a7 7 0 0114 0c0 4.7-7 11-7 11z" />
-                  <circle cx="12" cy="10" r="2.5" />
-                </svg>
-              </div>
-              <span className="idx" style={{ color: 'var(--teal)' }}><Editable id="aboutPage.location.hq">{t.location.hq}</Editable></span>
-              <h3><Editable id="aboutPage.location.addr_a">{t.location.addr_a}</Editable><br /><Editable id="aboutPage.location.addr_b">{t.location.addr_b}</Editable></h3>
-              <p style={{ color: 'var(--dim)', fontSize: 16, marginBottom: 30 }}>
-                <Editable id="aboutPage.location.body">{t.location.body}</Editable>
-              </p>
-              <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
-                <EditableLink id="aboutPage.location.contactCta" href="/contact" className="btn btn-p" data-magnetic>{t.location.contactCta}</EditableLink>
-                <EditableLink id="aboutPage.location.mapsCta" href="https://maps.google.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn"
-                >{t.location.mapsCta}</EditableLink>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }
