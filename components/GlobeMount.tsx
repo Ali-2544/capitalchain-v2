@@ -21,14 +21,27 @@ type IdleWindow = typeof window & {
 const DESKTOP_QUERY = '(min-width: 1041px)';
 const MOTION_QUERY = '(prefers-reduced-motion: no-preference)';
 
+// Boot the globe on the first of these — by which point the page is already
+// interactive, so the heavy three.js init lands well after TTI (outside the TBT window).
+const BOOT_EVENTS: (keyof WindowEventMap)[] = [
+  'pointerdown',
+  'mousemove',
+  'scroll',
+  'keydown',
+  'touchstart',
+  'wheel',
+];
+
 /**
  * Defers the heavy three.js globe so it never blocks initial paint or interactivity:
  *  - A lightweight CSS poster (real, server-rendered HTML) stands in immediately.
  *  - On mobile / reduced-motion the poster is the final state — the WebGL bundle is
  *    never even fetched.
- *  - On desktop the WebGL bundle is only imported once the poster scrolls into view
- *    (IntersectionObserver) AND the main thread is idle (requestIdleCallback),
- *    i.e. after hydration / LCP / first interactions — not on mount.
+ *  - On desktop the WebGL bundle is imported on the first user interaction, or — for a
+ *    passive viewer — once the main thread is idle AFTER the `load` event. We avoid the
+ *    old short forced idle-timeout (which fired ~3s in, inside the load/TBT window and
+ *    blocked the main thread mid-measurement); init now reliably lands after the page is
+ *    interactive.
  */
 export default function GlobeMount() {
   const posterRef = useRef<HTMLDivElement>(null);
@@ -43,28 +56,38 @@ export default function GlobeMount() {
     const eligible = () => desktop.matches && motionOk.matches;
 
     let idleId: number | undefined;
-    let io: IntersectionObserver | undefined;
+    let armed = false;
 
-    const start = () => {
-      // Hand the WebGL init to an idle slot so it can't compete with the
-      // critical-path work; fall back to a short timeout where unsupported.
-      if (w.requestIdleCallback) idleId = w.requestIdleCallback(() => setShow(true), { timeout: 3000 });
-      else idleId = window.setTimeout(() => setShow(true), 400);
+    const cleanupTriggers = () => {
+      BOOT_EVENTS.forEach((e) => window.removeEventListener(e, boot));
+      window.removeEventListener('load', scheduleIdleFallback);
+      if (idleId != null) {
+        if (w.cancelIdleCallback) w.cancelIdleCallback(idleId);
+        else clearTimeout(idleId);
+        idleId = undefined;
+      }
     };
 
+    function boot() {
+      cleanupTriggers();
+      setShow(true);
+    }
+
+    // Passive-viewer fallback: only after `load`, and on a genuine idle slot, so the
+    // WebGL init still happens post-interactive even with zero interaction.
+    function scheduleIdleFallback() {
+      if (idleId != null) return;
+      if (w.requestIdleCallback) idleId = w.requestIdleCallback(boot, { timeout: 10000 });
+      else idleId = window.setTimeout(boot, 2000);
+    }
+
     const arm = () => {
-      const el = posterRef.current;
-      if (io || !el || !eligible()) return; // mobile / reduced-motion: stay on the poster
-      io = new IntersectionObserver(
-        (entries) => {
-          if (entries.some((e) => e.isIntersecting)) {
-            io?.disconnect();
-            start();
-          }
-        },
-        { rootMargin: '300px' },
-      );
-      io.observe(el);
+      if (armed || !eligible()) return; // mobile / reduced-motion: stay on the poster
+      armed = true;
+      desktop.removeEventListener('change', onChange);
+      BOOT_EVENTS.forEach((e) => window.addEventListener(e, boot, { once: true, passive: true }));
+      if (document.readyState === 'complete') scheduleIdleFallback();
+      else window.addEventListener('load', scheduleIdleFallback, { once: true });
     };
 
     arm();
@@ -74,9 +97,8 @@ export default function GlobeMount() {
     desktop.addEventListener('change', onChange);
 
     return () => {
-      io?.disconnect();
       desktop.removeEventListener('change', onChange);
-      if (idleId != null) w.cancelIdleCallback?.(idleId);
+      cleanupTriggers();
     };
   }, [show]);
 
