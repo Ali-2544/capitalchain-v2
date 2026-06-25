@@ -1,9 +1,20 @@
 'use client';
 
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import { DICT } from '@/lib/i18n';
+import { en, type Dict } from '@/lib/i18n';
 
 export type Lang = 'en' | 'ar' | 'hi' | 'es' | 'bn' | 'ur' | 'fr';
+
+// English ships in the initial bundle (it is the SSR default); the other six
+// languages live in a separate chunk loaded on demand. `loaded` is a module-level
+// cache so a language is only fetched + parsed once per session.
+const loaded: Partial<Record<Lang, Dict>> = { en };
+
+async function ensureDict(lang: Lang): Promise<void> {
+  if (loaded[lang]) return;
+  const { EXTRA } = await import('@/lib/i18n-extra');
+  Object.assign(loaded, EXTRA);
+}
 
 export const LANGS: { code: Lang; label: string; flag: string; native: string }[] = [
   { code: 'en', label: 'EN', flag: '🇬🇧', native: 'English' },
@@ -32,16 +43,22 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem('lang');
-    if (saved && LANGS.some((l) => l.code === saved)) setLangState(saved as Lang);
+    if (saved && saved !== 'en' && LANGS.some((l) => l.code === saved)) {
+      // Switch only after the language chunk has loaded so the first render in the
+      // restored language already has its strings (no English flash mid-paint).
+      void ensureDict(saved as Lang).then(() => setLangState(saved as Lang));
+    }
   }, []);
 
   const setLang = useCallback((l: Lang) => {
-    setLangState(l);
-    try {
-      localStorage.setItem('lang', l);
-    } catch {
-      /* ignore */
-    }
+    void ensureDict(l).then(() => {
+      setLangState(l);
+      try {
+        localStorage.setItem('lang', l);
+      } catch {
+        /* ignore */
+      }
+    });
   }, []);
 
   const dir: 'ltr' | 'rtl' = RTL_LANGS.includes(lang) ? 'rtl' : 'ltr';
@@ -65,10 +82,10 @@ export function useLang() {
   return ctx;
 }
 
-/** Active language's translation slice. */
+/** Active language's translation slice (English until a lazily-loaded one arrives). */
 export function useT() {
   const { lang } = useLang();
-  return DICT[lang];
+  return loaded[lang] ?? en;
 }
 
 /** Pick the active language's strings from an {en, ar, hi} record. */
