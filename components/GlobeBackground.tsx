@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useTheme } from './ThemeProvider';
@@ -323,10 +323,24 @@ export default function GlobeBackground() {
   // Live payouts from the DB (polled); falls back to the built-in list until loaded.
   const raw = useLiveData<RawPayout>('/api/payouts', PAYOUTS);
   const payouts = useMemo(() => raw.map(toGP), [raw]);
+
+  // Stop the render loop while the tab is hidden — a fixed full-viewport canvas is
+  // otherwise "always on screen" and keeps the rAF loop (and GPU) busy in the
+  // background. 'demand' renders only on prop change, i.e. effectively paused.
+  const [frameloop, setFrameloop] = useState<'always' | 'demand'>(
+    typeof document !== 'undefined' && document.hidden ? 'demand' : 'always',
+  );
+  useEffect(() => {
+    const onVis = () => setFrameloop(document.hidden ? 'demand' : 'always');
+    document.addEventListener('visibilitychange', onVis);
+    return () => document.removeEventListener('visibilitychange', onVis);
+  }, []);
+
   return (
     <>
       <Canvas
         id="globe"
+        frameloop={frameloop}
         gl={{ alpha: true, antialias: true }}
         dpr={[1, 2]}
         camera={{ fov: 42, near: 1, far: 2000, position: [0, 0, 420] }}
