@@ -64,10 +64,11 @@ export default function GlobeMount() {
       BOOT_EVENTS.forEach((e) => window.addEventListener(e, boot, { once: true, passive: true }));
     };
 
-    arm();
     // If the viewport grows from mobile to desktop (rotate / resize / responsive
     // devtools), arm the loader then rather than leaving the poster forever.
     const onChange = () => arm();
+
+    arm();
     desktop.addEventListener('change', onChange);
 
     return () => {
