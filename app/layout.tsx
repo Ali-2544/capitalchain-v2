@@ -6,7 +6,7 @@ import { LanguageProvider } from '@/components/LanguageProvider';
 import { ContentProvider } from '@/components/ContentProvider';
 import EditModeToggle from '@/components/EditModeToggle';
 import EditorPopover from '@/components/EditorPopover';
-import GlobeMount from '@/components/GlobeMount';
+import MapVideoBackground from '@/components/MapVideoBackground';
 import Effects from '@/components/Effects';
 import Intercom from '@/components/Intercom';
 
@@ -46,8 +46,9 @@ export default function RootLayout({
         <ThemeProvider>
           <LanguageProvider>
             <ContentProvider>
-              {/* Fixed full-viewport WebGL globe, rendered once, persists across routes. */}
-              <GlobeMount />
+              {/* Fixed full-viewport looping map video, rendered once, persists across
+                  routes. Replaces the old WebGL <GlobeMount /> (kept in the codebase). */}
+              <MapVideoBackground />
               {/* Fixed scrims + JS-driven chrome + all page micro-interactions. */}
               <Effects />
               {children}
