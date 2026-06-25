@@ -83,23 +83,14 @@ export default function Intercom() {
       'mousemove',
       'touchstart',
     ];
+    // Load on the first real interaction only — NO idle/timeout fallback. The widget
+    // (≈344 KiB of third-party JS + ~1s of bootup) is not needed until the user engages,
+    // and the custom #cc-chat button boots it on click regardless. The old 8s idle
+    // fallback forced the load on every page during initial load, inflating mobile TBT.
     events.forEach((e) => window.addEventListener(e, load, { once: true, passive: true }));
-    const hasIdle = typeof window.requestIdleCallback === 'function';
-    const idleId = hasIdle
-      ? window.requestIdleCallback(load, { timeout: 8000 })
-      : window.setTimeout(load, 8000);
 
     function detach() {
       events.forEach((e) => window.removeEventListener(e, load));
-      if (hasIdle) {
-        try {
-          window.cancelIdleCallback(idleId);
-        } catch {
-          /* ignore */
-        }
-      } else {
-        clearTimeout(idleId);
-      }
     }
 
     return detach;
