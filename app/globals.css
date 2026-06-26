@@ -45,14 +45,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:17px
 #globe{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;transition:opacity .4s}
 /* Full-bleed world-map background that replaces the WebGL globe. Fixed and behind all
    page content; the per-theme PNG is pre-baked with the fade-to-bg on the left and the
-   map on the right, so no CSS mask is required. Theme is swapped via the `body.light`
-   class set by ThemeProvider — filenames contain a space, so URL-encode it. */
+   map on the right, so no CSS mask is required. We stretch the image to exactly the
+   viewport (`100% 100%`) so the map spans the full width of the page instead of being
+   anchored to the right and leaving the left half empty. Theme is swapped via the
+   `body.light` class set by ThemeProvider — filenames contain a space, so URL-encode it. */
 .map-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
   background:url('/db%20bg.png') no-repeat center center;
-  background-size:cover}
+  background-size:100% 100%}
 body.light .map-bg{background-image:url('/lg%20bg.png')}
-/* Mobile: shrink-to-fit and dim slightly so the map reads as a quieter backdrop. */
-@media(max-width:1040px){.map-bg{background-size:cover;opacity:.55}}
+/* Mobile: keep full-bleed but dim slightly so the map reads as a quieter backdrop. */
+@media(max-width:1040px){.map-bg{opacity:.55}}
 @media(max-width:1040px){body.light .map-bg{opacity:.7}}
 /* Live payout pills scattered over the map's right side (see MapPayouts). Reuses the
    .glabel styling; each pill fades in on every rotation. z-index:2 keeps them above the
