@@ -60,7 +60,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:17px
    .glabel styling; each pill fades in on every rotation. z-index:2 keeps them above the
    map/scrims but below page content (z:3), and they're hidden on small screens. */
 .map-labels{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden}
-.map-labels .glabel{animation:mapPillIn .55s ease both}
+/* Slim map pills: tighter padding + smaller type than the default .glabel. */
+.map-labels .glabel{animation:mapPillIn .55s ease both;gap:5px;padding:2px 8px 2px 7px;font-size:10.5px;border-radius:100px}
+.map-labels .glabel .gdot{width:5px;height:5px;box-shadow:0 0 6px var(--green)}
+.map-labels .glabel .gflag{font-size:11px}
 @keyframes mapPillIn{from{opacity:0;transform:translate(-50%,-42%)}to{opacity:1;transform:translate(-50%,-50%)}}
 @media(max-width:1040px){.map-labels{display:none}}
 /* Lightweight static stand-in for the WebGL globe — server-rendered, paints
