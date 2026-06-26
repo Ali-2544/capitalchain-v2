@@ -186,7 +186,7 @@ const ar: Dict = {
     ],
   },
   community: {
-    idx: '[ 12, المجتمع ]',
+    idx: '[ 11, المجتمع ]',
     title_a: 'أنت لا تتداول',
     title_b: 'وحدك.',
     sub: 'آلاف المتداولين، دردشة سوق مباشرة، وأشخاص للدعم على مدار الساعة.',
@@ -198,7 +198,7 @@ const ar: Dict = {
     langs: 'متعدد اللغات · EN · AR · UR · ES · HI',
   },
   affiliate: {
-    idx: '[ 13, برنامج الشراكة ]',
+    idx: '[ 12, برنامج الشراكة ]',
     title_a: 'اكسب بينما',
     title_b: 'تتداول شبكتك.',
     sub: 'أحِل متداولين إلى كابيتال تشين واكسب عمولة مدى الحياة على كل تقييم يشترونه. تتبّع لحظي، سحوبات شهرية، بلا حدود.',
@@ -212,7 +212,7 @@ const ar: Dict = {
     earnings: 'الأرباح',
   },
   faq: {
-    idx: '[ 14, الأسئلة الشائعة ]',
+    idx: '[ 13, الأسئلة الشائعة ]',
     title_a: 'هل تحتاج',
     title_b: 'مساعدة؟',
     sub: 'تواصل معنا. سيرد عليك فريق الدعم لدينا خلال ساعة.',
@@ -747,7 +747,7 @@ const hi: Dict = {
     ],
   },
   community: {
-    idx: '[ 12, समुदाय ]',
+    idx: '[ 11, समुदाय ]',
     title_a: 'आप अकेले ट्रेड',
     title_b: 'नहीं कर रहे.',
     sub: 'हज़ारों ट्रेडर, लाइव मार्केट चैट, और चौबीसों घंटे सहायता पर असली लोग।',
@@ -759,7 +759,7 @@ const hi: Dict = {
     langs: 'बहुभाषी · EN · AR · UR · ES · HI',
   },
   affiliate: {
-    idx: '[ 13, एफिलिएट प्रोग्राम ]',
+    idx: '[ 12, एफिलिएट प्रोग्राम ]',
     title_a: 'कमाएँ जब आपका',
     title_b: 'नेटवर्क ट्रेड करे.',
     sub: 'कैपिटल चेन को ट्रेडर रेफ़र करें और वे जो भी मूल्यांकन खरीदें उस पर आजीवन कमीशन कमाएँ। रीयल-टाइम ट्रैकिंग, मासिक पेआउट, कोई सीमा नहीं।',
@@ -773,7 +773,7 @@ const hi: Dict = {
     earnings: 'कमाई',
   },
   faq: {
-    idx: '[ 14, सामान्य प्रश्न ]',
+    idx: '[ 13, सामान्य प्रश्न ]',
     title_a: 'मदद',
     title_b: 'चाहिए?',
     sub: 'हमसे संपर्क करें। हमारी सहायता टीम एक घंटे के भीतर आपसे संपर्क करेगी।',
@@ -1308,7 +1308,7 @@ const es: Dict = {
     ],
   },
   community: {
-    idx: '[ 12, COMUNIDAD ]',
+    idx: '[ 11, COMUNIDAD ]',
     title_a: 'Únete a la comunidad de trading',
     title_b: 'que más rápido crece.',
     sub: 'Miles de traders, chat de mercado en vivo y personas en soporte a toda hora.',
@@ -1320,7 +1320,7 @@ const es: Dict = {
     langs: 'Multilingüe · EN · AR · UR · ES · HI',
   },
   affiliate: {
-    idx: '[ 13, PROGRAMA DE AFILIADOS ]',
+    idx: '[ 12, PROGRAMA DE AFILIADOS ]',
     title_a: 'Gana mientras tu',
     title_b: 'red opera.',
     sub: 'Refiere traders a Capital Chain y gana comisión de por vida por cada evaluación que compren. Seguimiento en tiempo real, pagos mensuales, sin límites.',
@@ -1334,7 +1334,7 @@ const es: Dict = {
     earnings: 'Ganancias',
   },
   faq: {
-    idx: '[ 14, PREGUNTAS FRECUENTES ]',
+    idx: '[ 13, PREGUNTAS FRECUENTES ]',
     title_a: '¿Necesitas',
     title_b: 'ayuda?',
     sub: 'Ponte en contacto con nosotros. Nuestro equipo de soporte te responderá en menos de una hora.',
@@ -1869,7 +1869,7 @@ const fr: Dict = {
     ],
   },
   community: {
-    idx: '[ 12, COMMUNAUTÉ ]',
+    idx: '[ 11, COMMUNAUTÉ ]',
     title_a: 'Rejoignez la communauté de trading',
     title_b: 'qui grandit le plus vite.',
     sub: 'Des milliers de traders, un chat de marché en direct et de vraies personnes au support 24h/24.',
@@ -1881,7 +1881,7 @@ const fr: Dict = {
     langs: 'Multilingue · EN · AR · UR · ES · HI',
   },
   affiliate: {
-    idx: '[ 13, PROGRAMME D’AFFILIATION ]',
+    idx: '[ 12, PROGRAMME D’AFFILIATION ]',
     title_a: 'Gagnez pendant que votre',
     title_b: 'réseau trade.',
     sub: 'Parrainez des traders vers Capital Chain et gagnez une commission à vie sur chaque évaluation qu’ils achètent. Suivi en temps réel, paiements mensuels, sans plafond.',
@@ -1895,7 +1895,7 @@ const fr: Dict = {
     earnings: 'Gains',
   },
   faq: {
-    idx: '[ 14, FAQ ]',
+    idx: '[ 13, FAQ ]',
     title_a: 'Besoin',
     title_b: 'd’aide ?',
     sub: 'Contactez-nous. Notre équipe de support vous répond en moins d’une heure.',
@@ -2991,7 +2991,7 @@ const ur: Dict = {
     ],
   },
   community: {
-    idx: '[ 12, کمیونٹی ]',
+    idx: '[ 11, کمیونٹی ]',
     title_a: 'سب سے تیزی سے بڑھتی',
     title_b: 'ٹریڈنگ کمیونٹی میں شامل ہوں',
     sub: 'ہزاروں ٹریڈرز، لائیو مارکیٹ چیٹ اور چوبیس گھنٹے سپورٹ پر حقیقی لوگ۔',
@@ -3003,7 +3003,7 @@ const ur: Dict = {
     langs: 'کثیر لسانی · EN · AR · UR · ES · HI',
   },
   affiliate: {
-    idx: '[ 13, ایفیلیئٹ پروگرام ]',
+    idx: '[ 12, ایفیلیئٹ پروگرام ]',
     title_a: 'کمائیں جب آپ کا',
     title_b: 'نیٹ ورک ٹریڈ کرے.',
     sub: 'کیپیٹل چین کو ٹریڈرز ریفر کریں اور وہ جو بھی تشخیص خریدیں اس پر تاحیات کمیشن کمائیں۔ ریئل ٹائم ٹریکنگ، ماہانہ ادائیگیاں، کوئی حد نہیں۔',
@@ -3017,7 +3017,7 @@ const ur: Dict = {
     earnings: 'کمائی',
   },
   faq: {
-    idx: '[ 14, عمومی سوالات ]',
+    idx: '[ 13, عمومی سوالات ]',
     title_a: 'مدد',
     title_b: 'چاہیے؟',
     sub: 'ہم سے رابطہ کریں۔ ہماری سپورٹ ٹیم ایک گھنٹے کے اندر آپ سے رابطہ کرے گی۔',

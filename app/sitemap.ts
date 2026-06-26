@@ -19,7 +19,7 @@ const ROUTES: {
   { path: '/rewards', changeFrequency: 'daily', priority: 0.8 },
   { path: '/blog', changeFrequency: 'weekly', priority: 0.7 },
   { path: '/contact', changeFrequency: 'yearly', priority: 0.6 },
-  { path: '/terms', changeFrequency: 'yearly', priority: 0.5 },
+  { path: '/terms-of-use', changeFrequency: 'yearly', priority: 0.5 },
   { path: '/privacy', changeFrequency: 'yearly', priority: 0.5 },
   { path: '/cookies', changeFrequency: 'yearly', priority: 0.5 },
   { path: '/refund', changeFrequency: 'yearly', priority: 0.5 },

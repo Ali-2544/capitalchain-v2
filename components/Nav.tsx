@@ -79,7 +79,7 @@ export default function Nav() {
     { key: 'about', href: '/about', label: t.nav.about },
     { key: 'contact', href: '/contact', label: t.nav.contact },
     { key: 'faq', href: 'https://help.capitalchain.co/en/', label: 'FAQ', external: true },
-    { key: 'terms', href: '/terms', label: t.nav.terms },
+    { key: 'terms', href: '/terms-of-use', label: t.nav.terms },
   ];
 
   const parseList = (raw?: string): string[] => {

@@ -10,10 +10,11 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
-  // The affiliate page moved to /partnership — keep old links/SEO working.
+  // Keep old links/SEO working after route renames.
   async redirects() {
     return [
       { source: "/affiliate", destination: "/partnership", permanent: true },
+      { source: "/terms", destination: "/terms-of-use", permanent: true },
     ];
   },
 };

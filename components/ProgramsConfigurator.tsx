@@ -227,21 +227,24 @@ export default function ProgramsConfigurator() {
               ))}
             </div>
           </div>
-          <div className="prog-ctl-row">
-            <div className="seg">
-              {(['Standard', 'Atomic'] as ChallengeType[]).map((tp) => (
-                <button
-                  key={tp}
-                  type="button"
-                  data-seg={tp}
-                  className={tp === type ? 'active' : undefined}
-                  onClick={() => setType(tp)}
-                >
-                  {tp}
-                </button>
-              ))}
+          {/* Instant has no evaluation model, so the Standard/Atomic choice is hidden. */}
+          {!isInstant && (
+            <div className="prog-ctl-row">
+              <div className="seg">
+                {(['Standard', 'Atomic'] as ChallengeType[]).map((tp) => (
+                  <button
+                    key={tp}
+                    type="button"
+                    data-seg={tp}
+                    className={tp === type ? 'active' : undefined}
+                    onClick={() => setType(tp)}
+                  >
+                    {tp}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <p className="prog-note reveal">{NOTES[isInstant ? 'Instant-1' : `${type}-${step}`]}</p>

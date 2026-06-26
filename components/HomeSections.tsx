@@ -15,7 +15,6 @@ import Platforms from './Platforms';
 import Champions from './Champions';
 import ScalingLadder from './ScalingLadder';
 import LiveRewards from './LiveRewards';
-import Testimonials from './Testimonials';
 import Community from './Community';
 import Affiliate from './Affiliate';
 import FAQ from './FAQ';
@@ -36,7 +35,6 @@ const REGISTRY: Record<string, { Comp: React.ComponentType; label: string }> = {
   champions: { Comp: Champions, label: 'Leaderboard' },
   scaling: { Comp: ScalingLadder, label: 'Scaling' },
   live: { Comp: LiveRewards, label: 'Live Rewards' },
-  testimonials: { Comp: Testimonials, label: 'Testimonials' },
   community: { Comp: Community, label: 'Community' },
   affiliate: { Comp: Affiliate, label: 'Affiliate' },
   faq: { Comp: FAQ, label: 'FAQ' },
@@ -45,7 +43,7 @@ const REGISTRY: Record<string, { Comp: React.ComponentType; label: string }> = {
 
 const DEFAULT_ORDER = [
   'hero', 'trust', 'ticker', 'how', 'programs', 'payouts', 'calc', 'who', 'why',
-  'platforms', 'scaling', 'live', 'testimonials', 'community', 'affiliate', 'faq', 'finalcta',
+  'platforms', 'scaling', 'live', 'community', 'affiliate', 'faq', 'finalcta',
 ];
 
 // Build a valid, complete order: keep saved order (known keys only), then append

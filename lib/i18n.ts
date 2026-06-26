@@ -185,7 +185,7 @@ export const en = {
     ],
   },
   community: {
-    idx: '[ 12, COMMUNITY ]',
+    idx: '[ 11, COMMUNITY ]',
     title_a: "You're not trading",
     title_b: 'alone.',
     sub: 'Thousands of traders, live market chat, and humans on support around the clock.',
@@ -197,7 +197,7 @@ export const en = {
     langs: 'Multilingual · EN · AR · UR · ES · HI',
   },
   affiliate: {
-    idx: '[ 13, AFFILIATE PROGRAM ]',
+    idx: '[ 12, AFFILIATE PROGRAM ]',
     title_a: 'Scale your income through',
     title_b: 'your trading network.',
     sub: 'Earn lifetime commissions on every evaluation purchase tracked in real time with monthly payouts and no earning caps.',
@@ -211,7 +211,7 @@ export const en = {
     earnings: 'Earnings',
   },
   faq: {
-    idx: '[ 14, FAQ ]',
+    idx: '[ 13, FAQ ]',
     title_a: 'Need',
     title_b: 'Help?',
     sub: 'Get in touch with us. Our Support Team will get back to you in an hour.',

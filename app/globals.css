@@ -43,14 +43,26 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:17px
 
 #prog{position:fixed;top:0;left:0;height:2px;width:0;background:var(--grad);z-index:200;box-shadow:0 0 12px var(--glow)}
 #globe{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;transition:opacity .4s}
-/* Looping map animation that replaces the WebGL globe — full-viewport, behind all
-   page content, never intercepts pointer events. One clip per theme (see MapVideoBackground). */
-.map-video-bg{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
-/* On desktop the old globe sat offset to the right of the hero text. Anchor the video
-   left and over-size its width so its centred content (the globe) lands on the right;
-   box centre ≈ width/2, so 160% puts the globe at ~80vw. The right overflow is clipped
-   past the viewport edge. Mobile keeps the centred full-cover framing. */
-@media(min-width:1041px){.map-video-bg{left:0;right:auto;width:160%}}
+/* Flat world-map background that replaces the WebGL globe. Fixed and behind all page
+   content; the transparent-PNG map is anchored to the RIGHT of the viewport and gently
+   faded toward the left (mask) so the hero copy on the left stays readable. One image
+   per theme, swapped via body.light. See MapBackground. */
+.map-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:url('/world_map_transparent.png') no-repeat right center;
+  background-size:min(64vw,1040px) auto;
+  -webkit-mask-image:linear-gradient(to right,transparent 28%,#000 56%);
+          mask-image:linear-gradient(to right,transparent 28%,#000 56%)}
+/* Same (dark) map image is used in both themes by request — no light-mode override. */
+/* Mobile: centre the map and dim it so it reads as a faint backdrop behind the copy. */
+@media(max-width:1040px){.map-bg{background-position:center;background-size:128vw auto;
+  -webkit-mask-image:none;mask-image:none;opacity:.4}}
+/* Live payout pills scattered over the map's right side (see MapPayouts). Reuses the
+   .glabel styling; each pill fades in on every rotation. z-index:2 keeps them above the
+   map/scrims but below page content (z:3), and they're hidden on small screens. */
+.map-labels{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.map-labels .glabel{animation:mapPillIn .55s ease both}
+@keyframes mapPillIn{from{opacity:0;transform:translate(-50%,-42%)}to{opacity:1;transform:translate(-50%,-50%)}}
+@media(max-width:1040px){.map-labels{display:none}}
 /* Lightweight static stand-in for the WebGL globe — server-rendered, paints
    immediately, and fades out once the real globe is loaded (see GlobeMount). */
 .globe-poster{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:1;transition:opacity .8s ease;
@@ -835,8 +847,8 @@ body.rtl .lang-menu{right:auto;left:0}
 .adm-err{color:#e2557b;font-size:13px;font-family:var(--fm)}
 .adm-shell{min-height:100vh}
 /* belt-and-braces: hide the marketing globe layers on the admin route */
-body:has(.adm-shell) #globe,body:has(.adm-shell) .globe-labels,body:has(.adm-shell) .globe-poster,body:has(.adm-shell) .map-video-bg,body:has(.adm-shell) .scrim,body:has(.adm-shell) #spot,body:has(.adm-shell) .mesh,
-body:has(.adm-login) #globe,body:has(.adm-login) .globe-labels,body:has(.adm-login) .globe-poster,body:has(.adm-login) .map-video-bg,body:has(.adm-login) .scrim,body:has(.adm-login) #spot,body:has(.adm-login) .mesh{display:none}
+body:has(.adm-shell) #globe,body:has(.adm-shell) .globe-labels,body:has(.adm-shell) .globe-poster,body:has(.adm-shell) .map-bg,body:has(.adm-shell) .map-labels,body:has(.adm-shell) .scrim,body:has(.adm-shell) #spot,body:has(.adm-shell) .mesh,
+body:has(.adm-login) #globe,body:has(.adm-login) .globe-labels,body:has(.adm-login) .globe-poster,body:has(.adm-login) .map-bg,body:has(.adm-login) .map-labels,body:has(.adm-login) .scrim,body:has(.adm-login) #spot,body:has(.adm-login) .mesh{display:none}
 .adm-top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:24px;padding:16px 28px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(16px)}
 .adm-brand{font-family:var(--fd);font-weight:700;font-size:18px}
 .adm-brand b{color:var(--teal)}

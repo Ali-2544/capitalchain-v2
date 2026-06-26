@@ -87,7 +87,7 @@ export default function ContactBody() {
                 <h2 style={{ fontFamily: 'var(--fd)', fontSize: '20px', fontWeight: 600, margin: 0 }}><Editable id="contactPage.business.title">{t.business.title}</Editable></h2>
               </div>
               <p style={{ color: 'var(--dim)', fontSize: '14.5px', lineHeight: 1.6 }}>
-                <Editable id="contactPage.business.body">{t.business.body}</Editable> <strong style={{ color: 'var(--text)' }}><Editable id="contactPage.business.email">partners@capitalchain.co</Editable></strong>
+                <Editable id="contactPage.business.body">{t.business.body}</Editable> <strong style={{ color: 'var(--text)' }}><Editable id="contactPage.business.email">collaborations@capitalchain.co</Editable></strong>
               </p>
             </div>
           </div>
