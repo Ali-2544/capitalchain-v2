@@ -27,19 +27,19 @@ const toGP = (r: RawPayout): GP => ({
 // Any country not listed here is dropped — better no pill than a pill on the wrong
 // continent. Tweak these by eye against the map image if needed.
 const COUNTRY_POS: Record<string, { left: string; top: string }> = {
-  UK: { left: '57%', top: '25%' },
-  Germany: { left: '60%', top: '28%' },
-  'Saudi Arabia': { left: '64%', top: '43%' },
-  UAE: { left: '68%', top: '46%' },
-  Pakistan: { left: '72%', top: '40%' },
-  India: { left: '74%', top: '48%' },
-  Japan: { left: '90%', top: '37%' },
-  Vietnam: { left: '79%', top: '49%' },
-  Philippines: { left: '86%', top: '52%' },
-  Malaysia: { left: '78%', top: '56%' },
-  Singapore: { left: '81%', top: '60%' },
-  Indonesia: { left: '84%', top: '63%' },
-  Australia: { left: '87%', top: '70%' },
+  UK: { left: '52%', top: '25%' },
+  Germany: { left: '54%', top: '28%' },
+  'Saudi Arabia': { left: '57%', top: '43%' },
+  UAE: { left: '60%', top: '46%' },
+  Pakistan: { left: '64%', top: '40%' },
+  India: { left: '65%', top: '48%' },
+  Japan: { left: '78%', top: '37%' },
+  Vietnam: { left: '69%', top: '49%' },
+  Philippines: { left: '75%', top: '52%' },
+  Malaysia: { left: '68%', top: '56%' },
+  Singapore: { left: '71%', top: '60%' },
+  Indonesia: { left: '73%', top: '63%' },
+  Australia: { left: '76%', top: '70%' },
 };
 
 // Built-in list shown until the live /api/payouts feed loads. Only countries that have
