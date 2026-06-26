@@ -52,7 +52,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:17px
   background-size:min(64vw,1040px) auto;
   -webkit-mask-image:linear-gradient(to right,transparent 28%,#000 56%);
           mask-image:linear-gradient(to right,transparent 28%,#000 56%)}
-/* Same (dark) map image is used in both themes by request — no light-mode override. */
+body.light .map-bg{background-image:url('/world_map_dotted_white.png')}
 /* Mobile: centre the map and dim it so it reads as a faint backdrop behind the copy. */
 @media(max-width:1040px){.map-bg{background-position:center;background-size:128vw auto;
   -webkit-mask-image:none;mask-image:none;opacity:.4}}
