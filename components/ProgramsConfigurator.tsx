@@ -179,7 +179,7 @@ export default function ProgramsConfigurator() {
   const note = NOTES[isInstant ? 'Instant-1' : `${type}-${step}`];
   const infoFacts: [string, string][] = [
     ['Refundable Fee', isInstant ? 'Refunded with 3rd payout' : 'Fully refundable (100%)'],
-    ['Min Trading Days', 'None'],
+    ['Min Trading Days', isInstant || (type === 'Standard' && !isOne) ? '4 Days' : 'None'],
     ['Weekend Holding', 'Allowed'],
     ['News Trading', 'Allowed'],
     ['Payout Cycle', 'Weekly'],
