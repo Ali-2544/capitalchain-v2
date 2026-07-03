@@ -1,20 +1,29 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useContent } from './ContentProvider';
 import Hero from './Hero';
 // import TrustBand from './TrustBand';
 import Ticker from './Ticker';
+
+// The three heaviest below-the-fold sections are code-split with next/dynamic so
+// their JS is broken out of the initial hydration burst (which helps break up long
+// tasks → lower TBT/INP). `ssr: true` (the default) is kept, so each is still
+// server-rendered into the HTML — identical markup, no layout shift, no SEO loss.
+// Splitting the smaller sections too was measured to add competing chunk preloads
+// with no net win, so only the heavy ones are split.
+const ProgramsConfigurator = dynamic(() => import('./ProgramsConfigurator'));
+const Calculator = dynamic(() => import('./Calculator'));
+const LiveRewards = dynamic(() => import('./LiveRewards'));
+
 import HowStacking from './HowStacking';
-import ProgramsConfigurator from './ProgramsConfigurator';
 import PayoutCycles from './PayoutCycles';
-import Calculator from './Calculator';
 import WhoWeAre from './WhoWeAre';
 import WhyBento from './WhyBento';
 import Platforms from './Platforms';
 import Champions from './Champions';
 import ScalingLadder from './ScalingLadder';
-import LiveRewards from './LiveRewards';
 import Community from './Community';
 import Affiliate from './Affiliate';
 import FAQ from './FAQ';
