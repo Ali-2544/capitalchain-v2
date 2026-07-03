@@ -16,7 +16,7 @@ const ar: Dict = {
     buy: 'عرض البرامج ←',
     language: 'اللغة',
   },
-  promo: ['اشترِ 1 واحصل على 1, أدخل الرمز BOGO عند الدفع', 'خصم 20% على Instant, أدخل الرمز INSTANT20 عند الدفع', 'اشترِ 1 واحصل على 1, أدخل الرمز BOGO عند الدفع'],
+  promo: ['اشترِ 1 واحصل على 1, أدخل الرمز BOGO عند الدفع', 'اشترِ 1 واحصل على 1, أدخل الرمز BOGO عند الدفع'],
   hero: {
     eyebrow: 'تداول الملكية · أكثر من 160 دولة',
     title_a: 'تمكين',
@@ -577,7 +577,7 @@ const hi: Dict = {
     buy: 'प्रोग्राम देखें →',
     language: 'भाषा',
   },
-  promo: ['1 खरीदें 1 पाएँ, चेकआउट पर कोड BOGO डालें', 'Instant पर 20% छूट, चेकआउट पर कोड INSTANT20 डालें', '1 खरीदें 1 पाएँ, चेकआउट पर कोड BOGO डालें'],
+  promo: ['1 खरीदें 1 पाएँ, चेकआउट पर कोड BOGO डालें', '1 खरीदें 1 पाएँ, चेकआउट पर कोड BOGO डालें'],
   hero: {
     eyebrow: 'प्रॉपराइटरी ट्रेडिंग · 160+ देश',
     title_a: 'ट्रेडर्स को',
@@ -1138,7 +1138,7 @@ const es: Dict = {
     buy: 'Ver programas →',
     language: 'Idioma',
   },
-  promo: ['Compra 1 y llévate 1, usa el código BOGO al pagar', '20% de descuento en Instant, usa el código INSTANT20 al pagar', 'Compra 1 y llévate 1, usa el código BOGO al pagar'],
+  promo: ['Compra 1 y llévate 1, usa el código BOGO al pagar', 'Compra 1 y llévate 1, usa el código BOGO al pagar'],
   hero: {
     eyebrow: 'TRADING PROPIETARIO · MÁS DE 160 PAÍSES',
     title_a: 'Damos a los',
@@ -1699,7 +1699,7 @@ const fr: Dict = {
     buy: 'Voir les programmes →',
     language: 'Langue',
   },
-  promo: ['Achetez-en 1, obtenez-en 1, code BOGO au paiement', '20% de réduction sur Instant, code INSTANT20 au paiement', 'Achetez-en 1, obtenez-en 1, code BOGO au paiement'],
+  promo: ['Achetez-en 1, obtenez-en 1, code BOGO au paiement', 'Achetez-en 1, obtenez-en 1, code BOGO au paiement'],
   hero: {
     eyebrow: 'TRADING POUR COMPTE PROPRE · PLUS DE 160 PAYS',
     title_a: 'Donnons aux',
@@ -2260,7 +2260,7 @@ const bn: Dict = {
     buy: 'প্রোগ্রাম দেখুন →',
     language: 'ভাষা',
   },
-  promo: ['১টি কিনুন ১টি পান, চেকআউটে BOGO কোড দিন', 'Instant-এ ২০% ছাড়, চেকআউটে INSTANT20 কোড দিন', '১টি কিনুন ১টি পান, চেকআউটে BOGO কোড দিন'],
+  promo: ['১টি কিনুন ১টি পান, চেকআউটে BOGO কোড দিন', '১টি কিনুন ১টি পান, চেকআউটে BOGO কোড দিন'],
   hero: {
     eyebrow: 'প্রপ্রাইটারি ট্রেডিং · ১৬০+ দেশ',
     title_a: 'ট্রেডারদের',
@@ -2821,7 +2821,7 @@ const ur: Dict = {
     buy: 'پروگرام دیکھیں ←',
     language: 'زبان',
   },
-  promo: ['ایک خریدیں ایک مفت پائیں, چیک آؤٹ پر کوڈ BOGO درج کریں', 'Instant پر 20% رعایت, چیک آؤٹ پر کوڈ INSTANT20 درج کریں', 'ایک خریدیں ایک مفت پائیں, چیک آؤٹ پر کوڈ BOGO درج کریں'],
+  promo: ['ایک خریدیں ایک مفت پائیں, چیک آؤٹ پر کوڈ BOGO درج کریں', 'ایک خریدیں ایک مفت پائیں, چیک آؤٹ پر کوڈ BOGO درج کریں'],
   hero: {
     eyebrow: 'پراپرائٹری ٹریڈنگ · 160+ ممالک',
     title_a: 'ٹریڈرز کو',

@@ -15,7 +15,7 @@ export const en = {
     buy: 'View Programs →',
     language: 'Language',
   },
-  promo: ['Buy 1 Get 1, enter code BOGO at checkout', '20% off Instant, enter code INSTANT20 at checkout', 'Buy 1 Get 1, enter code BOGO at checkout'],
+  promo: ['Buy 1 Get 1, enter code BOGO at checkout', 'Buy 1 Get 1, enter code BOGO at checkout'],
   hero: {
     eyebrow: 'PROPRIETARY TRADING · 160+ COUNTRIES',
     title_a: 'Empowering traders',
