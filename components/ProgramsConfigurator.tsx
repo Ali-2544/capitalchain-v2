@@ -203,15 +203,9 @@ export default function ProgramsConfigurator() {
         <div className="prog-controls reveal">
           <div className="prog-ctl-row">
             <div className="seg">
-              <button
-                type="button"
-                data-seg="Instant"
-                className={isInstant ? 'active' : undefined}
-                onClick={() => setType('Instant')}
-              >
-                Instant
-                <span className="seg-new">NEW</span>
-              </button>
+              {/* The "Instant" program is hidden from the public site. Its data and
+                  the isInstant branches below are kept so it can be restored by
+                  re-adding this toggle, but there is no UI path to select it. */}
               {([['1', 'One Step'], ['2', 'Two Step']] as [StepType, string][]).map(([s, label]) => (
                 <button
                   key={s}
