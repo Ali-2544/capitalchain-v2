@@ -17,6 +17,20 @@ const nextConfig: NextConfig = {
       { source: "/terms", destination: "/terms-of-use", permanent: true },
     ];
   },
+  // Static image assets in /public are stable brand assets referenced by fixed
+  // filenames (map backgrounds, logos, illustrations). Next serves /public with
+  // `Cache-Control: public, max-age=0` by default, so every repeat view re-validates
+  // them. Give them a 30-day cache — long enough to help returning visitors, short
+  // enough to recover if a same-named file is ever replaced. Fingerprinted assets
+  // under /_next/static (JS, CSS, fonts) already send `immutable` and are untouched.
+  async headers() {
+    return [
+      {
+        source: "/:path*.:ext(avif|webp|png|jpg|jpeg|gif|svg|ico)",
+        headers: [{ key: "Cache-Control", value: "public, max-age=2592000" }],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
