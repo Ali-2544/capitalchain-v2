@@ -645,8 +645,15 @@ footer{border-top:1px solid var(--line);padding:72px 0 40px;background:var(--foo
   .rw-status-meta{gap:14px}
 }
 
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
-.reveal.in{opacity:1;transform:none}
+/* Reveal-on-scroll is a progressive enhancement. Elements are fully visible in the
+   server-rendered HTML and for no-JS users; the hidden start-state is applied only
+   once the reveal script has marked <html class="js-ready">. This keeps above-the-fold
+   content (the hero) painted from the SSR HTML with zero JS, so LCP is never gated on
+   hydration. Elements already in the viewport are marked `.in` before `js-ready` is
+   added, so they never flash visible→hidden. */
+.reveal{transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+html.js-ready .reveal{opacity:0;transform:translateY(28px)}
+html.js-ready .reveal.in{opacity:1;transform:none}
 /* In Edit mode, sections re-mount so the reveal observer won't fire — force visible. */
 body.cms-editing .reveal{opacity:1!important;transform:none!important}
 
