@@ -43,6 +43,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+      {/* Preload the light map background (the LCP element). It is a CSS background,
+          so without this hint the browser only discovers it after building the CSSOM.
+          The first paint is always light (body ships as `light`; theme swaps post-mount),
+          so we preload the light AVIF specifically. React hoists this into <head>. */}
+      <link rel="preload" as="image" href="/lg-bg.avif" type="image/avif" fetchPriority="high" />
       <body className="light" suppressHydrationWarning>
         <ThemeProvider>
           <LanguageProvider>
