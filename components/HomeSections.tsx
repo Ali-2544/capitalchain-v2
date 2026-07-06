@@ -55,6 +55,29 @@ const DEFAULT_ORDER = [
   'platforms', 'scaling', 'live', 'community', 'affiliate', 'faq', 'finalcta',
 ];
 
+// Stable, human-meaningful anchor ids so each section is reachable via URL hash
+// (e.g. /#how-it-works). Keyed by the section key above. These power deep links
+// and in-page navigation; the scroll offset for the sticky header lives in the
+// `.section-anchor` CSS rule (globals.css) via scroll-margin-top.
+const ANCHORS: Record<string, string> = {
+  hero: 'hero',
+  ticker: 'live-ticker',
+  how: 'how-it-works',
+  programs: 'programs',
+  payouts: 'payouts',
+  calc: 'calculator',
+  who: 'who-we-are',
+  why: 'why-capital-chain',
+  platforms: 'platforms',
+  champions: 'leaderboard',
+  scaling: 'scaling',
+  live: 'live-rewards',
+  community: 'community',
+  affiliate: 'affiliate',
+  faq: 'faq',
+  finalcta: 'get-started',
+};
+
 // Build a valid, complete order: keep saved order (known keys only), then append
 // any sections missing from it (so new sections always appear).
 function computeOrder(saved?: string): string[] {
@@ -141,8 +164,19 @@ export default function HomeSections() {
         const { Comp, label } = entry;
         const isHidden = hidden.includes(key);
 
-        // Live site: skip removed sections entirely.
-        if (!editMode) return isHidden ? null : <Comp key={key} />;
+        // Live site: skip removed sections entirely. Each visible section is
+        // wrapped in a lightweight anchor container so it can be deep-linked via
+        // its URL hash (e.g. /#faq). The wrapper is a plain block element (no
+        // padding/margin/gap) so it has no visual effect on the section itself.
+        if (!editMode) {
+          if (isHidden) return null;
+          const anchor = ANCHORS[key] ?? key;
+          return (
+            <div key={key} id={anchor} className="section-anchor">
+              <Comp />
+            </div>
+          );
+        }
 
         // Edit mode, removed: show a compact strip with a Restore button.
         if (isHidden) {
