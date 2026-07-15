@@ -15,7 +15,7 @@ export const en = {
     buy: 'View Programs →',
     language: 'Language',
   },
-  promo: ['Buy 1 Get 1, enter code BOGO at checkout', 'Buy 1 Get 1, enter code BOGO at checkout'],
+  promo: ['Buy 1 Get 1, enter code BOGO at checkout', 'UPI and card payments are temporarily unavailable. Please use Cryptocurrency as your payment method.'],
   hero: {
     eyebrow: 'PROPRIETARY TRADING · 160+ COUNTRIES',
     title_a: 'Empowering traders',

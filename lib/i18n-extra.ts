@@ -16,7 +16,7 @@ const ar: Dict = {
     buy: 'عرض البرامج ←',
     language: 'اللغة',
   },
-  promo: ['اشترِ 1 واحصل على 1, أدخل الرمز BOGO عند الدفع', 'اشترِ 1 واحصل على 1, أدخل الرمز BOGO عند الدفع'],
+  promo: ['اشترِ 1 واحصل على 1, أدخل الرمز BOGO عند الدفع', 'الدفع عبر UPI والبطاقات غير متاح مؤقتًا. يُرجى استخدام العملات المشفّرة كوسيلة للدفع.'],
   hero: {
     eyebrow: 'تداول الملكية · أكثر من 160 دولة',
     title_a: 'تمكين',
@@ -577,7 +577,7 @@ const hi: Dict = {
     buy: 'प्रोग्राम देखें →',
     language: 'भाषा',
   },
-  promo: ['1 खरीदें 1 पाएँ, चेकआउट पर कोड BOGO डालें', '1 खरीदें 1 पाएँ, चेकआउट पर कोड BOGO डालें'],
+  promo: ['1 खरीदें 1 पाएँ, चेकआउट पर कोड BOGO डालें', 'UPI और कार्ड भुगतान अस्थायी रूप से अनुपलब्ध हैं। कृपया भुगतान के लिए क्रिप्टोकरेंसी का उपयोग करें।'],
   hero: {
     eyebrow: 'प्रॉपराइटरी ट्रेडिंग · 160+ देश',
     title_a: 'ट्रेडर्स को',
@@ -1138,7 +1138,7 @@ const es: Dict = {
     buy: 'Ver programas →',
     language: 'Idioma',
   },
-  promo: ['Compra 1 y llévate 1, usa el código BOGO al pagar', 'Compra 1 y llévate 1, usa el código BOGO al pagar'],
+  promo: ['Compra 1 y llévate 1, usa el código BOGO al pagar', 'Los pagos con UPI y tarjeta no están disponibles temporalmente. Utiliza criptomonedas como método de pago.'],
   hero: {
     eyebrow: 'TRADING PROPIETARIO · MÁS DE 160 PAÍSES',
     title_a: 'Damos a los',
@@ -1699,7 +1699,7 @@ const fr: Dict = {
     buy: 'Voir les programmes →',
     language: 'Langue',
   },
-  promo: ['Achetez-en 1, obtenez-en 1, code BOGO au paiement', 'Achetez-en 1, obtenez-en 1, code BOGO au paiement'],
+  promo: ['Achetez-en 1, obtenez-en 1, code BOGO au paiement', 'Les paiements par UPI et carte sont temporairement indisponibles. Veuillez utiliser les cryptomonnaies comme moyen de paiement.'],
   hero: {
     eyebrow: 'TRADING POUR COMPTE PROPRE · PLUS DE 160 PAYS',
     title_a: 'Donnons aux',
@@ -2260,7 +2260,7 @@ const bn: Dict = {
     buy: 'প্রোগ্রাম দেখুন →',
     language: 'ভাষা',
   },
-  promo: ['১টি কিনুন ১টি পান, চেকআউটে BOGO কোড দিন', '১টি কিনুন ১টি পান, চেকআউটে BOGO কোড দিন'],
+  promo: ['১টি কিনুন ১টি পান, চেকআউটে BOGO কোড দিন', 'UPI এবং কার্ড পেমেন্ট সাময়িকভাবে অনুপলব্ধ। অনুগ্রহ করে পেমেন্টের জন্য ক্রিপ্টোকারেন্সি ব্যবহার করুন।'],
   hero: {
     eyebrow: 'প্রপ্রাইটারি ট্রেডিং · ১৬০+ দেশ',
     title_a: 'ট্রেডারদের',
@@ -2821,7 +2821,7 @@ const ur: Dict = {
     buy: 'پروگرام دیکھیں ←',
     language: 'زبان',
   },
-  promo: ['ایک خریدیں ایک مفت پائیں, چیک آؤٹ پر کوڈ BOGO درج کریں', 'ایک خریدیں ایک مفت پائیں, چیک آؤٹ پر کوڈ BOGO درج کریں'],
+  promo: ['ایک خریدیں ایک مفت پائیں, چیک آؤٹ پر کوڈ BOGO درج کریں', 'UPI اور کارڈ کی ادائیگیاں عارضی طور پر دستیاب نہیں ہیں۔ براہ کرم ادائیگی کے لیے کرپٹو کرنسی استعمال کریں۔'],
   hero: {
     eyebrow: 'پراپرائٹری ٹریڈنگ · 160+ ممالک',
     title_a: 'ٹریڈرز کو',
